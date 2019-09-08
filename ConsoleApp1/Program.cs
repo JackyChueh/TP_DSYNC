@@ -13,7 +13,7 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             var timer = new System.Timers.Timer();
-            timer.Interval = 3000; // 60 seconds  
+            timer.Interval = 2000; // 60 seconds  
             timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer);
             timer.Start();
             Console.ReadLine();

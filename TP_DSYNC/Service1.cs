@@ -23,7 +23,7 @@ namespace TP_DSYNC
         protected override void OnStart(string[] args)
         {
             var timer = new System.Timers.Timer();
-            timer.Interval = 60000; // 60 seconds  
+            timer.Interval = 600000; // 60 seconds  
             timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
             timer.Start();
         }

@@ -48,12 +48,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="db\專案甘特圖.xlsx" />
+    <None Include="db\系統分析問題.docx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TP_DSYNC\TP_DSYNC.csproj">
       <Project>{0068692b-49b2-45f7-ad7e-5a281e51e8b7}</Project>
       <Name>TP_DSYNC</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="db\CREATE_DATABASE_TP_B3.sql" />
+    <Content Include="db\CREATE_TABLE_AHU_0B1.sql" />
+    <Content Include="db\TP_SCC.sql" />
+    <Content Include="db\UPDATE_AHU_0B1.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

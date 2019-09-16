@@ -12,10 +12,12 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var timer = new System.Timers.Timer();
-            timer.Interval = 2000; // 60 seconds  
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer);
-            timer.Start();
+            //var timer = new System.Timers.Timer();
+            //timer.Interval = 2000; // 60 seconds  
+            //timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer);
+            //timer.Start();
+            SensorData.Read();
+
             Console.ReadLine();
         }
 

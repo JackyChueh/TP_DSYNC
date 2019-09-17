@@ -10,7 +10,7 @@ namespace TP_DSYNC.Models.Implement
     {
         public AHU_WriteImplement(string connectionStringName) : base(connectionStringName) { }
 
-        public int WriteDataForAHU_004F(AHU_004F AHU_004)
+        public int WriteDataForAHU_004F(AHU_004F AHU_004F)
         {
             int affected = 0;
             DbConnection conn = null;
@@ -46,68 +46,68 @@ INSERT INTO AHU (AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU0
                 Db.AddInParameter(cmd, "AHU10", DbType.Single);
                 Db.AddInParameter(cmd, "AHU11", DbType.Single);
 
-                Db.SetParameterValue(cmd, "AUTOID", AHU_004.AUTOID);
-                Db.SetParameterValue(cmd, "DATETIME", AHU_004.DATETIME);
+                Db.SetParameterValue(cmd, "AUTOID", AHU_004F.AUTOID);
+                Db.SetParameterValue(cmd, "DATETIME", AHU_004F.DATETIME);
                 Db.SetParameterValue(cmd, "LOCATION", "004F");
 
                 #region 004F01
                 Db.SetParameterValue(cmd, "DEVICE_ID", "01");
-                Db.SetParameterValue(cmd, "AHU01", AHU_004.AHU01_004F01);
-                Db.SetParameterValue(cmd, "AHU02", AHU_004.AHU02_004F01);
-                Db.SetParameterValue(cmd, "AHU03", AHU_004.AHU03_004F01);
-                Db.SetParameterValue(cmd, "AHU04", AHU_004.AHU04_004F01);
-                Db.SetParameterValue(cmd, "AHU05", AHU_004.AHU05_004F01);
-                Db.SetParameterValue(cmd, "AHU06", AHU_004.AHU06_004F01);
-                Db.SetParameterValue(cmd, "AHU07", AHU_004.AHU07_004F01);
-                Db.SetParameterValue(cmd, "AHU08", AHU_004.AHU08_004F01);
-                Db.SetParameterValue(cmd, "AHU09", AHU_004.AHU09_004F01);
-                Db.SetParameterValue(cmd, "AHU10", AHU_004.AHU10_004F01);
-                Db.SetParameterValue(cmd, "AHU11", AHU_004.AHU11_004F01);
+                Db.SetParameterValue(cmd, "AHU01", AHU_004F.AHU01_004F01);
+                Db.SetParameterValue(cmd, "AHU02", AHU_004F.AHU02_004F01);
+                Db.SetParameterValue(cmd, "AHU03", AHU_004F.AHU03_004F01);
+                Db.SetParameterValue(cmd, "AHU04", AHU_004F.AHU04_004F01);
+                Db.SetParameterValue(cmd, "AHU05", AHU_004F.AHU05_004F01);
+                Db.SetParameterValue(cmd, "AHU06", AHU_004F.AHU06_004F01);
+                Db.SetParameterValue(cmd, "AHU07", AHU_004F.AHU07_004F01);
+                Db.SetParameterValue(cmd, "AHU08", AHU_004F.AHU08_004F01);
+                Db.SetParameterValue(cmd, "AHU09", AHU_004F.AHU09_004F01);
+                Db.SetParameterValue(cmd, "AHU10", AHU_004F.AHU10_004F01);
+                Db.SetParameterValue(cmd, "AHU11", AHU_004F.AHU11_004F01);
                 affected += Db.ExecuteNonQuery(cmd);
                 #endregion
                 #region 004F02
                 Db.SetParameterValue(cmd, "DEVICE_ID", "02");
-                Db.SetParameterValue(cmd, "AHU01", AHU_004.AHU01_004F02);
-                Db.SetParameterValue(cmd, "AHU02", AHU_004.AHU02_004F02);
-                Db.SetParameterValue(cmd, "AHU03", AHU_004.AHU03_004F02);
-                Db.SetParameterValue(cmd, "AHU04", AHU_004.AHU04_004F02);
-                Db.SetParameterValue(cmd, "AHU05", AHU_004.AHU05_004F02);
-                Db.SetParameterValue(cmd, "AHU06", AHU_004.AHU06_004F02);
-                Db.SetParameterValue(cmd, "AHU07", AHU_004.AHU07_004F02);
-                Db.SetParameterValue(cmd, "AHU08", AHU_004.AHU08_004F02);
-                Db.SetParameterValue(cmd, "AHU09", AHU_004.AHU09_004F02);
-                Db.SetParameterValue(cmd, "AHU10", AHU_004.AHU10_004F02);
-                Db.SetParameterValue(cmd, "AHU11", AHU_004.AHU11_004F02);
+                Db.SetParameterValue(cmd, "AHU01", AHU_004F.AHU01_004F02);
+                Db.SetParameterValue(cmd, "AHU02", AHU_004F.AHU02_004F02);
+                Db.SetParameterValue(cmd, "AHU03", AHU_004F.AHU03_004F02);
+                Db.SetParameterValue(cmd, "AHU04", AHU_004F.AHU04_004F02);
+                Db.SetParameterValue(cmd, "AHU05", AHU_004F.AHU05_004F02);
+                Db.SetParameterValue(cmd, "AHU06", AHU_004F.AHU06_004F02);
+                Db.SetParameterValue(cmd, "AHU07", AHU_004F.AHU07_004F02);
+                Db.SetParameterValue(cmd, "AHU08", AHU_004F.AHU08_004F02);
+                Db.SetParameterValue(cmd, "AHU09", AHU_004F.AHU09_004F02);
+                Db.SetParameterValue(cmd, "AHU10", AHU_004F.AHU10_004F02);
+                Db.SetParameterValue(cmd, "AHU11", AHU_004F.AHU11_004F02);
                 affected += Db.ExecuteNonQuery(cmd);
                 #endregion
                 #region 004F03
                 Db.SetParameterValue(cmd, "DEVICE_ID", "03");
-                Db.SetParameterValue(cmd, "AHU01", AHU_004.AHU01_004F03);
-                Db.SetParameterValue(cmd, "AHU02", AHU_004.AHU02_004F03);
-                Db.SetParameterValue(cmd, "AHU03", AHU_004.AHU03_004F03);
-                Db.SetParameterValue(cmd, "AHU04", AHU_004.AHU04_004F03);
-                Db.SetParameterValue(cmd, "AHU05", AHU_004.AHU05_004F03);
-                Db.SetParameterValue(cmd, "AHU06", AHU_004.AHU06_004F03);
-                Db.SetParameterValue(cmd, "AHU07", AHU_004.AHU07_004F03);
-                Db.SetParameterValue(cmd, "AHU08", AHU_004.AHU08_004F03);
-                Db.SetParameterValue(cmd, "AHU09", AHU_004.AHU09_004F03);
-                Db.SetParameterValue(cmd, "AHU10", AHU_004.AHU10_004F03);
-                Db.SetParameterValue(cmd, "AHU11", AHU_004.AHU11_004F03);
+                Db.SetParameterValue(cmd, "AHU01", AHU_004F.AHU01_004F03);
+                Db.SetParameterValue(cmd, "AHU02", AHU_004F.AHU02_004F03);
+                Db.SetParameterValue(cmd, "AHU03", AHU_004F.AHU03_004F03);
+                Db.SetParameterValue(cmd, "AHU04", AHU_004F.AHU04_004F03);
+                Db.SetParameterValue(cmd, "AHU05", AHU_004F.AHU05_004F03);
+                Db.SetParameterValue(cmd, "AHU06", AHU_004F.AHU06_004F03);
+                Db.SetParameterValue(cmd, "AHU07", AHU_004F.AHU07_004F03);
+                Db.SetParameterValue(cmd, "AHU08", AHU_004F.AHU08_004F03);
+                Db.SetParameterValue(cmd, "AHU09", AHU_004F.AHU09_004F03);
+                Db.SetParameterValue(cmd, "AHU10", AHU_004F.AHU10_004F03);
+                Db.SetParameterValue(cmd, "AHU11", AHU_004F.AHU11_004F03);
                 affected += Db.ExecuteNonQuery(cmd);
                 #endregion
                 #region 004F04
                 Db.SetParameterValue(cmd, "DEVICE_ID", "04");
-                Db.SetParameterValue(cmd, "AHU01", AHU_004.AHU01_004F04);
-                Db.SetParameterValue(cmd, "AHU02", AHU_004.AHU02_004F04);
-                Db.SetParameterValue(cmd, "AHU03", AHU_004.AHU03_004F04);
-                Db.SetParameterValue(cmd, "AHU04", AHU_004.AHU04_004F04);
-                Db.SetParameterValue(cmd, "AHU05", AHU_004.AHU05_004F04);
-                Db.SetParameterValue(cmd, "AHU06", AHU_004.AHU06_004F04);
-                Db.SetParameterValue(cmd, "AHU07", AHU_004.AHU07_004F04);
-                Db.SetParameterValue(cmd, "AHU08", AHU_004.AHU08_004F04);
-                Db.SetParameterValue(cmd, "AHU09", AHU_004.AHU09_004F04);
-                Db.SetParameterValue(cmd, "AHU10", AHU_004.AHU10_004F04);
-                Db.SetParameterValue(cmd, "AHU11", AHU_004.AHU11_004F04);
+                Db.SetParameterValue(cmd, "AHU01", AHU_004F.AHU01_004F04);
+                Db.SetParameterValue(cmd, "AHU02", AHU_004F.AHU02_004F04);
+                Db.SetParameterValue(cmd, "AHU03", AHU_004F.AHU03_004F04);
+                Db.SetParameterValue(cmd, "AHU04", AHU_004F.AHU04_004F04);
+                Db.SetParameterValue(cmd, "AHU05", AHU_004F.AHU05_004F04);
+                Db.SetParameterValue(cmd, "AHU06", AHU_004F.AHU06_004F04);
+                Db.SetParameterValue(cmd, "AHU07", AHU_004F.AHU07_004F04);
+                Db.SetParameterValue(cmd, "AHU08", AHU_004F.AHU08_004F04);
+                Db.SetParameterValue(cmd, "AHU09", AHU_004F.AHU09_004F04);
+                Db.SetParameterValue(cmd, "AHU10", AHU_004F.AHU10_004F04);
+                Db.SetParameterValue(cmd, "AHU11", AHU_004F.AHU11_004F04);
                 affected += Db.ExecuteNonQuery(cmd);
                 #endregion
 
@@ -129,7 +129,7 @@ INSERT INTO AHU (AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU0
             return affected;
         }
 
-        public int WriteDataForAHU_0B1F(AHU_004F AHU_004)
+        public int WriteDataForAHU_0B1F(AHU_0B1F AHU_0B1F)
         {
             int affected = 0;
             DbConnection conn = null;
@@ -165,68 +165,68 @@ INSERT INTO AHU (AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU0
                 Db.AddInParameter(cmd, "AHU10", DbType.Single);
                 Db.AddInParameter(cmd, "AHU11", DbType.Single);
 
-                Db.SetParameterValue(cmd, "AUTOID", AHU_004.AUTOID);
-                Db.SetParameterValue(cmd, "DATETIME", AHU_004.DATETIME);
-                Db.SetParameterValue(cmd, "LOCATION", "004F");
+                Db.SetParameterValue(cmd, "AUTOID", AHU_0B1F.AUTOID);
+                Db.SetParameterValue(cmd, "DATETIME", AHU_0B1F.DATETIME);
+                Db.SetParameterValue(cmd, "LOCATION", "0B1F");
 
-                #region 004F01
+                #region 0B1F01
                 Db.SetParameterValue(cmd, "DEVICE_ID", "01");
-                Db.SetParameterValue(cmd, "AHU01", AHU_004.AHU01_004F01);
-                Db.SetParameterValue(cmd, "AHU02", AHU_004.AHU02_004F01);
-                Db.SetParameterValue(cmd, "AHU03", AHU_004.AHU03_004F01);
-                Db.SetParameterValue(cmd, "AHU04", AHU_004.AHU04_004F01);
-                Db.SetParameterValue(cmd, "AHU05", AHU_004.AHU05_004F01);
-                Db.SetParameterValue(cmd, "AHU06", AHU_004.AHU06_004F01);
-                Db.SetParameterValue(cmd, "AHU07", AHU_004.AHU07_004F01);
-                Db.SetParameterValue(cmd, "AHU08", AHU_004.AHU08_004F01);
-                Db.SetParameterValue(cmd, "AHU09", AHU_004.AHU09_004F01);
-                Db.SetParameterValue(cmd, "AHU10", AHU_004.AHU10_004F01);
-                Db.SetParameterValue(cmd, "AHU11", AHU_004.AHU11_004F01);
+                Db.SetParameterValue(cmd, "AHU01", AHU_0B1F.AHU01_0B1F01);
+                Db.SetParameterValue(cmd, "AHU02", AHU_0B1F.AHU02_0B1F01);
+                Db.SetParameterValue(cmd, "AHU03", AHU_0B1F.AHU03_0B1F01);
+                Db.SetParameterValue(cmd, "AHU04", AHU_0B1F.AHU04_0B1F01);
+                Db.SetParameterValue(cmd, "AHU05", AHU_0B1F.AHU05_0B1F01);
+                Db.SetParameterValue(cmd, "AHU06", AHU_0B1F.AHU06_0B1F01);
+                Db.SetParameterValue(cmd, "AHU07", AHU_0B1F.AHU07_0B1F01);
+                Db.SetParameterValue(cmd, "AHU08", AHU_0B1F.AHU08_0B1F01);
+                Db.SetParameterValue(cmd, "AHU09", AHU_0B1F.AHU09_0B1F01);
+                Db.SetParameterValue(cmd, "AHU10", AHU_0B1F.AHU10_0B1F01);
+                Db.SetParameterValue(cmd, "AHU11", AHU_0B1F.AHU11_0B1F01);
                 affected += Db.ExecuteNonQuery(cmd);
                 #endregion
-                #region 004F02
+                #region 0B1F02
                 Db.SetParameterValue(cmd, "DEVICE_ID", "02");
-                Db.SetParameterValue(cmd, "AHU01", AHU_004.AHU01_004F02);
-                Db.SetParameterValue(cmd, "AHU02", AHU_004.AHU02_004F02);
-                Db.SetParameterValue(cmd, "AHU03", AHU_004.AHU03_004F02);
-                Db.SetParameterValue(cmd, "AHU04", AHU_004.AHU04_004F02);
-                Db.SetParameterValue(cmd, "AHU05", AHU_004.AHU05_004F02);
-                Db.SetParameterValue(cmd, "AHU06", AHU_004.AHU06_004F02);
-                Db.SetParameterValue(cmd, "AHU07", AHU_004.AHU07_004F02);
-                Db.SetParameterValue(cmd, "AHU08", AHU_004.AHU08_004F02);
-                Db.SetParameterValue(cmd, "AHU09", AHU_004.AHU09_004F02);
-                Db.SetParameterValue(cmd, "AHU10", AHU_004.AHU10_004F02);
-                Db.SetParameterValue(cmd, "AHU11", AHU_004.AHU11_004F02);
+                Db.SetParameterValue(cmd, "AHU01", AHU_0B1F.AHU01_0B1F02);
+                Db.SetParameterValue(cmd, "AHU02", AHU_0B1F.AHU02_0B1F02);
+                Db.SetParameterValue(cmd, "AHU03", AHU_0B1F.AHU03_0B1F02);
+                Db.SetParameterValue(cmd, "AHU04", AHU_0B1F.AHU04_0B1F02);
+                Db.SetParameterValue(cmd, "AHU05", AHU_0B1F.AHU05_0B1F02);
+                Db.SetParameterValue(cmd, "AHU06", AHU_0B1F.AHU06_0B1F02);
+                Db.SetParameterValue(cmd, "AHU07", AHU_0B1F.AHU07_0B1F02);
+                Db.SetParameterValue(cmd, "AHU08", AHU_0B1F.AHU08_0B1F02);
+                Db.SetParameterValue(cmd, "AHU09", AHU_0B1F.AHU09_0B1F02);
+                Db.SetParameterValue(cmd, "AHU10", AHU_0B1F.AHU10_0B1F02);
+                Db.SetParameterValue(cmd, "AHU11", AHU_0B1F.AHU11_0B1F02);
                 affected += Db.ExecuteNonQuery(cmd);
                 #endregion
-                #region 004F03
+                #region 0B1F03
                 Db.SetParameterValue(cmd, "DEVICE_ID", "03");
-                Db.SetParameterValue(cmd, "AHU01", AHU_004.AHU01_004F03);
-                Db.SetParameterValue(cmd, "AHU02", AHU_004.AHU02_004F03);
-                Db.SetParameterValue(cmd, "AHU03", AHU_004.AHU03_004F03);
-                Db.SetParameterValue(cmd, "AHU04", AHU_004.AHU04_004F03);
-                Db.SetParameterValue(cmd, "AHU05", AHU_004.AHU05_004F03);
-                Db.SetParameterValue(cmd, "AHU06", AHU_004.AHU06_004F03);
-                Db.SetParameterValue(cmd, "AHU07", AHU_004.AHU07_004F03);
-                Db.SetParameterValue(cmd, "AHU08", AHU_004.AHU08_004F03);
-                Db.SetParameterValue(cmd, "AHU09", AHU_004.AHU09_004F03);
-                Db.SetParameterValue(cmd, "AHU10", AHU_004.AHU10_004F03);
-                Db.SetParameterValue(cmd, "AHU11", AHU_004.AHU11_004F03);
+                Db.SetParameterValue(cmd, "AHU01", AHU_0B1F.AHU01_0B1F03);
+                Db.SetParameterValue(cmd, "AHU02", AHU_0B1F.AHU02_0B1F03);
+                Db.SetParameterValue(cmd, "AHU03", AHU_0B1F.AHU03_0B1F03);
+                Db.SetParameterValue(cmd, "AHU04", AHU_0B1F.AHU04_0B1F03);
+                Db.SetParameterValue(cmd, "AHU05", AHU_0B1F.AHU05_0B1F03);
+                Db.SetParameterValue(cmd, "AHU06", AHU_0B1F.AHU06_0B1F03);
+                Db.SetParameterValue(cmd, "AHU07", AHU_0B1F.AHU07_0B1F03);
+                Db.SetParameterValue(cmd, "AHU08", AHU_0B1F.AHU08_0B1F03);
+                Db.SetParameterValue(cmd, "AHU09", AHU_0B1F.AHU09_0B1F03);
+                Db.SetParameterValue(cmd, "AHU10", AHU_0B1F.AHU10_0B1F03);
+                Db.SetParameterValue(cmd, "AHU11", AHU_0B1F.AHU11_0B1F03);
                 affected += Db.ExecuteNonQuery(cmd);
                 #endregion
-                #region 004F04
+                #region 0B1F04
                 Db.SetParameterValue(cmd, "DEVICE_ID", "04");
-                Db.SetParameterValue(cmd, "AHU01", AHU_004.AHU01_004F04);
-                Db.SetParameterValue(cmd, "AHU02", AHU_004.AHU02_004F04);
-                Db.SetParameterValue(cmd, "AHU03", AHU_004.AHU03_004F04);
-                Db.SetParameterValue(cmd, "AHU04", AHU_004.AHU04_004F04);
-                Db.SetParameterValue(cmd, "AHU05", AHU_004.AHU05_004F04);
-                Db.SetParameterValue(cmd, "AHU06", AHU_004.AHU06_004F04);
-                Db.SetParameterValue(cmd, "AHU07", AHU_004.AHU07_004F04);
-                Db.SetParameterValue(cmd, "AHU08", AHU_004.AHU08_004F04);
-                Db.SetParameterValue(cmd, "AHU09", AHU_004.AHU09_004F04);
-                Db.SetParameterValue(cmd, "AHU10", AHU_004.AHU10_004F04);
-                Db.SetParameterValue(cmd, "AHU11", AHU_004.AHU11_004F04);
+                Db.SetParameterValue(cmd, "AHU01", AHU_0B1F.AHU01_0B1F04);
+                Db.SetParameterValue(cmd, "AHU02", AHU_0B1F.AHU02_0B1F04);
+                Db.SetParameterValue(cmd, "AHU03", AHU_0B1F.AHU03_0B1F04);
+                Db.SetParameterValue(cmd, "AHU04", AHU_0B1F.AHU04_0B1F04);
+                Db.SetParameterValue(cmd, "AHU05", AHU_0B1F.AHU05_0B1F04);
+                Db.SetParameterValue(cmd, "AHU06", AHU_0B1F.AHU06_0B1F04);
+                Db.SetParameterValue(cmd, "AHU07", AHU_0B1F.AHU07_0B1F04);
+                Db.SetParameterValue(cmd, "AHU08", AHU_0B1F.AHU08_0B1F04);
+                Db.SetParameterValue(cmd, "AHU09", AHU_0B1F.AHU09_0B1F04);
+                Db.SetParameterValue(cmd, "AHU10", AHU_0B1F.AHU10_0B1F04);
+                Db.SetParameterValue(cmd, "AHU11", AHU_0B1F.AHU11_0B1F04);
                 affected += Db.ExecuteNonQuery(cmd);
                 #endregion
 

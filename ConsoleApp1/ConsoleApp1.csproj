@@ -60,9 +60,9 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="db\CREATE_DATABASE_TP_B3.sql" />
+    <Content Include="db\CREATE_SP_TimerUpdateAHU.sql" />
     <Content Include="db\CREATE_TABLE_AHU_0B1.sql" />
     <Content Include="db\TP_SCC.sql" />
-    <Content Include="db\UPDATE_AHU_0B1.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

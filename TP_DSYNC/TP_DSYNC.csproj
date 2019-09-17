@@ -52,13 +52,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\DataAccess\DatabaseAccess.cs" />
+    <Compile Include="Models\DataDefine\B3\AHU_04F.cs" />
     <Compile Include="Models\DataDefine\B3\AHU_0B1.cs" />
+    <Compile Include="Models\DataDefine\B3\AHU_0RF.cs" />
+    <Compile Include="Models\DataDefine\B3\AHU_14F.cs" />
+    <Compile Include="Models\DataDefine\B3\AHU_S03.cs" />
+    <Compile Include="Models\DataDefine\B3\AHU_SB1.cs" />
     <Compile Include="Models\Help\Config.cs" />
     <Compile Include="Models\Help\Log.cs" />
     <Compile Include="Models\Help\MailSender.cs" />
-    <Compile Include="Models\Implement\AHU_004FImplement.cs" />
+    <Compile Include="Models\Implement\AHU_ReadImplement.cs" />
+    <Compile Include="Models\Implement\AHU_WriteImplement.cs" />
     <Compile Include="Models\Implement\BaseImplement.cs" />
-    <Compile Include="Models\Implement\AHU_0B1FImplement.cs" />
     <Compile Include="Service1.cs">
       <SubType>Component</SubType>
     </Compile>

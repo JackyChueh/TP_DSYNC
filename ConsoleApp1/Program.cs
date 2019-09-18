@@ -16,14 +16,14 @@ namespace ConsoleApp1
             //timer.Interval = 2000; // 60 seconds  
             //timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer);
             //timer.Start();
-            SensorData.Read();
+            SensorData.AHU();
 
             Console.ReadLine();
         }
 
         protected static void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
-            Thread thread = new Thread(SensorData.Read);
+            Thread thread = new Thread(SensorData.AHU);
             thread.Start();
         }
     }

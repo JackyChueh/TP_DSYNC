@@ -60,6 +60,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="db\CREATE_DATABASE_TP_B3.sql" />
+    <Content Include="db\CREATE_DATABASE_TP_B3_BUFFER.sql" />
     <Content Include="db\CREATE_DATABASE_TP_DSCCR.sql" />
     <Content Include="db\CREATE_SP_TimerUpdateAHU.sql" />
     <Content Include="db\CREATE_TABLE_AHU_0B1.sql" />

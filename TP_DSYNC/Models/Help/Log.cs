@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace TP_DSYNC.Models.Help
 {
-    public static class Log
+    public static class Logs
     {
         //private static Mutex _Lock = new Mutex();
         private static readonly object _syncObject = new object();

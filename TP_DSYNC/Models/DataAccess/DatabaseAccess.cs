@@ -20,6 +20,19 @@ namespace TP_DSYNC.Models.DataAccess
             }
         }
 
+        private Database db2;
+        protected Database Db2
+        {
+            get
+            {
+                if (this.db2 == null)
+                {
+                    this.db2 = this.factory.Create(this.ConnectionStringName);
+                }
+                return this.db2;
+            }
+        }
+
         private string connectionStringName;
         protected string ConnectionStringName
         {
@@ -32,10 +45,28 @@ namespace TP_DSYNC.Models.DataAccess
                 connectionStringName = value;
             }
         }
+        private string connectionStringName2;
+        protected string ConnectionStringName2
+        {
+            get
+            {
+                return connectionStringName2;
+            }
+            set
+            {
+                connectionStringName2 = value;
+            }
+        }
 
         public DatabaseAccess(string connectionStringName)
         {
             this.ConnectionStringName = connectionStringName;
+
+        }
+        public DatabaseAccess(string connectionStringName, string connectionStringName2)
+        {
+            this.ConnectionStringName = connectionStringName;
+            this.ConnectionStringName2 = connectionStringName2;
         }
 
     }

@@ -6,12 +6,11 @@ using System.Data.Common;
 
 namespace TP_DSYNC.Models.Implement
 {
-    public class AHU_WriteImplement : DatabaseAccess
+    public class AHU_BufferImplement : DatabaseAccess
     {
-        public AHU_WriteImplement(string connectionStringName) : base(connectionStringName) { }
-        public AHU_WriteImplement(string connectionStringName, string connectionStringName2) : base(connectionStringName, connectionStringName2) { }
+        public AHU_BufferImplement(string connectionStringName) : base(connectionStringName) { }
 
-        public int WriteDataForAHU_004F(AHU_004F AHU_004F)
+        public int WriteBufferForAHU_004F(AHU_004F AHU_004F)
         {
             int affected = 0;
             DbConnection conn = null;
@@ -130,7 +129,7 @@ INSERT INTO AHU (AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU0
             return affected;
         }
 
-        public int WriteDataForAHU_0B1F(AHU_0B1F AHU_0B1F)
+        public int WriteBufferForAHU_0B1F(AHU_0B1F AHU_0B1F)
         {
             int affected = 0;
             DbConnection conn = null;
@@ -308,7 +307,7 @@ INSERT INTO AHU (AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU0
             return affected;
         }
 
-        public int WriteDataForAHU_00RF(AHU_00RF AHU_00RF)
+        public int WriteBufferForAHU_00RF(AHU_00RF AHU_00RF)
         {
             int affected = 0;
             DbConnection conn = null;
@@ -502,7 +501,7 @@ INSERT INTO AHU (AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU0
             return affected;
         }
 
-        public int WriteDataForAHU_014F(AHU_014F AHU_014F)
+        public int WriteBufferForAHU_014F(AHU_014F AHU_014F)
         {
             int affected = 0;
             DbConnection conn = null;
@@ -513,7 +512,6 @@ INSERT INTO AHU (AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU0
             {
                 conn = Db.CreateConnection();
                 conn.Open();
-                
                 trans = conn.BeginTransaction();
                 cmd = conn.CreateCommand();
                 cmd.CommandType = CommandType.Text;
@@ -1013,7 +1011,7 @@ INSERT INTO AHU (AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU0
                 trans.Commit();
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 trans.Rollback();
                 throw;
@@ -1028,145 +1026,73 @@ INSERT INTO AHU (AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU0
             return affected;
         }
 
-        public int WriteDataForAHU_S03F(AHU_S03F AHU_S03F)
+        public bool WriteBufferForAHU_S03F(AHU_S03F AHU_S03F)
         {
-            string sql = null;
-            int affected2 = 0;
-
-            DbConnection conn2 = null;
-            DbCommand cmd2 = null;
+            
+            int affected = 0;
+            string sql;
             try
             {
-                conn2 = Db.CreateConnection();
-                conn2.Open();
-                cmd2 = conn2.CreateCommand();
-                cmd2.CommandType = CommandType.Text;
+                bool exist = false;
 
                 sql = @"
 SELECT 1 FROM AHU_S03 WHERE AUTOID=@AUTOID
 ";
-                Db2.AddInParameter(cmd2, "AUTOID", DbType.Int32);
-                Db2.SetParameterValue(cmd2, "AUTOID", AHU_S03F.AUTOID);
-                affected2 = Db.ExecuteNonQuery(cmd2);
-                if (affected2 > 0)
+                using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                {
+                    Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_S03F.AUTOID);
+                    using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                    {
+                        if (reader.Read())
+                        {
+                            exist = true;
+                        }
+                    }
+                }
+
+                if (!exist)
                 {
                     sql = @"
 IF NOT EXISTS (SELECT 1 FROM AHU_S03 WHERE AUTOID = @AUTOID)
     BEGIN
-        INSERT INTO AHU_S03 (AUTOID, DATETIME, ACTIVE
+        INSERT INTO AHU_S03 (AUTOID,DATETIME,ACTIVE
             ,AHU01_S03F01,AHU02_S03F01,AHU03_S03F01,AHU04_S03F01,AHU05_S03F01,AHU06_S03F01,AHU07_S03F01,AHU08_S03F01,AHU09_S03F01,AHU10_S03F01,AHU11_S03F01)
-        VALUES (@AUTOID,@DATETIME, @ACTIVE
+        VALUES (@AUTOID,@DATETIME,@ACTIVE
             ,@AHU01_S03F01,@AHU02_S03F01,@AHU03_S03F01,@AHU04_S03F01,@AHU05_S03F01,@AHU06_S03F01,@AHU07_S03F01,@AHU08_S03F01,@AHU09_S03F01,@AHU10_S03F01,@AHU11_S03F01)
     END
 ";
-                    cmd2.CommandText = sql;
-                    Db.AddInParameter(cmd2, "AUTOID", DbType.Int32, AHU_S03F.AUTOID);
-                    Db.AddInParameter(cmd2, "DATETIME", DbType.DateTime, AHU_S03F.DATETIME);
-                    Db.AddInParameter(cmd2, "ACTIVE", DbType.String, "I");
-                    Db.AddInParameter(cmd2, "AHU01_S03F01", DbType.Single, AHU_S03F.AHU01_S03F01);
-                    Db.AddInParameter(cmd2, "AHU02_S03F01", DbType.Single, AHU_S03F.AHU02_S03F01);
-                    Db.AddInParameter(cmd2, "AHU03_S03F01", DbType.Single, AHU_S03F.AHU03_S03F01);
-                    Db.AddInParameter(cmd2, "AHU04_S03F01", DbType.Single, AHU_S03F.AHU04_S03F01);
-                    Db.AddInParameter(cmd2, "AHU05_S03F01", DbType.Single, AHU_S03F.AHU05_S03F01);
-                    Db.AddInParameter(cmd2, "AHU06_S03F01", DbType.Single, AHU_S03F.AHU06_S03F01);
-                    Db.AddInParameter(cmd2, "AHU07_S03F01", DbType.Single, AHU_S03F.AHU07_S03F01);
-                    Db.AddInParameter(cmd2, "AHU08_S03F01", DbType.Single, AHU_S03F.AHU08_S03F01);
-                    Db.AddInParameter(cmd2, "AHU09_S03F01", DbType.Single, AHU_S03F.AHU09_S03F01);
-                    Db.AddInParameter(cmd2, "AHU10_S03F01", DbType.Single, AHU_S03F.AHU10_S03F01);
-                    Db.AddInParameter(cmd2, "AHU11_S03F01", DbType.Single, AHU_S03F.AHU11_S03F01);
+                    using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                    {
+                        Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_S03F.AUTOID);
+                        Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, AHU_S03F.DATETIME);
+                        Db.AddInParameter(cmd, "ACTIVE", DbType.String, "I");
+                        Db.AddInParameter(cmd, "AHU01_S03F01", DbType.Single, AHU_S03F.AHU01_S03F01);
+                        Db.AddInParameter(cmd, "AHU02_S03F01", DbType.Single, AHU_S03F.AHU02_S03F01);
+                        Db.AddInParameter(cmd, "AHU03_S03F01", DbType.Single, AHU_S03F.AHU03_S03F01);
+                        Db.AddInParameter(cmd, "AHU04_S03F01", DbType.Single, AHU_S03F.AHU04_S03F01);
+                        Db.AddInParameter(cmd, "AHU05_S03F01", DbType.Single, AHU_S03F.AHU05_S03F01);
+                        Db.AddInParameter(cmd, "AHU06_S03F01", DbType.Single, AHU_S03F.AHU06_S03F01);
+                        Db.AddInParameter(cmd, "AHU07_S03F01", DbType.Single, AHU_S03F.AHU07_S03F01);
+                        Db.AddInParameter(cmd, "AHU08_S03F01", DbType.Single, AHU_S03F.AHU08_S03F01);
+                        Db.AddInParameter(cmd, "AHU09_S03F01", DbType.Single, AHU_S03F.AHU09_S03F01);
+                        Db.AddInParameter(cmd, "AHU10_S03F01", DbType.Single, AHU_S03F.AHU10_S03F01);
+                        Db.AddInParameter(cmd, "AHU11_S03F01", DbType.Single, AHU_S03F.AHU11_S03F01);
 
-                    affected2 = Db.ExecuteNonQuery(cmd2);
+                        affected = Db.ExecuteNonQuery(cmd);
+                    }
                 }
 
             }
-            catch
+            catch(Exception ex)
             {
-
-                affected2 = 0;
+                
                 throw;
             }
-            finally
-            {
-                if (conn2 != null && conn2.State == ConnectionState.Open)
-                {
-                    conn2.Close();
-                }
-            }
-
-            int affected = 0;
-            DbConnection conn = null;
-            DbTransaction trans = null;
-            DbCommand cmd = null;
-            try
-            {
-                conn = Db.CreateConnection();
-                conn.Open();
-                trans = conn.BeginTransaction();
-                cmd = conn.CreateCommand();
-                cmd.CommandType = CommandType.Text;
-
-                sql = @"
-INSERT INTO AHU (AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU05,AHU06,AHU07,AHU08,AHU09,AHU10,AHU11)     
-    VALUES (@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@AHU01,@AHU02,@AHU03,@AHU04,@AHU05,@AHU06,@AHU07,@AHU08,@AHU09,@AHU10,@AHU11)
-";
-                cmd.CommandText = sql;
-                Db.AddInParameter(cmd, "AUTOID", DbType.Int32);
-                Db.AddInParameter(cmd, "DATETIME", DbType.DateTime);
-                Db.AddInParameter(cmd, "LOCATION", DbType.String);
-                Db.AddInParameter(cmd, "DEVICE_ID", DbType.String);
-                Db.AddInParameter(cmd, "AHU01", DbType.Single);
-                Db.AddInParameter(cmd, "AHU02", DbType.Single);
-                Db.AddInParameter(cmd, "AHU03", DbType.Single);
-                Db.AddInParameter(cmd, "AHU04", DbType.Single);
-                Db.AddInParameter(cmd, "AHU05", DbType.Single);
-                Db.AddInParameter(cmd, "AHU06", DbType.Single);
-                Db.AddInParameter(cmd, "AHU07", DbType.Single);
-                Db.AddInParameter(cmd, "AHU08", DbType.Single);
-                Db.AddInParameter(cmd, "AHU09", DbType.Single);
-                Db.AddInParameter(cmd, "AHU10", DbType.Single);
-                Db.AddInParameter(cmd, "AHU11", DbType.Single);
-
-                Db.SetParameterValue(cmd, "AUTOID", AHU_S03F.AUTOID);
-                Db.SetParameterValue(cmd, "DATETIME", AHU_S03F.DATETIME);
-                Db.SetParameterValue(cmd, "LOCATION", "S03F");
-
-                #region S03F01
-                Db.SetParameterValue(cmd, "DEVICE_ID", "01");
-                Db.SetParameterValue(cmd, "AHU01", AHU_S03F.AHU01_S03F01);
-                Db.SetParameterValue(cmd, "AHU02", AHU_S03F.AHU02_S03F01);
-                Db.SetParameterValue(cmd, "AHU03", AHU_S03F.AHU03_S03F01);
-                Db.SetParameterValue(cmd, "AHU04", AHU_S03F.AHU04_S03F01);
-                Db.SetParameterValue(cmd, "AHU05", AHU_S03F.AHU05_S03F01);
-                Db.SetParameterValue(cmd, "AHU06", AHU_S03F.AHU06_S03F01);
-                Db.SetParameterValue(cmd, "AHU07", AHU_S03F.AHU07_S03F01);
-                Db.SetParameterValue(cmd, "AHU08", AHU_S03F.AHU08_S03F01);
-                Db.SetParameterValue(cmd, "AHU09", AHU_S03F.AHU09_S03F01);
-                Db.SetParameterValue(cmd, "AHU10", AHU_S03F.AHU10_S03F01);
-                Db.SetParameterValue(cmd, "AHU11", AHU_S03F.AHU11_S03F01);
-                affected += Db.ExecuteNonQuery(cmd);
-                #endregion
-
-                trans.Commit();
-
-            }
-            catch
-            {
-                trans.Rollback();
-                throw;
-            }
-            finally
-            {
-                if (conn != null && conn.State == ConnectionState.Open)
-                {
-                    conn.Close();
-                }
-            }
-
-
-            return affected;
+           
+            return affected > 0;
         }
 
-        public int WriteDataForAHU_SB1F(AHU_SB1F AHU_SB1F)
+        public int WriteBufferForAHU_SB1F(AHU_SB1F AHU_SB1F)
         {
             int affected = 0;
             DbConnection conn = null;
@@ -1254,5 +1180,6 @@ INSERT INTO AHU (AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU0
             }
             return affected;
         }
+
     }
 }

@@ -51,14 +51,14 @@ namespace TP_DSYNC.Models.Help
                     }
                     client.Send(mms);//寄出一封信
                 }
-                Log.Write("Mail", "Mail_Send From=" + mms.From + "\n" + "Mail_Send Bcc=" + mms.Bcc + "\n" + "Mail_Send Body=" + mms.Body + "\n" + "Mail_Send IsBodyHtml=" + mms.IsBodyHtml + "\n");
+                Logs.Write("Mail", "Mail_Send From=" + mms.From + "\n" + "Mail_Send Bcc=" + mms.Bcc + "\n" + "Mail_Send Body=" + mms.Body + "\n" + "Mail_Send IsBodyHtml=" + mms.IsBodyHtml + "\n");
                 //成功
                 return true;
 
             }
             catch (Exception ex)
             {
-                Log.Write("Mail", "Mail_Send-Err=" + ex.Message + "\n");
+                Logs.Write("Mail", "Mail_Send-Err=" + ex.Message + "\n");
                 //寄失敗
                 return false;
             }

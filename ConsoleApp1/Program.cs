@@ -12,11 +12,21 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            //var timer = new System.Timers.Timer();
-            //timer.Interval = 2000; // 60 seconds  
-            //timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer);
-            //timer.Start();
-            SensorData.AHU();
+            bool onTime = true;
+            while (onTime)
+            {
+                if (DateTime.Now.Millisecond == 0 && DateTime.Now.Second == 49)
+                {
+                    break;
+                }
+            }
+
+            var timer = new System.Timers.Timer();
+            timer.Interval = 1000; // 60 seconds  
+            timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer);
+            timer.Start();
+
+            //SensorData.AHU();   //單次測試用
 
             Console.ReadLine();
         }

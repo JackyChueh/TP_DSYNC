@@ -42,6 +42,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\DataAccess\B3BUFFER_DSCCR_Access.cs" />
     <Compile Include="Models\DataAccess\DatabaseAccess.cs" />
     <Compile Include="Models\DataDefine\B3\AHU_04F.cs" />
     <Compile Include="Models\DataDefine\B3\AHU_0B1.cs" />

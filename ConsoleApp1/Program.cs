@@ -15,7 +15,7 @@ namespace ConsoleApp1
             bool onTime = true;
             while (onTime)
             {
-                if (DateTime.Now.Millisecond == 0 && DateTime.Now.Second == 49)
+                if (DateTime.Now.Millisecond == 0 && DateTime.Now.Second == 29)
                 {
                     break;
                 }

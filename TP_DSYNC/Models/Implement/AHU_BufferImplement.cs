@@ -14,30 +14,16 @@ namespace TP_DSYNC.Models.Implement
         public bool WriteBufferForAHU_004F(AHU_004F AHU_004F)
         {
             int affected = 0;
-            string sql;
             try
             {
-                bool exist = false;
-
-                sql = @"
-SELECT 1 FROM AHU_04F WHERE AUTOID=@AUTOID
-";
-                using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
                 {
-                    Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_004F.AUTOID);
-                    using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                    using (DbConnection conn = Db.CreateConnection())
                     {
-                        if (reader.Read())
-                        {
-                            exist = true;
-                        }
-                    }
-                }
+                        conn.Open();
 
-                if (!exist)
-                {
-                    sql = @"
-IF NOT EXISTS (SELECT 1 FROM AHU_04F WHERE AUTOID = @AUTOID)
+                        string sql = @"
+IF NOT EXISTS (SELECT 1 FROM AHU_04F WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
     BEGIN
         INSERT INTO AHU_04F (AUTOID, DATETIME, ACTIVE
             ,AHU01_004F01,AHU02_004F01,AHU03_004F01,AHU04_004F01,AHU05_004F01,AHU06_004F01,AHU07_004F01,AHU08_004F01,AHU09_004F01,AHU10_004F01,AHU11_004F01
@@ -51,61 +37,63 @@ IF NOT EXISTS (SELECT 1 FROM AHU_04F WHERE AUTOID = @AUTOID)
             ,@AHU01_004F04,@AHU02_004F04,@AHU03_004F04,@AHU04_004F04,@AHU05_004F04,@AHU06_004F04,@AHU07_004F04,@AHU08_004F04,@AHU09_004F04,@AHU10_004F04,@AHU11_004F04)
     END
 ";
-                    using (DbCommand cmd = Db.GetSqlStringCommand(sql))
-                    {
-                        #region 參數
-                        Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_004F.AUTOID);
-                        Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, AHU_004F.DATETIME);
-                        Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
-                        Db.AddInParameter(cmd, "AHU01_004F01", DbType.Single, AHU_004F.AHU01_004F01);
-                        Db.AddInParameter(cmd, "AHU02_004F01", DbType.Single, AHU_004F.AHU02_004F01);
-                        Db.AddInParameter(cmd, "AHU03_004F01", DbType.Single, AHU_004F.AHU03_004F01);
-                        Db.AddInParameter(cmd, "AHU04_004F01", DbType.Single, AHU_004F.AHU04_004F01);
-                        Db.AddInParameter(cmd, "AHU05_004F01", DbType.Single, AHU_004F.AHU05_004F01);
-                        Db.AddInParameter(cmd, "AHU06_004F01", DbType.Single, AHU_004F.AHU06_004F01);
-                        Db.AddInParameter(cmd, "AHU07_004F01", DbType.Single, AHU_004F.AHU07_004F01);
-                        Db.AddInParameter(cmd, "AHU08_004F01", DbType.Single, AHU_004F.AHU08_004F01);
-                        Db.AddInParameter(cmd, "AHU09_004F01", DbType.Single, AHU_004F.AHU09_004F01);
-                        Db.AddInParameter(cmd, "AHU10_004F01", DbType.Single, AHU_004F.AHU10_004F01);
-                        Db.AddInParameter(cmd, "AHU11_004F01", DbType.Single, AHU_004F.AHU11_004F01);
-                        Db.AddInParameter(cmd, "AHU01_004F02", DbType.Single, AHU_004F.AHU01_004F02);
-                        Db.AddInParameter(cmd, "AHU02_004F02", DbType.Single, AHU_004F.AHU02_004F02);
-                        Db.AddInParameter(cmd, "AHU03_004F02", DbType.Single, AHU_004F.AHU03_004F02);
-                        Db.AddInParameter(cmd, "AHU04_004F02", DbType.Single, AHU_004F.AHU04_004F02);
-                        Db.AddInParameter(cmd, "AHU05_004F02", DbType.Single, AHU_004F.AHU05_004F02);
-                        Db.AddInParameter(cmd, "AHU06_004F02", DbType.Single, AHU_004F.AHU06_004F02);
-                        Db.AddInParameter(cmd, "AHU07_004F02", DbType.Single, AHU_004F.AHU07_004F02);
-                        Db.AddInParameter(cmd, "AHU08_004F02", DbType.Single, AHU_004F.AHU08_004F02);
-                        Db.AddInParameter(cmd, "AHU09_004F02", DbType.Single, AHU_004F.AHU09_004F02);
-                        Db.AddInParameter(cmd, "AHU10_004F02", DbType.Single, AHU_004F.AHU10_004F02);
-                        Db.AddInParameter(cmd, "AHU11_004F02", DbType.Single, AHU_004F.AHU11_004F02);
-                        Db.AddInParameter(cmd, "AHU01_004F03", DbType.Single, AHU_004F.AHU01_004F03);
-                        Db.AddInParameter(cmd, "AHU02_004F03", DbType.Single, AHU_004F.AHU02_004F03);
-                        Db.AddInParameter(cmd, "AHU03_004F03", DbType.Single, AHU_004F.AHU03_004F03);
-                        Db.AddInParameter(cmd, "AHU04_004F03", DbType.Single, AHU_004F.AHU04_004F03);
-                        Db.AddInParameter(cmd, "AHU05_004F03", DbType.Single, AHU_004F.AHU05_004F03);
-                        Db.AddInParameter(cmd, "AHU06_004F03", DbType.Single, AHU_004F.AHU06_004F03);
-                        Db.AddInParameter(cmd, "AHU07_004F03", DbType.Single, AHU_004F.AHU07_004F03);
-                        Db.AddInParameter(cmd, "AHU08_004F03", DbType.Single, AHU_004F.AHU08_004F03);
-                        Db.AddInParameter(cmd, "AHU09_004F03", DbType.Single, AHU_004F.AHU09_004F03);
-                        Db.AddInParameter(cmd, "AHU10_004F03", DbType.Single, AHU_004F.AHU10_004F03);
-                        Db.AddInParameter(cmd, "AHU11_004F03", DbType.Single, AHU_004F.AHU11_004F03);
-                        Db.AddInParameter(cmd, "AHU01_004F04", DbType.Single, AHU_004F.AHU01_004F04);
-                        Db.AddInParameter(cmd, "AHU02_004F04", DbType.Single, AHU_004F.AHU02_004F04);
-                        Db.AddInParameter(cmd, "AHU03_004F04", DbType.Single, AHU_004F.AHU03_004F04);
-                        Db.AddInParameter(cmd, "AHU04_004F04", DbType.Single, AHU_004F.AHU04_004F04);
-                        Db.AddInParameter(cmd, "AHU05_004F04", DbType.Single, AHU_004F.AHU05_004F04);
-                        Db.AddInParameter(cmd, "AHU06_004F04", DbType.Single, AHU_004F.AHU06_004F04);
-                        Db.AddInParameter(cmd, "AHU07_004F04", DbType.Single, AHU_004F.AHU07_004F04);
-                        Db.AddInParameter(cmd, "AHU08_004F04", DbType.Single, AHU_004F.AHU08_004F04);
-                        Db.AddInParameter(cmd, "AHU09_004F04", DbType.Single, AHU_004F.AHU09_004F04);
-                        Db.AddInParameter(cmd, "AHU10_004F04", DbType.Single, AHU_004F.AHU10_004F04);
-                        Db.AddInParameter(cmd, "AHU11_004F04", DbType.Single, AHU_004F.AHU11_004F04);
-                        #endregion
-                        affected = Db.ExecuteNonQuery(cmd);
+                        using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                        {
+                            #region 參數
+                            Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_004F.AUTOID);
+                            Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, AHU_004F.DATETIME);
+                            Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
+                            Db.AddInParameter(cmd, "AHU01_004F01", DbType.Single, AHU_004F.AHU01_004F01);
+                            Db.AddInParameter(cmd, "AHU02_004F01", DbType.Single, AHU_004F.AHU02_004F01);
+                            Db.AddInParameter(cmd, "AHU03_004F01", DbType.Single, AHU_004F.AHU03_004F01);
+                            Db.AddInParameter(cmd, "AHU04_004F01", DbType.Single, AHU_004F.AHU04_004F01);
+                            Db.AddInParameter(cmd, "AHU05_004F01", DbType.Single, AHU_004F.AHU05_004F01);
+                            Db.AddInParameter(cmd, "AHU06_004F01", DbType.Single, AHU_004F.AHU06_004F01);
+                            Db.AddInParameter(cmd, "AHU07_004F01", DbType.Single, AHU_004F.AHU07_004F01);
+                            Db.AddInParameter(cmd, "AHU08_004F01", DbType.Single, AHU_004F.AHU08_004F01);
+                            Db.AddInParameter(cmd, "AHU09_004F01", DbType.Single, AHU_004F.AHU09_004F01);
+                            Db.AddInParameter(cmd, "AHU10_004F01", DbType.Single, AHU_004F.AHU10_004F01);
+                            Db.AddInParameter(cmd, "AHU11_004F01", DbType.Single, AHU_004F.AHU11_004F01);
+                            Db.AddInParameter(cmd, "AHU01_004F02", DbType.Single, AHU_004F.AHU01_004F02);
+                            Db.AddInParameter(cmd, "AHU02_004F02", DbType.Single, AHU_004F.AHU02_004F02);
+                            Db.AddInParameter(cmd, "AHU03_004F02", DbType.Single, AHU_004F.AHU03_004F02);
+                            Db.AddInParameter(cmd, "AHU04_004F02", DbType.Single, AHU_004F.AHU04_004F02);
+                            Db.AddInParameter(cmd, "AHU05_004F02", DbType.Single, AHU_004F.AHU05_004F02);
+                            Db.AddInParameter(cmd, "AHU06_004F02", DbType.Single, AHU_004F.AHU06_004F02);
+                            Db.AddInParameter(cmd, "AHU07_004F02", DbType.Single, AHU_004F.AHU07_004F02);
+                            Db.AddInParameter(cmd, "AHU08_004F02", DbType.Single, AHU_004F.AHU08_004F02);
+                            Db.AddInParameter(cmd, "AHU09_004F02", DbType.Single, AHU_004F.AHU09_004F02);
+                            Db.AddInParameter(cmd, "AHU10_004F02", DbType.Single, AHU_004F.AHU10_004F02);
+                            Db.AddInParameter(cmd, "AHU11_004F02", DbType.Single, AHU_004F.AHU11_004F02);
+                            Db.AddInParameter(cmd, "AHU01_004F03", DbType.Single, AHU_004F.AHU01_004F03);
+                            Db.AddInParameter(cmd, "AHU02_004F03", DbType.Single, AHU_004F.AHU02_004F03);
+                            Db.AddInParameter(cmd, "AHU03_004F03", DbType.Single, AHU_004F.AHU03_004F03);
+                            Db.AddInParameter(cmd, "AHU04_004F03", DbType.Single, AHU_004F.AHU04_004F03);
+                            Db.AddInParameter(cmd, "AHU05_004F03", DbType.Single, AHU_004F.AHU05_004F03);
+                            Db.AddInParameter(cmd, "AHU06_004F03", DbType.Single, AHU_004F.AHU06_004F03);
+                            Db.AddInParameter(cmd, "AHU07_004F03", DbType.Single, AHU_004F.AHU07_004F03);
+                            Db.AddInParameter(cmd, "AHU08_004F03", DbType.Single, AHU_004F.AHU08_004F03);
+                            Db.AddInParameter(cmd, "AHU09_004F03", DbType.Single, AHU_004F.AHU09_004F03);
+                            Db.AddInParameter(cmd, "AHU10_004F03", DbType.Single, AHU_004F.AHU10_004F03);
+                            Db.AddInParameter(cmd, "AHU11_004F03", DbType.Single, AHU_004F.AHU11_004F03);
+                            Db.AddInParameter(cmd, "AHU01_004F04", DbType.Single, AHU_004F.AHU01_004F04);
+                            Db.AddInParameter(cmd, "AHU02_004F04", DbType.Single, AHU_004F.AHU02_004F04);
+                            Db.AddInParameter(cmd, "AHU03_004F04", DbType.Single, AHU_004F.AHU03_004F04);
+                            Db.AddInParameter(cmd, "AHU04_004F04", DbType.Single, AHU_004F.AHU04_004F04);
+                            Db.AddInParameter(cmd, "AHU05_004F04", DbType.Single, AHU_004F.AHU05_004F04);
+                            Db.AddInParameter(cmd, "AHU06_004F04", DbType.Single, AHU_004F.AHU06_004F04);
+                            Db.AddInParameter(cmd, "AHU07_004F04", DbType.Single, AHU_004F.AHU07_004F04);
+                            Db.AddInParameter(cmd, "AHU08_004F04", DbType.Single, AHU_004F.AHU08_004F04);
+                            Db.AddInParameter(cmd, "AHU09_004F04", DbType.Single, AHU_004F.AHU09_004F04);
+                            Db.AddInParameter(cmd, "AHU10_004F04", DbType.Single, AHU_004F.AHU10_004F04);
+                            Db.AddInParameter(cmd, "AHU11_004F04", DbType.Single, AHU_004F.AHU11_004F04);
+                            #endregion
+                            affected = Db.ExecuteNonQuery(cmd);
+                        }
                     }
-                }
 
+                    scop.Complete();
+                }
             }
             catch (Exception ex)
             {
@@ -119,30 +107,16 @@ IF NOT EXISTS (SELECT 1 FROM AHU_04F WHERE AUTOID = @AUTOID)
         public bool WriteBufferForAHU_0B1F(AHU_0B1F AHU_0B1F)
         {
             int affected = 0;
-            string sql;
             try
             {
-                bool exist = false;
-
-                sql = @"
-SELECT 1 FROM AHU_0B1 WHERE AUTOID=@AUTOID
-";
-                using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
                 {
-                    Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_0B1F.AUTOID);
-                    using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                    using (DbConnection conn = Db.CreateConnection())
                     {
-                        if (reader.Read())
-                        {
-                            exist = true;
-                        }
-                    }
-                }
+                        conn.Open();
 
-                if (!exist)
-                {
-                    sql = @"
-IF NOT EXISTS (SELECT 1 FROM AHU_0B1 WHERE AUTOID = @AUTOID)
+                        string sql = @"
+IF NOT EXISTS (SELECT 1 FROM AHU_0B1 WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
     BEGIN
         INSERT INTO AHU_0B1 (AUTOID, DATETIME, ACTIVE
             ,AHU01_0B1F01,AHU02_0B1F01,AHU03_0B1F01,AHU04_0B1F01,AHU05_0B1F01,AHU06_0B1F01,AHU07_0B1F01,AHU08_0B1F01,AHU09_0B1F01,AHU10_0B1F01,AHU11_0B1F01
@@ -164,105 +138,107 @@ IF NOT EXISTS (SELECT 1 FROM AHU_0B1 WHERE AUTOID = @AUTOID)
             ,@AHU01_0B1F08,@AHU02_0B1F08,@AHU03_0B1F08,@AHU04_0B1F08,@AHU05_0B1F08,@AHU06_0B1F08,@AHU07_0B1F08,@AHU08_0B1F08,@AHU09_0B1F08,@AHU10_0B1F08,@AHU11_0B1F08)
     END
 ";
-                    using (DbCommand cmd = Db.GetSqlStringCommand(sql))
-                    {
-                        #region 參數
-                        Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_0B1F.AUTOID);
-                        Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, AHU_0B1F.DATETIME);
-                        Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
-                        Db.AddInParameter(cmd, "AHU01_0B1F01", DbType.Single, AHU_0B1F.AHU01_0B1F01);
-                        Db.AddInParameter(cmd, "AHU02_0B1F01", DbType.Single, AHU_0B1F.AHU02_0B1F01);
-                        Db.AddInParameter(cmd, "AHU03_0B1F01", DbType.Single, AHU_0B1F.AHU03_0B1F01);
-                        Db.AddInParameter(cmd, "AHU04_0B1F01", DbType.Single, AHU_0B1F.AHU04_0B1F01);
-                        Db.AddInParameter(cmd, "AHU05_0B1F01", DbType.Single, AHU_0B1F.AHU05_0B1F01);
-                        Db.AddInParameter(cmd, "AHU06_0B1F01", DbType.Single, AHU_0B1F.AHU06_0B1F01);
-                        Db.AddInParameter(cmd, "AHU07_0B1F01", DbType.Single, AHU_0B1F.AHU07_0B1F01);
-                        Db.AddInParameter(cmd, "AHU08_0B1F01", DbType.Single, AHU_0B1F.AHU08_0B1F01);
-                        Db.AddInParameter(cmd, "AHU09_0B1F01", DbType.Single, AHU_0B1F.AHU09_0B1F01);
-                        Db.AddInParameter(cmd, "AHU10_0B1F01", DbType.Single, AHU_0B1F.AHU10_0B1F01);
-                        Db.AddInParameter(cmd, "AHU11_0B1F01", DbType.Single, AHU_0B1F.AHU11_0B1F01);
-                        Db.AddInParameter(cmd, "AHU01_0B1F02", DbType.Single, AHU_0B1F.AHU01_0B1F02);
-                        Db.AddInParameter(cmd, "AHU02_0B1F02", DbType.Single, AHU_0B1F.AHU02_0B1F02);
-                        Db.AddInParameter(cmd, "AHU03_0B1F02", DbType.Single, AHU_0B1F.AHU03_0B1F02);
-                        Db.AddInParameter(cmd, "AHU04_0B1F02", DbType.Single, AHU_0B1F.AHU04_0B1F02);
-                        Db.AddInParameter(cmd, "AHU05_0B1F02", DbType.Single, AHU_0B1F.AHU05_0B1F02);
-                        Db.AddInParameter(cmd, "AHU06_0B1F02", DbType.Single, AHU_0B1F.AHU06_0B1F02);
-                        Db.AddInParameter(cmd, "AHU07_0B1F02", DbType.Single, AHU_0B1F.AHU07_0B1F02);
-                        Db.AddInParameter(cmd, "AHU08_0B1F02", DbType.Single, AHU_0B1F.AHU08_0B1F02);
-                        Db.AddInParameter(cmd, "AHU09_0B1F02", DbType.Single, AHU_0B1F.AHU09_0B1F02);
-                        Db.AddInParameter(cmd, "AHU10_0B1F02", DbType.Single, AHU_0B1F.AHU10_0B1F02);
-                        Db.AddInParameter(cmd, "AHU11_0B1F02", DbType.Single, AHU_0B1F.AHU11_0B1F02);
-                        Db.AddInParameter(cmd, "AHU01_0B1F03", DbType.Single, AHU_0B1F.AHU01_0B1F03);
-                        Db.AddInParameter(cmd, "AHU02_0B1F03", DbType.Single, AHU_0B1F.AHU02_0B1F03);
-                        Db.AddInParameter(cmd, "AHU03_0B1F03", DbType.Single, AHU_0B1F.AHU03_0B1F03);
-                        Db.AddInParameter(cmd, "AHU04_0B1F03", DbType.Single, AHU_0B1F.AHU04_0B1F03);
-                        Db.AddInParameter(cmd, "AHU05_0B1F03", DbType.Single, AHU_0B1F.AHU05_0B1F03);
-                        Db.AddInParameter(cmd, "AHU06_0B1F03", DbType.Single, AHU_0B1F.AHU06_0B1F03);
-                        Db.AddInParameter(cmd, "AHU07_0B1F03", DbType.Single, AHU_0B1F.AHU07_0B1F03);
-                        Db.AddInParameter(cmd, "AHU08_0B1F03", DbType.Single, AHU_0B1F.AHU08_0B1F03);
-                        Db.AddInParameter(cmd, "AHU09_0B1F03", DbType.Single, AHU_0B1F.AHU09_0B1F03);
-                        Db.AddInParameter(cmd, "AHU10_0B1F03", DbType.Single, AHU_0B1F.AHU10_0B1F03);
-                        Db.AddInParameter(cmd, "AHU11_0B1F03", DbType.Single, AHU_0B1F.AHU11_0B1F03);
-                        Db.AddInParameter(cmd, "AHU01_0B1F04", DbType.Single, AHU_0B1F.AHU01_0B1F04);
-                        Db.AddInParameter(cmd, "AHU02_0B1F04", DbType.Single, AHU_0B1F.AHU02_0B1F04);
-                        Db.AddInParameter(cmd, "AHU03_0B1F04", DbType.Single, AHU_0B1F.AHU03_0B1F04);
-                        Db.AddInParameter(cmd, "AHU04_0B1F04", DbType.Single, AHU_0B1F.AHU04_0B1F04);
-                        Db.AddInParameter(cmd, "AHU05_0B1F04", DbType.Single, AHU_0B1F.AHU05_0B1F04);
-                        Db.AddInParameter(cmd, "AHU06_0B1F04", DbType.Single, AHU_0B1F.AHU06_0B1F04);
-                        Db.AddInParameter(cmd, "AHU07_0B1F04", DbType.Single, AHU_0B1F.AHU07_0B1F04);
-                        Db.AddInParameter(cmd, "AHU08_0B1F04", DbType.Single, AHU_0B1F.AHU08_0B1F04);
-                        Db.AddInParameter(cmd, "AHU09_0B1F04", DbType.Single, AHU_0B1F.AHU09_0B1F04);
-                        Db.AddInParameter(cmd, "AHU10_0B1F04", DbType.Single, AHU_0B1F.AHU10_0B1F04);
-                        Db.AddInParameter(cmd, "AHU11_0B1F04", DbType.Single, AHU_0B1F.AHU11_0B1F04);
-                        Db.AddInParameter(cmd, "AHU01_0B1F05", DbType.Single, AHU_0B1F.AHU01_0B1F05);
-                        Db.AddInParameter(cmd, "AHU02_0B1F05", DbType.Single, AHU_0B1F.AHU02_0B1F05);
-                        Db.AddInParameter(cmd, "AHU03_0B1F05", DbType.Single, AHU_0B1F.AHU03_0B1F05);
-                        Db.AddInParameter(cmd, "AHU04_0B1F05", DbType.Single, AHU_0B1F.AHU04_0B1F05);
-                        Db.AddInParameter(cmd, "AHU05_0B1F05", DbType.Single, AHU_0B1F.AHU05_0B1F05);
-                        Db.AddInParameter(cmd, "AHU06_0B1F05", DbType.Single, AHU_0B1F.AHU06_0B1F05);
-                        Db.AddInParameter(cmd, "AHU07_0B1F05", DbType.Single, AHU_0B1F.AHU07_0B1F05);
-                        Db.AddInParameter(cmd, "AHU08_0B1F05", DbType.Single, AHU_0B1F.AHU08_0B1F05);
-                        Db.AddInParameter(cmd, "AHU09_0B1F05", DbType.Single, AHU_0B1F.AHU09_0B1F05);
-                        Db.AddInParameter(cmd, "AHU10_0B1F05", DbType.Single, AHU_0B1F.AHU10_0B1F05);
-                        Db.AddInParameter(cmd, "AHU11_0B1F05", DbType.Single, AHU_0B1F.AHU11_0B1F05);
-                        Db.AddInParameter(cmd, "AHU01_0B1F06", DbType.Single, AHU_0B1F.AHU01_0B1F06);
-                        Db.AddInParameter(cmd, "AHU02_0B1F06", DbType.Single, AHU_0B1F.AHU02_0B1F06);
-                        Db.AddInParameter(cmd, "AHU03_0B1F06", DbType.Single, AHU_0B1F.AHU03_0B1F06);
-                        Db.AddInParameter(cmd, "AHU04_0B1F06", DbType.Single, AHU_0B1F.AHU04_0B1F06);
-                        Db.AddInParameter(cmd, "AHU05_0B1F06", DbType.Single, AHU_0B1F.AHU05_0B1F06);
-                        Db.AddInParameter(cmd, "AHU06_0B1F06", DbType.Single, AHU_0B1F.AHU06_0B1F06);
-                        Db.AddInParameter(cmd, "AHU07_0B1F06", DbType.Single, AHU_0B1F.AHU07_0B1F06);
-                        Db.AddInParameter(cmd, "AHU08_0B1F06", DbType.Single, AHU_0B1F.AHU08_0B1F06);
-                        Db.AddInParameter(cmd, "AHU09_0B1F06", DbType.Single, AHU_0B1F.AHU09_0B1F06);
-                        Db.AddInParameter(cmd, "AHU10_0B1F06", DbType.Single, AHU_0B1F.AHU10_0B1F06);
-                        Db.AddInParameter(cmd, "AHU11_0B1F06", DbType.Single, AHU_0B1F.AHU11_0B1F06);
-                        Db.AddInParameter(cmd, "AHU01_0B1F07", DbType.Single, AHU_0B1F.AHU01_0B1F07);
-                        Db.AddInParameter(cmd, "AHU02_0B1F07", DbType.Single, AHU_0B1F.AHU02_0B1F07);
-                        Db.AddInParameter(cmd, "AHU03_0B1F07", DbType.Single, AHU_0B1F.AHU03_0B1F07);
-                        Db.AddInParameter(cmd, "AHU04_0B1F07", DbType.Single, AHU_0B1F.AHU04_0B1F07);
-                        Db.AddInParameter(cmd, "AHU05_0B1F07", DbType.Single, AHU_0B1F.AHU05_0B1F07);
-                        Db.AddInParameter(cmd, "AHU06_0B1F07", DbType.Single, AHU_0B1F.AHU06_0B1F07);
-                        Db.AddInParameter(cmd, "AHU07_0B1F07", DbType.Single, AHU_0B1F.AHU07_0B1F07);
-                        Db.AddInParameter(cmd, "AHU08_0B1F07", DbType.Single, AHU_0B1F.AHU08_0B1F07);
-                        Db.AddInParameter(cmd, "AHU09_0B1F07", DbType.Single, AHU_0B1F.AHU09_0B1F07);
-                        Db.AddInParameter(cmd, "AHU10_0B1F07", DbType.Single, AHU_0B1F.AHU10_0B1F07);
-                        Db.AddInParameter(cmd, "AHU11_0B1F07", DbType.Single, AHU_0B1F.AHU11_0B1F07);
-                        Db.AddInParameter(cmd, "AHU01_0B1F08", DbType.Single, AHU_0B1F.AHU01_0B1F08);
-                        Db.AddInParameter(cmd, "AHU02_0B1F08", DbType.Single, AHU_0B1F.AHU02_0B1F08);
-                        Db.AddInParameter(cmd, "AHU03_0B1F08", DbType.Single, AHU_0B1F.AHU03_0B1F08);
-                        Db.AddInParameter(cmd, "AHU04_0B1F08", DbType.Single, AHU_0B1F.AHU04_0B1F08);
-                        Db.AddInParameter(cmd, "AHU05_0B1F08", DbType.Single, AHU_0B1F.AHU05_0B1F08);
-                        Db.AddInParameter(cmd, "AHU06_0B1F08", DbType.Single, AHU_0B1F.AHU06_0B1F08);
-                        Db.AddInParameter(cmd, "AHU07_0B1F08", DbType.Single, AHU_0B1F.AHU07_0B1F08);
-                        Db.AddInParameter(cmd, "AHU08_0B1F08", DbType.Single, AHU_0B1F.AHU08_0B1F08);
-                        Db.AddInParameter(cmd, "AHU09_0B1F08", DbType.Single, AHU_0B1F.AHU09_0B1F08);
-                        Db.AddInParameter(cmd, "AHU10_0B1F08", DbType.Single, AHU_0B1F.AHU10_0B1F08);
-                        Db.AddInParameter(cmd, "AHU11_0B1F08", DbType.Single, AHU_0B1F.AHU11_0B1F08);
-                        #endregion
-                        affected = Db.ExecuteNonQuery(cmd);
+                        using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                        {
+                            #region 參數
+                            Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_0B1F.AUTOID);
+                            Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, AHU_0B1F.DATETIME);
+                            Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
+                            Db.AddInParameter(cmd, "AHU01_0B1F01", DbType.Single, AHU_0B1F.AHU01_0B1F01);
+                            Db.AddInParameter(cmd, "AHU02_0B1F01", DbType.Single, AHU_0B1F.AHU02_0B1F01);
+                            Db.AddInParameter(cmd, "AHU03_0B1F01", DbType.Single, AHU_0B1F.AHU03_0B1F01);
+                            Db.AddInParameter(cmd, "AHU04_0B1F01", DbType.Single, AHU_0B1F.AHU04_0B1F01);
+                            Db.AddInParameter(cmd, "AHU05_0B1F01", DbType.Single, AHU_0B1F.AHU05_0B1F01);
+                            Db.AddInParameter(cmd, "AHU06_0B1F01", DbType.Single, AHU_0B1F.AHU06_0B1F01);
+                            Db.AddInParameter(cmd, "AHU07_0B1F01", DbType.Single, AHU_0B1F.AHU07_0B1F01);
+                            Db.AddInParameter(cmd, "AHU08_0B1F01", DbType.Single, AHU_0B1F.AHU08_0B1F01);
+                            Db.AddInParameter(cmd, "AHU09_0B1F01", DbType.Single, AHU_0B1F.AHU09_0B1F01);
+                            Db.AddInParameter(cmd, "AHU10_0B1F01", DbType.Single, AHU_0B1F.AHU10_0B1F01);
+                            Db.AddInParameter(cmd, "AHU11_0B1F01", DbType.Single, AHU_0B1F.AHU11_0B1F01);
+                            Db.AddInParameter(cmd, "AHU01_0B1F02", DbType.Single, AHU_0B1F.AHU01_0B1F02);
+                            Db.AddInParameter(cmd, "AHU02_0B1F02", DbType.Single, AHU_0B1F.AHU02_0B1F02);
+                            Db.AddInParameter(cmd, "AHU03_0B1F02", DbType.Single, AHU_0B1F.AHU03_0B1F02);
+                            Db.AddInParameter(cmd, "AHU04_0B1F02", DbType.Single, AHU_0B1F.AHU04_0B1F02);
+                            Db.AddInParameter(cmd, "AHU05_0B1F02", DbType.Single, AHU_0B1F.AHU05_0B1F02);
+                            Db.AddInParameter(cmd, "AHU06_0B1F02", DbType.Single, AHU_0B1F.AHU06_0B1F02);
+                            Db.AddInParameter(cmd, "AHU07_0B1F02", DbType.Single, AHU_0B1F.AHU07_0B1F02);
+                            Db.AddInParameter(cmd, "AHU08_0B1F02", DbType.Single, AHU_0B1F.AHU08_0B1F02);
+                            Db.AddInParameter(cmd, "AHU09_0B1F02", DbType.Single, AHU_0B1F.AHU09_0B1F02);
+                            Db.AddInParameter(cmd, "AHU10_0B1F02", DbType.Single, AHU_0B1F.AHU10_0B1F02);
+                            Db.AddInParameter(cmd, "AHU11_0B1F02", DbType.Single, AHU_0B1F.AHU11_0B1F02);
+                            Db.AddInParameter(cmd, "AHU01_0B1F03", DbType.Single, AHU_0B1F.AHU01_0B1F03);
+                            Db.AddInParameter(cmd, "AHU02_0B1F03", DbType.Single, AHU_0B1F.AHU02_0B1F03);
+                            Db.AddInParameter(cmd, "AHU03_0B1F03", DbType.Single, AHU_0B1F.AHU03_0B1F03);
+                            Db.AddInParameter(cmd, "AHU04_0B1F03", DbType.Single, AHU_0B1F.AHU04_0B1F03);
+                            Db.AddInParameter(cmd, "AHU05_0B1F03", DbType.Single, AHU_0B1F.AHU05_0B1F03);
+                            Db.AddInParameter(cmd, "AHU06_0B1F03", DbType.Single, AHU_0B1F.AHU06_0B1F03);
+                            Db.AddInParameter(cmd, "AHU07_0B1F03", DbType.Single, AHU_0B1F.AHU07_0B1F03);
+                            Db.AddInParameter(cmd, "AHU08_0B1F03", DbType.Single, AHU_0B1F.AHU08_0B1F03);
+                            Db.AddInParameter(cmd, "AHU09_0B1F03", DbType.Single, AHU_0B1F.AHU09_0B1F03);
+                            Db.AddInParameter(cmd, "AHU10_0B1F03", DbType.Single, AHU_0B1F.AHU10_0B1F03);
+                            Db.AddInParameter(cmd, "AHU11_0B1F03", DbType.Single, AHU_0B1F.AHU11_0B1F03);
+                            Db.AddInParameter(cmd, "AHU01_0B1F04", DbType.Single, AHU_0B1F.AHU01_0B1F04);
+                            Db.AddInParameter(cmd, "AHU02_0B1F04", DbType.Single, AHU_0B1F.AHU02_0B1F04);
+                            Db.AddInParameter(cmd, "AHU03_0B1F04", DbType.Single, AHU_0B1F.AHU03_0B1F04);
+                            Db.AddInParameter(cmd, "AHU04_0B1F04", DbType.Single, AHU_0B1F.AHU04_0B1F04);
+                            Db.AddInParameter(cmd, "AHU05_0B1F04", DbType.Single, AHU_0B1F.AHU05_0B1F04);
+                            Db.AddInParameter(cmd, "AHU06_0B1F04", DbType.Single, AHU_0B1F.AHU06_0B1F04);
+                            Db.AddInParameter(cmd, "AHU07_0B1F04", DbType.Single, AHU_0B1F.AHU07_0B1F04);
+                            Db.AddInParameter(cmd, "AHU08_0B1F04", DbType.Single, AHU_0B1F.AHU08_0B1F04);
+                            Db.AddInParameter(cmd, "AHU09_0B1F04", DbType.Single, AHU_0B1F.AHU09_0B1F04);
+                            Db.AddInParameter(cmd, "AHU10_0B1F04", DbType.Single, AHU_0B1F.AHU10_0B1F04);
+                            Db.AddInParameter(cmd, "AHU11_0B1F04", DbType.Single, AHU_0B1F.AHU11_0B1F04);
+                            Db.AddInParameter(cmd, "AHU01_0B1F05", DbType.Single, AHU_0B1F.AHU01_0B1F05);
+                            Db.AddInParameter(cmd, "AHU02_0B1F05", DbType.Single, AHU_0B1F.AHU02_0B1F05);
+                            Db.AddInParameter(cmd, "AHU03_0B1F05", DbType.Single, AHU_0B1F.AHU03_0B1F05);
+                            Db.AddInParameter(cmd, "AHU04_0B1F05", DbType.Single, AHU_0B1F.AHU04_0B1F05);
+                            Db.AddInParameter(cmd, "AHU05_0B1F05", DbType.Single, AHU_0B1F.AHU05_0B1F05);
+                            Db.AddInParameter(cmd, "AHU06_0B1F05", DbType.Single, AHU_0B1F.AHU06_0B1F05);
+                            Db.AddInParameter(cmd, "AHU07_0B1F05", DbType.Single, AHU_0B1F.AHU07_0B1F05);
+                            Db.AddInParameter(cmd, "AHU08_0B1F05", DbType.Single, AHU_0B1F.AHU08_0B1F05);
+                            Db.AddInParameter(cmd, "AHU09_0B1F05", DbType.Single, AHU_0B1F.AHU09_0B1F05);
+                            Db.AddInParameter(cmd, "AHU10_0B1F05", DbType.Single, AHU_0B1F.AHU10_0B1F05);
+                            Db.AddInParameter(cmd, "AHU11_0B1F05", DbType.Single, AHU_0B1F.AHU11_0B1F05);
+                            Db.AddInParameter(cmd, "AHU01_0B1F06", DbType.Single, AHU_0B1F.AHU01_0B1F06);
+                            Db.AddInParameter(cmd, "AHU02_0B1F06", DbType.Single, AHU_0B1F.AHU02_0B1F06);
+                            Db.AddInParameter(cmd, "AHU03_0B1F06", DbType.Single, AHU_0B1F.AHU03_0B1F06);
+                            Db.AddInParameter(cmd, "AHU04_0B1F06", DbType.Single, AHU_0B1F.AHU04_0B1F06);
+                            Db.AddInParameter(cmd, "AHU05_0B1F06", DbType.Single, AHU_0B1F.AHU05_0B1F06);
+                            Db.AddInParameter(cmd, "AHU06_0B1F06", DbType.Single, AHU_0B1F.AHU06_0B1F06);
+                            Db.AddInParameter(cmd, "AHU07_0B1F06", DbType.Single, AHU_0B1F.AHU07_0B1F06);
+                            Db.AddInParameter(cmd, "AHU08_0B1F06", DbType.Single, AHU_0B1F.AHU08_0B1F06);
+                            Db.AddInParameter(cmd, "AHU09_0B1F06", DbType.Single, AHU_0B1F.AHU09_0B1F06);
+                            Db.AddInParameter(cmd, "AHU10_0B1F06", DbType.Single, AHU_0B1F.AHU10_0B1F06);
+                            Db.AddInParameter(cmd, "AHU11_0B1F06", DbType.Single, AHU_0B1F.AHU11_0B1F06);
+                            Db.AddInParameter(cmd, "AHU01_0B1F07", DbType.Single, AHU_0B1F.AHU01_0B1F07);
+                            Db.AddInParameter(cmd, "AHU02_0B1F07", DbType.Single, AHU_0B1F.AHU02_0B1F07);
+                            Db.AddInParameter(cmd, "AHU03_0B1F07", DbType.Single, AHU_0B1F.AHU03_0B1F07);
+                            Db.AddInParameter(cmd, "AHU04_0B1F07", DbType.Single, AHU_0B1F.AHU04_0B1F07);
+                            Db.AddInParameter(cmd, "AHU05_0B1F07", DbType.Single, AHU_0B1F.AHU05_0B1F07);
+                            Db.AddInParameter(cmd, "AHU06_0B1F07", DbType.Single, AHU_0B1F.AHU06_0B1F07);
+                            Db.AddInParameter(cmd, "AHU07_0B1F07", DbType.Single, AHU_0B1F.AHU07_0B1F07);
+                            Db.AddInParameter(cmd, "AHU08_0B1F07", DbType.Single, AHU_0B1F.AHU08_0B1F07);
+                            Db.AddInParameter(cmd, "AHU09_0B1F07", DbType.Single, AHU_0B1F.AHU09_0B1F07);
+                            Db.AddInParameter(cmd, "AHU10_0B1F07", DbType.Single, AHU_0B1F.AHU10_0B1F07);
+                            Db.AddInParameter(cmd, "AHU11_0B1F07", DbType.Single, AHU_0B1F.AHU11_0B1F07);
+                            Db.AddInParameter(cmd, "AHU01_0B1F08", DbType.Single, AHU_0B1F.AHU01_0B1F08);
+                            Db.AddInParameter(cmd, "AHU02_0B1F08", DbType.Single, AHU_0B1F.AHU02_0B1F08);
+                            Db.AddInParameter(cmd, "AHU03_0B1F08", DbType.Single, AHU_0B1F.AHU03_0B1F08);
+                            Db.AddInParameter(cmd, "AHU04_0B1F08", DbType.Single, AHU_0B1F.AHU04_0B1F08);
+                            Db.AddInParameter(cmd, "AHU05_0B1F08", DbType.Single, AHU_0B1F.AHU05_0B1F08);
+                            Db.AddInParameter(cmd, "AHU06_0B1F08", DbType.Single, AHU_0B1F.AHU06_0B1F08);
+                            Db.AddInParameter(cmd, "AHU07_0B1F08", DbType.Single, AHU_0B1F.AHU07_0B1F08);
+                            Db.AddInParameter(cmd, "AHU08_0B1F08", DbType.Single, AHU_0B1F.AHU08_0B1F08);
+                            Db.AddInParameter(cmd, "AHU09_0B1F08", DbType.Single, AHU_0B1F.AHU09_0B1F08);
+                            Db.AddInParameter(cmd, "AHU10_0B1F08", DbType.Single, AHU_0B1F.AHU10_0B1F08);
+                            Db.AddInParameter(cmd, "AHU11_0B1F08", DbType.Single, AHU_0B1F.AHU11_0B1F08);
+                            #endregion
+                            affected = Db.ExecuteNonQuery(cmd);
+                        }
                     }
-                }
 
+                    scop.Complete();
+                }
             }
             catch (Exception ex)
             {
@@ -276,30 +252,16 @@ IF NOT EXISTS (SELECT 1 FROM AHU_0B1 WHERE AUTOID = @AUTOID)
         public bool WriteBufferForAHU_00RF(AHU_00RF AHU_00RF)
         {
             int affected = 0;
-            string sql;
             try
             {
-                bool exist = false;
-
-                sql = @"
-SELECT 1 FROM AHU_0RF WHERE AUTOID=@AUTOID
-";
-                using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
                 {
-                    Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_00RF.AUTOID);
-                    using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                    using (DbConnection conn = Db.CreateConnection())
                     {
-                        if (reader.Read())
-                        {
-                            exist = true;
-                        }
-                    }
-                }
+                        conn.Open();
 
-                if (!exist)
-                {
-                    sql = @"
-IF NOT EXISTS (SELECT 1 FROM AHU_0RF WHERE AUTOID = @AUTOID)
+                        string sql = @"
+IF NOT EXISTS (SELECT 1 FROM AHU_0RF WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
     BEGIN
         INSERT INTO AHU_0RF (AUTOID, DATETIME, ACTIVE
             ,AHU01_00RF01,AHU02_00RF01,AHU03_00RF01,AHU04_00RF01,AHU05_00RF01,AHU06_00RF01,AHU07_00RF01,AHU08_00RF01,AHU09_00RF01,AHU10_00RF01,AHU11_00RF01
@@ -323,116 +285,118 @@ IF NOT EXISTS (SELECT 1 FROM AHU_0RF WHERE AUTOID = @AUTOID)
             ,@AHU01_00RF09,@AHU02_00RF09,@AHU03_00RF09,@AHU04_00RF09,@AHU05_00RF09,@AHU06_00RF09,@AHU07_00RF09,@AHU08_00RF09,@AHU09_00RF09,@AHU10_00RF09,@AHU11_00RF09)
     END
 ";
-                    using (DbCommand cmd = Db.GetSqlStringCommand(sql))
-                    {
-                        #region 參數
-                        Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_00RF.AUTOID);
-                        Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, AHU_00RF.DATETIME);
-                        Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
-                        Db.AddInParameter(cmd, "AHU01_00RF01", DbType.Single, AHU_00RF.AHU01_00RF01);
-                        Db.AddInParameter(cmd, "AHU02_00RF01", DbType.Single, AHU_00RF.AHU02_00RF01);
-                        Db.AddInParameter(cmd, "AHU03_00RF01", DbType.Single, AHU_00RF.AHU03_00RF01);
-                        Db.AddInParameter(cmd, "AHU04_00RF01", DbType.Single, AHU_00RF.AHU04_00RF01);
-                        Db.AddInParameter(cmd, "AHU05_00RF01", DbType.Single, AHU_00RF.AHU05_00RF01);
-                        Db.AddInParameter(cmd, "AHU06_00RF01", DbType.Single, AHU_00RF.AHU06_00RF01);
-                        Db.AddInParameter(cmd, "AHU07_00RF01", DbType.Single, AHU_00RF.AHU07_00RF01);
-                        Db.AddInParameter(cmd, "AHU08_00RF01", DbType.Single, AHU_00RF.AHU08_00RF01);
-                        Db.AddInParameter(cmd, "AHU09_00RF01", DbType.Single, AHU_00RF.AHU09_00RF01);
-                        Db.AddInParameter(cmd, "AHU10_00RF01", DbType.Single, AHU_00RF.AHU10_00RF01);
-                        Db.AddInParameter(cmd, "AHU11_00RF01", DbType.Single, AHU_00RF.AHU11_00RF01);
-                        Db.AddInParameter(cmd, "AHU01_00RF02", DbType.Single, AHU_00RF.AHU01_00RF02);
-                        Db.AddInParameter(cmd, "AHU02_00RF02", DbType.Single, AHU_00RF.AHU02_00RF02);
-                        Db.AddInParameter(cmd, "AHU03_00RF02", DbType.Single, AHU_00RF.AHU03_00RF02);
-                        Db.AddInParameter(cmd, "AHU04_00RF02", DbType.Single, AHU_00RF.AHU04_00RF02);
-                        Db.AddInParameter(cmd, "AHU05_00RF02", DbType.Single, AHU_00RF.AHU05_00RF02);
-                        Db.AddInParameter(cmd, "AHU06_00RF02", DbType.Single, AHU_00RF.AHU06_00RF02);
-                        Db.AddInParameter(cmd, "AHU07_00RF02", DbType.Single, AHU_00RF.AHU07_00RF02);
-                        Db.AddInParameter(cmd, "AHU08_00RF02", DbType.Single, AHU_00RF.AHU08_00RF02);
-                        Db.AddInParameter(cmd, "AHU09_00RF02", DbType.Single, AHU_00RF.AHU09_00RF02);
-                        Db.AddInParameter(cmd, "AHU10_00RF02", DbType.Single, AHU_00RF.AHU10_00RF02);
-                        Db.AddInParameter(cmd, "AHU11_00RF02", DbType.Single, AHU_00RF.AHU11_00RF02);
-                        Db.AddInParameter(cmd, "AHU01_00RF03", DbType.Single, AHU_00RF.AHU01_00RF03);
-                        Db.AddInParameter(cmd, "AHU02_00RF03", DbType.Single, AHU_00RF.AHU02_00RF03);
-                        Db.AddInParameter(cmd, "AHU03_00RF03", DbType.Single, AHU_00RF.AHU03_00RF03);
-                        Db.AddInParameter(cmd, "AHU04_00RF03", DbType.Single, AHU_00RF.AHU04_00RF03);
-                        Db.AddInParameter(cmd, "AHU05_00RF03", DbType.Single, AHU_00RF.AHU05_00RF03);
-                        Db.AddInParameter(cmd, "AHU06_00RF03", DbType.Single, AHU_00RF.AHU06_00RF03);
-                        Db.AddInParameter(cmd, "AHU07_00RF03", DbType.Single, AHU_00RF.AHU07_00RF03);
-                        Db.AddInParameter(cmd, "AHU08_00RF03", DbType.Single, AHU_00RF.AHU08_00RF03);
-                        Db.AddInParameter(cmd, "AHU09_00RF03", DbType.Single, AHU_00RF.AHU09_00RF03);
-                        Db.AddInParameter(cmd, "AHU10_00RF03", DbType.Single, AHU_00RF.AHU10_00RF03);
-                        Db.AddInParameter(cmd, "AHU11_00RF03", DbType.Single, AHU_00RF.AHU11_00RF03);
-                        Db.AddInParameter(cmd, "AHU01_00RF04", DbType.Single, AHU_00RF.AHU01_00RF04);
-                        Db.AddInParameter(cmd, "AHU02_00RF04", DbType.Single, AHU_00RF.AHU02_00RF04);
-                        Db.AddInParameter(cmd, "AHU03_00RF04", DbType.Single, AHU_00RF.AHU03_00RF04);
-                        Db.AddInParameter(cmd, "AHU04_00RF04", DbType.Single, AHU_00RF.AHU04_00RF04);
-                        Db.AddInParameter(cmd, "AHU05_00RF04", DbType.Single, AHU_00RF.AHU05_00RF04);
-                        Db.AddInParameter(cmd, "AHU06_00RF04", DbType.Single, AHU_00RF.AHU06_00RF04);
-                        Db.AddInParameter(cmd, "AHU07_00RF04", DbType.Single, AHU_00RF.AHU07_00RF04);
-                        Db.AddInParameter(cmd, "AHU08_00RF04", DbType.Single, AHU_00RF.AHU08_00RF04);
-                        Db.AddInParameter(cmd, "AHU09_00RF04", DbType.Single, AHU_00RF.AHU09_00RF04);
-                        Db.AddInParameter(cmd, "AHU10_00RF04", DbType.Single, AHU_00RF.AHU10_00RF04);
-                        Db.AddInParameter(cmd, "AHU11_00RF04", DbType.Single, AHU_00RF.AHU11_00RF04);
-                        Db.AddInParameter(cmd, "AHU01_00RF05", DbType.Single, AHU_00RF.AHU01_00RF05);
-                        Db.AddInParameter(cmd, "AHU02_00RF05", DbType.Single, AHU_00RF.AHU02_00RF05);
-                        Db.AddInParameter(cmd, "AHU03_00RF05", DbType.Single, AHU_00RF.AHU03_00RF05);
-                        Db.AddInParameter(cmd, "AHU04_00RF05", DbType.Single, AHU_00RF.AHU04_00RF05);
-                        Db.AddInParameter(cmd, "AHU05_00RF05", DbType.Single, AHU_00RF.AHU05_00RF05);
-                        Db.AddInParameter(cmd, "AHU06_00RF05", DbType.Single, AHU_00RF.AHU06_00RF05);
-                        Db.AddInParameter(cmd, "AHU07_00RF05", DbType.Single, AHU_00RF.AHU07_00RF05);
-                        Db.AddInParameter(cmd, "AHU08_00RF05", DbType.Single, AHU_00RF.AHU08_00RF05);
-                        Db.AddInParameter(cmd, "AHU09_00RF05", DbType.Single, AHU_00RF.AHU09_00RF05);
-                        Db.AddInParameter(cmd, "AHU10_00RF05", DbType.Single, AHU_00RF.AHU10_00RF05);
-                        Db.AddInParameter(cmd, "AHU11_00RF05", DbType.Single, AHU_00RF.AHU11_00RF05);
-                        Db.AddInParameter(cmd, "AHU01_00RF06", DbType.Single, AHU_00RF.AHU01_00RF06);
-                        Db.AddInParameter(cmd, "AHU02_00RF06", DbType.Single, AHU_00RF.AHU02_00RF06);
-                        Db.AddInParameter(cmd, "AHU03_00RF06", DbType.Single, AHU_00RF.AHU03_00RF06);
-                        Db.AddInParameter(cmd, "AHU04_00RF06", DbType.Single, AHU_00RF.AHU04_00RF06);
-                        Db.AddInParameter(cmd, "AHU05_00RF06", DbType.Single, AHU_00RF.AHU05_00RF06);
-                        Db.AddInParameter(cmd, "AHU06_00RF06", DbType.Single, AHU_00RF.AHU06_00RF06);
-                        Db.AddInParameter(cmd, "AHU07_00RF06", DbType.Single, AHU_00RF.AHU07_00RF06);
-                        Db.AddInParameter(cmd, "AHU08_00RF06", DbType.Single, AHU_00RF.AHU08_00RF06);
-                        Db.AddInParameter(cmd, "AHU09_00RF06", DbType.Single, AHU_00RF.AHU09_00RF06);
-                        Db.AddInParameter(cmd, "AHU10_00RF06", DbType.Single, AHU_00RF.AHU10_00RF06);
-                        Db.AddInParameter(cmd, "AHU11_00RF06", DbType.Single, AHU_00RF.AHU11_00RF06);
-                        Db.AddInParameter(cmd, "AHU01_00RF07", DbType.Single, AHU_00RF.AHU01_00RF07);
-                        Db.AddInParameter(cmd, "AHU02_00RF07", DbType.Single, AHU_00RF.AHU02_00RF07);
-                        Db.AddInParameter(cmd, "AHU03_00RF07", DbType.Single, AHU_00RF.AHU03_00RF07);
-                        Db.AddInParameter(cmd, "AHU04_00RF07", DbType.Single, AHU_00RF.AHU04_00RF07);
-                        Db.AddInParameter(cmd, "AHU05_00RF07", DbType.Single, AHU_00RF.AHU05_00RF07);
-                        Db.AddInParameter(cmd, "AHU06_00RF07", DbType.Single, AHU_00RF.AHU06_00RF07);
-                        Db.AddInParameter(cmd, "AHU07_00RF07", DbType.Single, AHU_00RF.AHU07_00RF07);
-                        Db.AddInParameter(cmd, "AHU08_00RF07", DbType.Single, AHU_00RF.AHU08_00RF07);
-                        Db.AddInParameter(cmd, "AHU09_00RF07", DbType.Single, AHU_00RF.AHU09_00RF07);
-                        Db.AddInParameter(cmd, "AHU10_00RF07", DbType.Single, AHU_00RF.AHU10_00RF07);
-                        Db.AddInParameter(cmd, "AHU11_00RF07", DbType.Single, AHU_00RF.AHU11_00RF07);
-                        Db.AddInParameter(cmd, "AHU01_00RF08", DbType.Single, AHU_00RF.AHU01_00RF08);
-                        Db.AddInParameter(cmd, "AHU02_00RF08", DbType.Single, AHU_00RF.AHU02_00RF08);
-                        Db.AddInParameter(cmd, "AHU03_00RF08", DbType.Single, AHU_00RF.AHU03_00RF08);
-                        Db.AddInParameter(cmd, "AHU04_00RF08", DbType.Single, AHU_00RF.AHU04_00RF08);
-                        Db.AddInParameter(cmd, "AHU05_00RF08", DbType.Single, AHU_00RF.AHU05_00RF08);
-                        Db.AddInParameter(cmd, "AHU06_00RF08", DbType.Single, AHU_00RF.AHU06_00RF08);
-                        Db.AddInParameter(cmd, "AHU07_00RF08", DbType.Single, AHU_00RF.AHU07_00RF08);
-                        Db.AddInParameter(cmd, "AHU08_00RF08", DbType.Single, AHU_00RF.AHU08_00RF08);
-                        Db.AddInParameter(cmd, "AHU09_00RF08", DbType.Single, AHU_00RF.AHU09_00RF08);
-                        Db.AddInParameter(cmd, "AHU10_00RF08", DbType.Single, AHU_00RF.AHU10_00RF08);
-                        Db.AddInParameter(cmd, "AHU11_00RF08", DbType.Single, AHU_00RF.AHU11_00RF08);
-                        Db.AddInParameter(cmd, "AHU01_00RF09", DbType.Single, AHU_00RF.AHU01_00RF09);
-                        Db.AddInParameter(cmd, "AHU02_00RF09", DbType.Single, AHU_00RF.AHU02_00RF09);
-                        Db.AddInParameter(cmd, "AHU03_00RF09", DbType.Single, AHU_00RF.AHU03_00RF09);
-                        Db.AddInParameter(cmd, "AHU04_00RF09", DbType.Single, AHU_00RF.AHU04_00RF09);
-                        Db.AddInParameter(cmd, "AHU05_00RF09", DbType.Single, AHU_00RF.AHU05_00RF09);
-                        Db.AddInParameter(cmd, "AHU06_00RF09", DbType.Single, AHU_00RF.AHU06_00RF09);
-                        Db.AddInParameter(cmd, "AHU07_00RF09", DbType.Single, AHU_00RF.AHU07_00RF09);
-                        Db.AddInParameter(cmd, "AHU08_00RF09", DbType.Single, AHU_00RF.AHU08_00RF09);
-                        Db.AddInParameter(cmd, "AHU09_00RF09", DbType.Single, AHU_00RF.AHU09_00RF09);
-                        Db.AddInParameter(cmd, "AHU10_00RF09", DbType.Single, AHU_00RF.AHU10_00RF09);
-                        Db.AddInParameter(cmd, "AHU11_00RF09", DbType.Single, AHU_00RF.AHU11_00RF09);
-                        #endregion
-                        affected = Db.ExecuteNonQuery(cmd);
+                        using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                        {
+                            #region 參數
+                            Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_00RF.AUTOID);
+                            Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, AHU_00RF.DATETIME);
+                            Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
+                            Db.AddInParameter(cmd, "AHU01_00RF01", DbType.Single, AHU_00RF.AHU01_00RF01);
+                            Db.AddInParameter(cmd, "AHU02_00RF01", DbType.Single, AHU_00RF.AHU02_00RF01);
+                            Db.AddInParameter(cmd, "AHU03_00RF01", DbType.Single, AHU_00RF.AHU03_00RF01);
+                            Db.AddInParameter(cmd, "AHU04_00RF01", DbType.Single, AHU_00RF.AHU04_00RF01);
+                            Db.AddInParameter(cmd, "AHU05_00RF01", DbType.Single, AHU_00RF.AHU05_00RF01);
+                            Db.AddInParameter(cmd, "AHU06_00RF01", DbType.Single, AHU_00RF.AHU06_00RF01);
+                            Db.AddInParameter(cmd, "AHU07_00RF01", DbType.Single, AHU_00RF.AHU07_00RF01);
+                            Db.AddInParameter(cmd, "AHU08_00RF01", DbType.Single, AHU_00RF.AHU08_00RF01);
+                            Db.AddInParameter(cmd, "AHU09_00RF01", DbType.Single, AHU_00RF.AHU09_00RF01);
+                            Db.AddInParameter(cmd, "AHU10_00RF01", DbType.Single, AHU_00RF.AHU10_00RF01);
+                            Db.AddInParameter(cmd, "AHU11_00RF01", DbType.Single, AHU_00RF.AHU11_00RF01);
+                            Db.AddInParameter(cmd, "AHU01_00RF02", DbType.Single, AHU_00RF.AHU01_00RF02);
+                            Db.AddInParameter(cmd, "AHU02_00RF02", DbType.Single, AHU_00RF.AHU02_00RF02);
+                            Db.AddInParameter(cmd, "AHU03_00RF02", DbType.Single, AHU_00RF.AHU03_00RF02);
+                            Db.AddInParameter(cmd, "AHU04_00RF02", DbType.Single, AHU_00RF.AHU04_00RF02);
+                            Db.AddInParameter(cmd, "AHU05_00RF02", DbType.Single, AHU_00RF.AHU05_00RF02);
+                            Db.AddInParameter(cmd, "AHU06_00RF02", DbType.Single, AHU_00RF.AHU06_00RF02);
+                            Db.AddInParameter(cmd, "AHU07_00RF02", DbType.Single, AHU_00RF.AHU07_00RF02);
+                            Db.AddInParameter(cmd, "AHU08_00RF02", DbType.Single, AHU_00RF.AHU08_00RF02);
+                            Db.AddInParameter(cmd, "AHU09_00RF02", DbType.Single, AHU_00RF.AHU09_00RF02);
+                            Db.AddInParameter(cmd, "AHU10_00RF02", DbType.Single, AHU_00RF.AHU10_00RF02);
+                            Db.AddInParameter(cmd, "AHU11_00RF02", DbType.Single, AHU_00RF.AHU11_00RF02);
+                            Db.AddInParameter(cmd, "AHU01_00RF03", DbType.Single, AHU_00RF.AHU01_00RF03);
+                            Db.AddInParameter(cmd, "AHU02_00RF03", DbType.Single, AHU_00RF.AHU02_00RF03);
+                            Db.AddInParameter(cmd, "AHU03_00RF03", DbType.Single, AHU_00RF.AHU03_00RF03);
+                            Db.AddInParameter(cmd, "AHU04_00RF03", DbType.Single, AHU_00RF.AHU04_00RF03);
+                            Db.AddInParameter(cmd, "AHU05_00RF03", DbType.Single, AHU_00RF.AHU05_00RF03);
+                            Db.AddInParameter(cmd, "AHU06_00RF03", DbType.Single, AHU_00RF.AHU06_00RF03);
+                            Db.AddInParameter(cmd, "AHU07_00RF03", DbType.Single, AHU_00RF.AHU07_00RF03);
+                            Db.AddInParameter(cmd, "AHU08_00RF03", DbType.Single, AHU_00RF.AHU08_00RF03);
+                            Db.AddInParameter(cmd, "AHU09_00RF03", DbType.Single, AHU_00RF.AHU09_00RF03);
+                            Db.AddInParameter(cmd, "AHU10_00RF03", DbType.Single, AHU_00RF.AHU10_00RF03);
+                            Db.AddInParameter(cmd, "AHU11_00RF03", DbType.Single, AHU_00RF.AHU11_00RF03);
+                            Db.AddInParameter(cmd, "AHU01_00RF04", DbType.Single, AHU_00RF.AHU01_00RF04);
+                            Db.AddInParameter(cmd, "AHU02_00RF04", DbType.Single, AHU_00RF.AHU02_00RF04);
+                            Db.AddInParameter(cmd, "AHU03_00RF04", DbType.Single, AHU_00RF.AHU03_00RF04);
+                            Db.AddInParameter(cmd, "AHU04_00RF04", DbType.Single, AHU_00RF.AHU04_00RF04);
+                            Db.AddInParameter(cmd, "AHU05_00RF04", DbType.Single, AHU_00RF.AHU05_00RF04);
+                            Db.AddInParameter(cmd, "AHU06_00RF04", DbType.Single, AHU_00RF.AHU06_00RF04);
+                            Db.AddInParameter(cmd, "AHU07_00RF04", DbType.Single, AHU_00RF.AHU07_00RF04);
+                            Db.AddInParameter(cmd, "AHU08_00RF04", DbType.Single, AHU_00RF.AHU08_00RF04);
+                            Db.AddInParameter(cmd, "AHU09_00RF04", DbType.Single, AHU_00RF.AHU09_00RF04);
+                            Db.AddInParameter(cmd, "AHU10_00RF04", DbType.Single, AHU_00RF.AHU10_00RF04);
+                            Db.AddInParameter(cmd, "AHU11_00RF04", DbType.Single, AHU_00RF.AHU11_00RF04);
+                            Db.AddInParameter(cmd, "AHU01_00RF05", DbType.Single, AHU_00RF.AHU01_00RF05);
+                            Db.AddInParameter(cmd, "AHU02_00RF05", DbType.Single, AHU_00RF.AHU02_00RF05);
+                            Db.AddInParameter(cmd, "AHU03_00RF05", DbType.Single, AHU_00RF.AHU03_00RF05);
+                            Db.AddInParameter(cmd, "AHU04_00RF05", DbType.Single, AHU_00RF.AHU04_00RF05);
+                            Db.AddInParameter(cmd, "AHU05_00RF05", DbType.Single, AHU_00RF.AHU05_00RF05);
+                            Db.AddInParameter(cmd, "AHU06_00RF05", DbType.Single, AHU_00RF.AHU06_00RF05);
+                            Db.AddInParameter(cmd, "AHU07_00RF05", DbType.Single, AHU_00RF.AHU07_00RF05);
+                            Db.AddInParameter(cmd, "AHU08_00RF05", DbType.Single, AHU_00RF.AHU08_00RF05);
+                            Db.AddInParameter(cmd, "AHU09_00RF05", DbType.Single, AHU_00RF.AHU09_00RF05);
+                            Db.AddInParameter(cmd, "AHU10_00RF05", DbType.Single, AHU_00RF.AHU10_00RF05);
+                            Db.AddInParameter(cmd, "AHU11_00RF05", DbType.Single, AHU_00RF.AHU11_00RF05);
+                            Db.AddInParameter(cmd, "AHU01_00RF06", DbType.Single, AHU_00RF.AHU01_00RF06);
+                            Db.AddInParameter(cmd, "AHU02_00RF06", DbType.Single, AHU_00RF.AHU02_00RF06);
+                            Db.AddInParameter(cmd, "AHU03_00RF06", DbType.Single, AHU_00RF.AHU03_00RF06);
+                            Db.AddInParameter(cmd, "AHU04_00RF06", DbType.Single, AHU_00RF.AHU04_00RF06);
+                            Db.AddInParameter(cmd, "AHU05_00RF06", DbType.Single, AHU_00RF.AHU05_00RF06);
+                            Db.AddInParameter(cmd, "AHU06_00RF06", DbType.Single, AHU_00RF.AHU06_00RF06);
+                            Db.AddInParameter(cmd, "AHU07_00RF06", DbType.Single, AHU_00RF.AHU07_00RF06);
+                            Db.AddInParameter(cmd, "AHU08_00RF06", DbType.Single, AHU_00RF.AHU08_00RF06);
+                            Db.AddInParameter(cmd, "AHU09_00RF06", DbType.Single, AHU_00RF.AHU09_00RF06);
+                            Db.AddInParameter(cmd, "AHU10_00RF06", DbType.Single, AHU_00RF.AHU10_00RF06);
+                            Db.AddInParameter(cmd, "AHU11_00RF06", DbType.Single, AHU_00RF.AHU11_00RF06);
+                            Db.AddInParameter(cmd, "AHU01_00RF07", DbType.Single, AHU_00RF.AHU01_00RF07);
+                            Db.AddInParameter(cmd, "AHU02_00RF07", DbType.Single, AHU_00RF.AHU02_00RF07);
+                            Db.AddInParameter(cmd, "AHU03_00RF07", DbType.Single, AHU_00RF.AHU03_00RF07);
+                            Db.AddInParameter(cmd, "AHU04_00RF07", DbType.Single, AHU_00RF.AHU04_00RF07);
+                            Db.AddInParameter(cmd, "AHU05_00RF07", DbType.Single, AHU_00RF.AHU05_00RF07);
+                            Db.AddInParameter(cmd, "AHU06_00RF07", DbType.Single, AHU_00RF.AHU06_00RF07);
+                            Db.AddInParameter(cmd, "AHU07_00RF07", DbType.Single, AHU_00RF.AHU07_00RF07);
+                            Db.AddInParameter(cmd, "AHU08_00RF07", DbType.Single, AHU_00RF.AHU08_00RF07);
+                            Db.AddInParameter(cmd, "AHU09_00RF07", DbType.Single, AHU_00RF.AHU09_00RF07);
+                            Db.AddInParameter(cmd, "AHU10_00RF07", DbType.Single, AHU_00RF.AHU10_00RF07);
+                            Db.AddInParameter(cmd, "AHU11_00RF07", DbType.Single, AHU_00RF.AHU11_00RF07);
+                            Db.AddInParameter(cmd, "AHU01_00RF08", DbType.Single, AHU_00RF.AHU01_00RF08);
+                            Db.AddInParameter(cmd, "AHU02_00RF08", DbType.Single, AHU_00RF.AHU02_00RF08);
+                            Db.AddInParameter(cmd, "AHU03_00RF08", DbType.Single, AHU_00RF.AHU03_00RF08);
+                            Db.AddInParameter(cmd, "AHU04_00RF08", DbType.Single, AHU_00RF.AHU04_00RF08);
+                            Db.AddInParameter(cmd, "AHU05_00RF08", DbType.Single, AHU_00RF.AHU05_00RF08);
+                            Db.AddInParameter(cmd, "AHU06_00RF08", DbType.Single, AHU_00RF.AHU06_00RF08);
+                            Db.AddInParameter(cmd, "AHU07_00RF08", DbType.Single, AHU_00RF.AHU07_00RF08);
+                            Db.AddInParameter(cmd, "AHU08_00RF08", DbType.Single, AHU_00RF.AHU08_00RF08);
+                            Db.AddInParameter(cmd, "AHU09_00RF08", DbType.Single, AHU_00RF.AHU09_00RF08);
+                            Db.AddInParameter(cmd, "AHU10_00RF08", DbType.Single, AHU_00RF.AHU10_00RF08);
+                            Db.AddInParameter(cmd, "AHU11_00RF08", DbType.Single, AHU_00RF.AHU11_00RF08);
+                            Db.AddInParameter(cmd, "AHU01_00RF09", DbType.Single, AHU_00RF.AHU01_00RF09);
+                            Db.AddInParameter(cmd, "AHU02_00RF09", DbType.Single, AHU_00RF.AHU02_00RF09);
+                            Db.AddInParameter(cmd, "AHU03_00RF09", DbType.Single, AHU_00RF.AHU03_00RF09);
+                            Db.AddInParameter(cmd, "AHU04_00RF09", DbType.Single, AHU_00RF.AHU04_00RF09);
+                            Db.AddInParameter(cmd, "AHU05_00RF09", DbType.Single, AHU_00RF.AHU05_00RF09);
+                            Db.AddInParameter(cmd, "AHU06_00RF09", DbType.Single, AHU_00RF.AHU06_00RF09);
+                            Db.AddInParameter(cmd, "AHU07_00RF09", DbType.Single, AHU_00RF.AHU07_00RF09);
+                            Db.AddInParameter(cmd, "AHU08_00RF09", DbType.Single, AHU_00RF.AHU08_00RF09);
+                            Db.AddInParameter(cmd, "AHU09_00RF09", DbType.Single, AHU_00RF.AHU09_00RF09);
+                            Db.AddInParameter(cmd, "AHU10_00RF09", DbType.Single, AHU_00RF.AHU10_00RF09);
+                            Db.AddInParameter(cmd, "AHU11_00RF09", DbType.Single, AHU_00RF.AHU11_00RF09);
+                            #endregion
+                            affected = Db.ExecuteNonQuery(cmd);
+                        }
                     }
-                }
 
+                    scop.Complete();
+                }
             }
             catch (Exception ex)
             {
@@ -446,7 +410,6 @@ IF NOT EXISTS (SELECT 1 FROM AHU_0RF WHERE AUTOID = @AUTOID)
         public bool WriteBufferForAHU_014F(AHU_014F AHU_014F)
         {
             int affected = 0;
-            string sql;
             try
             {
                 using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
@@ -454,9 +417,7 @@ IF NOT EXISTS (SELECT 1 FROM AHU_0RF WHERE AUTOID = @AUTOID)
                     using (DbConnection conn = Db.CreateConnection())
                     {
                         conn.Open();
-                        using (DbCommand cmd = conn.CreateCommand())
-                        {
-                            sql = @"
+                        string sql = @"
 IF NOT EXISTS (SELECT 1 FROM AHU_14F WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
     BEGIN
         INSERT INTO AHU_14F (AUTOID, DATETIME, ACTIVE
@@ -495,6 +456,8 @@ IF NOT EXISTS (SELECT 1 FROM AHU_14F WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
             ,@AHU01_014F16,@AHU02_014F16,@AHU03_014F16,@AHU04_014F16,@AHU05_014F16,@AHU06_014F16,@AHU07_014F16,@AHU08_014F16,@AHU09_014F16,@AHU10_014F16,@AHU11_014F16)
     END
 ";
+                        using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                        {
                             #region 參數
                             Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_014F.AUTOID);
                             Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, AHU_014F.DATETIME);
@@ -679,8 +642,9 @@ IF NOT EXISTS (SELECT 1 FROM AHU_14F WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
                             affected = Db.ExecuteNonQuery(cmd);
                         }
                     }
+
+                    scop.Complete();
                 }
-                
             }
             catch (Exception ex)
             {
@@ -693,32 +657,17 @@ IF NOT EXISTS (SELECT 1 FROM AHU_14F WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
 
         public bool WriteBufferForAHU_S03F(AHU_S03F AHU_S03F)
         {
-            
             int affected = 0;
-            string sql;
             try
             {
-                bool exist = false;
-
-                sql = @"
-SELECT 1 FROM AHU_S03 WHERE AUTOID=@AUTOID
-";
-                using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
                 {
-                    Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_S03F.AUTOID);
-                    using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                    using (DbConnection conn = Db.CreateConnection())
                     {
-                        if (reader.Read())
-                        {
-                            exist = true;
-                        }
-                    }
-                }
+                        conn.Open();
 
-                if (!exist)
-                {
-                    sql = @"
-IF NOT EXISTS (SELECT 1 FROM AHU_S03 WHERE AUTOID = @AUTOID)
+                        string sql = @"
+IF NOT EXISTS (SELECT 1 FROM AHU_S03 WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
     BEGIN
         INSERT INTO AHU_S03 (AUTOID,DATETIME,ACTIVE
             ,AHU01_S03F01,AHU02_S03F01,AHU03_S03F01,AHU04_S03F01,AHU05_S03F01,AHU06_S03F01,AHU07_S03F01,AHU08_S03F01,AHU09_S03F01,AHU10_S03F01,AHU11_S03F01)
@@ -726,64 +675,52 @@ IF NOT EXISTS (SELECT 1 FROM AHU_S03 WHERE AUTOID = @AUTOID)
             ,@AHU01_S03F01,@AHU02_S03F01,@AHU03_S03F01,@AHU04_S03F01,@AHU05_S03F01,@AHU06_S03F01,@AHU07_S03F01,@AHU08_S03F01,@AHU09_S03F01,@AHU10_S03F01,@AHU11_S03F01)
     END
 ";
-                    using (DbCommand cmd = Db.GetSqlStringCommand(sql))
-                    {
-                        Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_S03F.AUTOID);
-                        Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, AHU_S03F.DATETIME);
-                        Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
-                        Db.AddInParameter(cmd, "AHU01_S03F01", DbType.Single, AHU_S03F.AHU01_S03F01);
-                        Db.AddInParameter(cmd, "AHU02_S03F01", DbType.Single, AHU_S03F.AHU02_S03F01);
-                        Db.AddInParameter(cmd, "AHU03_S03F01", DbType.Single, AHU_S03F.AHU03_S03F01);
-                        Db.AddInParameter(cmd, "AHU04_S03F01", DbType.Single, AHU_S03F.AHU04_S03F01);
-                        Db.AddInParameter(cmd, "AHU05_S03F01", DbType.Single, AHU_S03F.AHU05_S03F01);
-                        Db.AddInParameter(cmd, "AHU06_S03F01", DbType.Single, AHU_S03F.AHU06_S03F01);
-                        Db.AddInParameter(cmd, "AHU07_S03F01", DbType.Single, AHU_S03F.AHU07_S03F01);
-                        Db.AddInParameter(cmd, "AHU08_S03F01", DbType.Single, AHU_S03F.AHU08_S03F01);
-                        Db.AddInParameter(cmd, "AHU09_S03F01", DbType.Single, AHU_S03F.AHU09_S03F01);
-                        Db.AddInParameter(cmd, "AHU10_S03F01", DbType.Single, AHU_S03F.AHU10_S03F01);
-                        Db.AddInParameter(cmd, "AHU11_S03F01", DbType.Single, AHU_S03F.AHU11_S03F01);
+                        using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                        {
+                            Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_S03F.AUTOID);
+                            Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, AHU_S03F.DATETIME);
+                            Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
+                            Db.AddInParameter(cmd, "AHU01_S03F01", DbType.Single, AHU_S03F.AHU01_S03F01);
+                            Db.AddInParameter(cmd, "AHU02_S03F01", DbType.Single, AHU_S03F.AHU02_S03F01);
+                            Db.AddInParameter(cmd, "AHU03_S03F01", DbType.Single, AHU_S03F.AHU03_S03F01);
+                            Db.AddInParameter(cmd, "AHU04_S03F01", DbType.Single, AHU_S03F.AHU04_S03F01);
+                            Db.AddInParameter(cmd, "AHU05_S03F01", DbType.Single, AHU_S03F.AHU05_S03F01);
+                            Db.AddInParameter(cmd, "AHU06_S03F01", DbType.Single, AHU_S03F.AHU06_S03F01);
+                            Db.AddInParameter(cmd, "AHU07_S03F01", DbType.Single, AHU_S03F.AHU07_S03F01);
+                            Db.AddInParameter(cmd, "AHU08_S03F01", DbType.Single, AHU_S03F.AHU08_S03F01);
+                            Db.AddInParameter(cmd, "AHU09_S03F01", DbType.Single, AHU_S03F.AHU09_S03F01);
+                            Db.AddInParameter(cmd, "AHU10_S03F01", DbType.Single, AHU_S03F.AHU10_S03F01);
+                            Db.AddInParameter(cmd, "AHU11_S03F01", DbType.Single, AHU_S03F.AHU11_S03F01);
 
-                        affected = Db.ExecuteNonQuery(cmd);
+                            affected = Db.ExecuteNonQuery(cmd);
+                        }
                     }
-                }
 
+                    scop.Complete();
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
+
                 throw;
             }
-           
+
             return affected > 0;
         }
 
         public bool WriteBufferForAHU_SB1F(AHU_SB1F AHU_SB1F)
         {
             int affected = 0;
-            string sql;
             try
             {
-                bool exist = false;
-
-                sql = @"
-SELECT 1 FROM AHU_SB1 WHERE AUTOID=@AUTOID
-";
-                using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
                 {
-                    Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_SB1F.AUTOID);
-                    using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                    using (DbConnection conn = Db.CreateConnection())
                     {
-                        if (reader.Read())
-                        {
-                            exist = true;
-                        }
-                    }
-                }
+                        conn.Open();
 
-                if (!exist)
-                {
-                    sql = @"
-IF NOT EXISTS (SELECT 1 FROM AHU_SB1 WHERE AUTOID = @AUTOID)
+                        string sql = @"
+IF NOT EXISTS (SELECT 1 FROM AHU_SB1 WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
     BEGIN
         INSERT INTO AHU_SB1 (AUTOID,DATETIME,ACTIVE
             ,AHU01_SB1F01,AHU02_SB1F01,AHU03_SB1F01,AHU04_SB1F01,AHU05_SB1F01,AHU06_SB1F01,AHU07_SB1F01,AHU08_SB1F01,AHU09_SB1F01,AHU10_SB1F01,AHU11_SB1F01
@@ -793,39 +730,41 @@ IF NOT EXISTS (SELECT 1 FROM AHU_SB1 WHERE AUTOID = @AUTOID)
             ,@AHU01_SB1F02,@AHU02_SB1F02,@AHU03_SB1F02,@AHU04_SB1F02,@AHU05_SB1F02,@AHU06_SB1F02,@AHU07_SB1F02,@AHU08_SB1F02,@AHU09_SB1F02,@AHU10_SB1F02,@AHU11_SB1F02)
     END
 ";
-                    using (DbCommand cmd = Db.GetSqlStringCommand(sql))
-                    {
-                        #region 參數
-                        Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_SB1F.AUTOID);
-                        Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, AHU_SB1F.DATETIME);
-                        Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
-                        Db.AddInParameter(cmd, "AHU01_SB1F01", DbType.Single, AHU_SB1F.AHU01_SB1F01);
-                        Db.AddInParameter(cmd, "AHU02_SB1F01", DbType.Single, AHU_SB1F.AHU02_SB1F01);
-                        Db.AddInParameter(cmd, "AHU03_SB1F01", DbType.Single, AHU_SB1F.AHU03_SB1F01);
-                        Db.AddInParameter(cmd, "AHU04_SB1F01", DbType.Single, AHU_SB1F.AHU04_SB1F01);
-                        Db.AddInParameter(cmd, "AHU05_SB1F01", DbType.Single, AHU_SB1F.AHU05_SB1F01);
-                        Db.AddInParameter(cmd, "AHU06_SB1F01", DbType.Single, AHU_SB1F.AHU06_SB1F01);
-                        Db.AddInParameter(cmd, "AHU07_SB1F01", DbType.Single, AHU_SB1F.AHU07_SB1F01);
-                        Db.AddInParameter(cmd, "AHU08_SB1F01", DbType.Single, AHU_SB1F.AHU08_SB1F01);
-                        Db.AddInParameter(cmd, "AHU09_SB1F01", DbType.Single, AHU_SB1F.AHU09_SB1F01);
-                        Db.AddInParameter(cmd, "AHU10_SB1F01", DbType.Single, AHU_SB1F.AHU10_SB1F01);
-                        Db.AddInParameter(cmd, "AHU11_SB1F01", DbType.Single, AHU_SB1F.AHU11_SB1F01);
-                        Db.AddInParameter(cmd, "AHU01_SB1F02", DbType.Single, AHU_SB1F.AHU01_SB1F02);
-                        Db.AddInParameter(cmd, "AHU02_SB1F02", DbType.Single, AHU_SB1F.AHU02_SB1F02);
-                        Db.AddInParameter(cmd, "AHU03_SB1F02", DbType.Single, AHU_SB1F.AHU03_SB1F02);
-                        Db.AddInParameter(cmd, "AHU04_SB1F02", DbType.Single, AHU_SB1F.AHU04_SB1F02);
-                        Db.AddInParameter(cmd, "AHU05_SB1F02", DbType.Single, AHU_SB1F.AHU05_SB1F02);
-                        Db.AddInParameter(cmd, "AHU06_SB1F02", DbType.Single, AHU_SB1F.AHU06_SB1F02);
-                        Db.AddInParameter(cmd, "AHU07_SB1F02", DbType.Single, AHU_SB1F.AHU07_SB1F02);
-                        Db.AddInParameter(cmd, "AHU08_SB1F02", DbType.Single, AHU_SB1F.AHU08_SB1F02);
-                        Db.AddInParameter(cmd, "AHU09_SB1F02", DbType.Single, AHU_SB1F.AHU09_SB1F02);
-                        Db.AddInParameter(cmd, "AHU10_SB1F02", DbType.Single, AHU_SB1F.AHU10_SB1F02);
-                        Db.AddInParameter(cmd, "AHU11_SB1F02", DbType.Single, AHU_SB1F.AHU11_SB1F02);
-                        #endregion
-                        affected = Db.ExecuteNonQuery(cmd);
+                        using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                        {
+                            #region 參數
+                            Db.AddInParameter(cmd, "AUTOID", DbType.Int32, AHU_SB1F.AUTOID);
+                            Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, AHU_SB1F.DATETIME);
+                            Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
+                            Db.AddInParameter(cmd, "AHU01_SB1F01", DbType.Single, AHU_SB1F.AHU01_SB1F01);
+                            Db.AddInParameter(cmd, "AHU02_SB1F01", DbType.Single, AHU_SB1F.AHU02_SB1F01);
+                            Db.AddInParameter(cmd, "AHU03_SB1F01", DbType.Single, AHU_SB1F.AHU03_SB1F01);
+                            Db.AddInParameter(cmd, "AHU04_SB1F01", DbType.Single, AHU_SB1F.AHU04_SB1F01);
+                            Db.AddInParameter(cmd, "AHU05_SB1F01", DbType.Single, AHU_SB1F.AHU05_SB1F01);
+                            Db.AddInParameter(cmd, "AHU06_SB1F01", DbType.Single, AHU_SB1F.AHU06_SB1F01);
+                            Db.AddInParameter(cmd, "AHU07_SB1F01", DbType.Single, AHU_SB1F.AHU07_SB1F01);
+                            Db.AddInParameter(cmd, "AHU08_SB1F01", DbType.Single, AHU_SB1F.AHU08_SB1F01);
+                            Db.AddInParameter(cmd, "AHU09_SB1F01", DbType.Single, AHU_SB1F.AHU09_SB1F01);
+                            Db.AddInParameter(cmd, "AHU10_SB1F01", DbType.Single, AHU_SB1F.AHU10_SB1F01);
+                            Db.AddInParameter(cmd, "AHU11_SB1F01", DbType.Single, AHU_SB1F.AHU11_SB1F01);
+                            Db.AddInParameter(cmd, "AHU01_SB1F02", DbType.Single, AHU_SB1F.AHU01_SB1F02);
+                            Db.AddInParameter(cmd, "AHU02_SB1F02", DbType.Single, AHU_SB1F.AHU02_SB1F02);
+                            Db.AddInParameter(cmd, "AHU03_SB1F02", DbType.Single, AHU_SB1F.AHU03_SB1F02);
+                            Db.AddInParameter(cmd, "AHU04_SB1F02", DbType.Single, AHU_SB1F.AHU04_SB1F02);
+                            Db.AddInParameter(cmd, "AHU05_SB1F02", DbType.Single, AHU_SB1F.AHU05_SB1F02);
+                            Db.AddInParameter(cmd, "AHU06_SB1F02", DbType.Single, AHU_SB1F.AHU06_SB1F02);
+                            Db.AddInParameter(cmd, "AHU07_SB1F02", DbType.Single, AHU_SB1F.AHU07_SB1F02);
+                            Db.AddInParameter(cmd, "AHU08_SB1F02", DbType.Single, AHU_SB1F.AHU08_SB1F02);
+                            Db.AddInParameter(cmd, "AHU09_SB1F02", DbType.Single, AHU_SB1F.AHU09_SB1F02);
+                            Db.AddInParameter(cmd, "AHU10_SB1F02", DbType.Single, AHU_SB1F.AHU10_SB1F02);
+                            Db.AddInParameter(cmd, "AHU11_SB1F02", DbType.Single, AHU_SB1F.AHU11_SB1F02);
+                            #endregion
+                            affected = Db.ExecuteNonQuery(cmd);
+                        }
                     }
-                }
 
+                    scop.Complete();
+                }
             }
             catch (Exception ex)
             {

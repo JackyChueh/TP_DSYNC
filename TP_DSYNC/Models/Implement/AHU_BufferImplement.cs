@@ -775,5 +775,269 @@ IF NOT EXISTS (SELECT 1 FROM AHU_SB1 WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
             return affected > 0;
         }
 
+        public bool WriteBufferForChiller(Chiller Chiller)
+        {
+            int affected = 0;
+            try
+            {
+                using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
+                {
+                    using (DbConnection conn = Db.CreateConnection())
+                    {
+                        conn.Open();
+
+                        string sql = @"
+IF NOT EXISTS (SELECT 1 FROM Chiller WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
+    BEGIN
+        INSERT INTO Chiller (AUTOID,DATETIME,ACTIVE
+            ,Chiller01_R1,Chiller02_R1,Chiller03_R1,Chiller04_R1,Chiller05_R1,Chiller06_R1,Chiller07_R1,Chiller08_R1,Chiller09_R1,Chiller10_R1
+            ,Chiller01_R2,Chiller02_R2,Chiller03_R2,Chiller04_R2,Chiller05_R2,Chiller06_R2,Chiller07_R2,Chiller08_R2,Chiller09_R2,Chiller10_R2
+            ,Chiller01_R3,Chiller02_R3,Chiller03_R3,Chiller04_R3,Chiller05_R3,Chiller06_R3,Chiller07_R3,Chiller08_R3,Chiller09_R3,Chiller10_R3
+            ,Chiller01_R6,Chiller02_R6,Chiller03_R6,Chiller04_R6,Chiller05_R6,Chiller06_R6,Chiller07_R6,Chiller08_R6,Chiller09_R6,Chiller10_R6)
+        VALUES (@AUTOID,@DATETIME,@ACTIVE
+            ,@Chiller01_R1,@Chiller02_R1,@Chiller03_R1,@Chiller04_R1,@Chiller05_R1,@Chiller06_R1,@Chiller07_R1,@Chiller08_R1,@Chiller09_R1,@Chiller10_R1
+            ,@Chiller01_R2,@Chiller02_R2,@Chiller03_R2,@Chiller04_R2,@Chiller05_R2,@Chiller06_R2,@Chiller07_R2,@Chiller08_R2,@Chiller09_R2,@Chiller10_R2
+            ,@Chiller01_R3,@Chiller02_R3,@Chiller03_R3,@Chiller04_R3,@Chiller05_R3,@Chiller06_R3,@Chiller07_R3,@Chiller08_R3,@Chiller09_R3,@Chiller10_R3
+            ,@Chiller01_R6,@Chiller02_R6,@Chiller03_R6,@Chiller04_R6,@Chiller05_R6,@Chiller06_R6,@Chiller07_R6,@Chiller08_R6,@Chiller09_R6,@Chiller10_R6)
+    END
+";
+                        using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                        {
+                            #region 參數
+                            Db.AddInParameter(cmd, "AUTOID", DbType.Int32, Chiller.AUTOID);
+                            Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, Chiller.DATETIME);
+                            Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
+                            Db.AddInParameter(cmd, "Chiller01_R1", DbType.Single, Chiller.Chiller01_R1);
+                            Db.AddInParameter(cmd, "Chiller02_R1", DbType.Single, Chiller.Chiller02_R1);
+                            Db.AddInParameter(cmd, "Chiller03_R1", DbType.Single, Chiller.Chiller03_R1);
+                            Db.AddInParameter(cmd, "Chiller04_R1", DbType.Single, Chiller.Chiller04_R1);
+                            Db.AddInParameter(cmd, "Chiller05_R1", DbType.Single, Chiller.Chiller05_R1);
+                            Db.AddInParameter(cmd, "Chiller06_R1", DbType.Single, Chiller.Chiller06_R1);
+                            Db.AddInParameter(cmd, "Chiller07_R1", DbType.Single, Chiller.Chiller07_R1);
+                            Db.AddInParameter(cmd, "Chiller08_R1", DbType.Single, Chiller.Chiller08_R1);
+                            Db.AddInParameter(cmd, "Chiller09_R1", DbType.Single, Chiller.Chiller09_R1);
+                            Db.AddInParameter(cmd, "Chiller10_R1", DbType.Single, Chiller.Chiller10_R1);
+                            Db.AddInParameter(cmd, "Chiller01_R2", DbType.Single, Chiller.Chiller01_R2);
+                            Db.AddInParameter(cmd, "Chiller02_R2", DbType.Single, Chiller.Chiller02_R2);
+                            Db.AddInParameter(cmd, "Chiller03_R2", DbType.Single, Chiller.Chiller03_R2);
+                            Db.AddInParameter(cmd, "Chiller04_R2", DbType.Single, Chiller.Chiller04_R2);
+                            Db.AddInParameter(cmd, "Chiller05_R2", DbType.Single, Chiller.Chiller05_R2);
+                            Db.AddInParameter(cmd, "Chiller06_R2", DbType.Single, Chiller.Chiller06_R2);
+                            Db.AddInParameter(cmd, "Chiller07_R2", DbType.Single, Chiller.Chiller07_R2);
+                            Db.AddInParameter(cmd, "Chiller08_R2", DbType.Single, Chiller.Chiller08_R2);
+                            Db.AddInParameter(cmd, "Chiller09_R2", DbType.Single, Chiller.Chiller09_R2);
+                            Db.AddInParameter(cmd, "Chiller10_R2", DbType.Single, Chiller.Chiller10_R2);
+                            Db.AddInParameter(cmd, "Chiller01_R3", DbType.Single, Chiller.Chiller01_R3);
+                            Db.AddInParameter(cmd, "Chiller02_R3", DbType.Single, Chiller.Chiller02_R3);
+                            Db.AddInParameter(cmd, "Chiller03_R3", DbType.Single, Chiller.Chiller03_R3);
+                            Db.AddInParameter(cmd, "Chiller04_R3", DbType.Single, Chiller.Chiller04_R3);
+                            Db.AddInParameter(cmd, "Chiller05_R3", DbType.Single, Chiller.Chiller05_R3);
+                            Db.AddInParameter(cmd, "Chiller06_R3", DbType.Single, Chiller.Chiller06_R3);
+                            Db.AddInParameter(cmd, "Chiller07_R3", DbType.Single, Chiller.Chiller07_R3);
+                            Db.AddInParameter(cmd, "Chiller08_R3", DbType.Single, Chiller.Chiller08_R3);
+                            Db.AddInParameter(cmd, "Chiller09_R3", DbType.Single, Chiller.Chiller09_R3);
+                            Db.AddInParameter(cmd, "Chiller10_R3", DbType.Single, Chiller.Chiller10_R3);
+                            Db.AddInParameter(cmd, "Chiller01_R6", DbType.Single, Chiller.Chiller01_R6);
+                            Db.AddInParameter(cmd, "Chiller02_R6", DbType.Single, Chiller.Chiller02_R6);
+                            Db.AddInParameter(cmd, "Chiller03_R6", DbType.Single, Chiller.Chiller03_R6);
+                            Db.AddInParameter(cmd, "Chiller04_R6", DbType.Single, Chiller.Chiller04_R6);
+                            Db.AddInParameter(cmd, "Chiller05_R6", DbType.Single, Chiller.Chiller05_R6);
+                            Db.AddInParameter(cmd, "Chiller06_R6", DbType.Single, Chiller.Chiller06_R6);
+                            Db.AddInParameter(cmd, "Chiller07_R6", DbType.Single, Chiller.Chiller07_R6);
+                            Db.AddInParameter(cmd, "Chiller08_R6", DbType.Single, Chiller.Chiller08_R6);
+                            Db.AddInParameter(cmd, "Chiller09_R6", DbType.Single, Chiller.Chiller09_R6);
+                            Db.AddInParameter(cmd, "Chiller10_R6", DbType.Single, Chiller.Chiller10_R6);
+                            #endregion
+                            affected = Db.ExecuteNonQuery(cmd);
+                        }
+                    }
+
+                    scop.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return affected > 0;
+        }
+
+        public bool WriteBufferForCOP(COP COP)
+        {
+            int affected = 0;
+            try
+            {
+                using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
+                {
+                    using (DbConnection conn = Db.CreateConnection())
+                    {
+                        conn.Open();
+
+                        string sql = @"
+IF NOT EXISTS (SELECT 1 FROM COP WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
+    BEGIN
+        INSERT INTO COP (AUTOID,DATETIME,ACTIVE
+            ,COP01_001,COP02_001,COP03_001,COP04_001,COP05_001
+            ,COP01_002,COP02_002,COP03_002,COP04_002,COP05_002
+            ,COP01_003,COP02_003,COP03_003,COP04_003,COP05_003
+            ,COP01_006,COP02_006,COP03_006,COP04_006,COP05_006
+            ,COP01_12S,COP02_12S,COP03_12S,COP04_12S,COP05_12S
+            ,COP01_03S,COP02_03S,COP03_03S,COP04_03S,COP05_03S
+            ,COP01_06S,COP02_06S,COP03_06S,COP04_06S,COP05_06S)
+        VALUES (@AUTOID,@DATETIME,@ACTIVE
+            ,@COP01_001,@COP02_001,@COP03_001,@COP04_001,@COP05_001
+            ,@COP01_002,@COP02_002,@COP03_002,@COP04_002,@COP05_002
+            ,@COP01_003,@COP02_003,@COP03_003,@COP04_003,@COP05_003
+            ,@COP01_006,@COP02_006,@COP03_006,@COP04_006,@COP05_006
+            ,@COP01_12S,@COP02_12S,@COP03_12S,@COP04_12S,@COP05_12S
+            ,@COP01_03S,@COP02_03S,@COP03_03S,@COP04_03S,@COP05_03S
+            ,@COP01_06S,@COP02_06S,@COP03_06S,@COP04_06S,@COP05_06S)
+    END
+";
+                        using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                        {
+                            #region 參數
+                            Db.AddInParameter(cmd, "AUTOID", DbType.Int32, COP.AUTOID);
+                            Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, COP.DATETIME);
+                            Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
+                            Db.AddInParameter(cmd, "COP01_001", DbType.Single, COP.COP01_001);
+                            Db.AddInParameter(cmd, "COP02_001", DbType.Single, COP.COP02_001);
+                            Db.AddInParameter(cmd, "COP03_001", DbType.Single, COP.COP03_001);
+                            Db.AddInParameter(cmd, "COP04_001", DbType.Single, COP.COP04_001);
+                            Db.AddInParameter(cmd, "COP05_001", DbType.Single, COP.COP05_001);
+                            Db.AddInParameter(cmd, "COP01_002", DbType.Single, COP.COP01_002);
+                            Db.AddInParameter(cmd, "COP02_002", DbType.Single, COP.COP02_002);
+                            Db.AddInParameter(cmd, "COP03_002", DbType.Single, COP.COP03_002);
+                            Db.AddInParameter(cmd, "COP04_002", DbType.Single, COP.COP04_002);
+                            Db.AddInParameter(cmd, "COP05_002", DbType.Single, COP.COP05_002);
+                            Db.AddInParameter(cmd, "COP01_003", DbType.Single, COP.COP01_003);
+                            Db.AddInParameter(cmd, "COP02_003", DbType.Single, COP.COP02_003);
+                            Db.AddInParameter(cmd, "COP03_003", DbType.Single, COP.COP03_003);
+                            Db.AddInParameter(cmd, "COP04_003", DbType.Single, COP.COP04_003);
+                            Db.AddInParameter(cmd, "COP05_003", DbType.Single, COP.COP05_003);
+                            Db.AddInParameter(cmd, "COP01_006", DbType.Single, COP.COP01_006);
+                            Db.AddInParameter(cmd, "COP02_006", DbType.Single, COP.COP02_006);
+                            Db.AddInParameter(cmd, "COP03_006", DbType.Single, COP.COP03_006);
+                            Db.AddInParameter(cmd, "COP04_006", DbType.Single, COP.COP04_006);
+                            Db.AddInParameter(cmd, "COP05_006", DbType.Single, COP.COP05_006);
+                            Db.AddInParameter(cmd, "COP01_12S", DbType.Single, COP.COP01_12S);
+                            Db.AddInParameter(cmd, "COP02_12S", DbType.Single, COP.COP02_12S);
+                            Db.AddInParameter(cmd, "COP03_12S", DbType.Single, COP.COP03_12S);
+                            Db.AddInParameter(cmd, "COP04_12S", DbType.Single, COP.COP04_12S);
+                            Db.AddInParameter(cmd, "COP05_12S", DbType.Single, COP.COP05_12S);
+                            Db.AddInParameter(cmd, "COP01_03S", DbType.Single, COP.COP01_03S);
+                            Db.AddInParameter(cmd, "COP02_03S", DbType.Single, COP.COP02_03S);
+                            Db.AddInParameter(cmd, "COP03_03S", DbType.Single, COP.COP03_03S);
+                            Db.AddInParameter(cmd, "COP04_03S", DbType.Single, COP.COP04_03S);
+                            Db.AddInParameter(cmd, "COP05_03S", DbType.Single, COP.COP05_03S);
+                            Db.AddInParameter(cmd, "COP01_06S", DbType.Single, COP.COP01_06S);
+                            Db.AddInParameter(cmd, "COP02_06S", DbType.Single, COP.COP02_06S);
+                            Db.AddInParameter(cmd, "COP03_06S", DbType.Single, COP.COP03_06S);
+                            Db.AddInParameter(cmd, "COP04_06S", DbType.Single, COP.COP04_06S);
+                            Db.AddInParameter(cmd, "COP05_06S", DbType.Single, COP.COP05_06S);
+                            #endregion
+                            affected = Db.ExecuteNonQuery(cmd);
+                        }
+                    }
+
+                    scop.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return affected > 0;
+        }
+
+        public bool WriteBufferForCP(CP CP)
+        {
+            int affected = 0;
+            try
+            {
+                using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
+                {
+                    using (DbConnection conn = Db.CreateConnection())
+                    {
+                        conn.Open();
+
+                        string sql = @"
+IF NOT EXISTS (SELECT 1 FROM CP WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
+    BEGIN
+        INSERT INTO CP (AUTOID,DATETIME,ACTIVE
+            ,CP01_01,CP02_01,CP03_01,CP04_01,CP05_01,CP06_01,CP07_01
+            ,CP01_02,CP02_02,CP03_02,CP04_02,CP05_02,CP06_02,CP07_02
+            ,CP01_03,CP02_03,CP03_03,CP04_03,CP05_03,CP06_03,CP07_03
+            ,CP01_06,CP02_06,CP03_06,CP04_06,CP05_06,CP06_06,CP07_06
+            ,CP01_0S,CP02_0S,CP03_0S,CP04_0S,CP05_0S,CP06_0S,CP07_0S)
+        VALUES (@AUTOID,@DATETIME,@ACTIVE
+            ,@CP01_01,@CP02_01,@CP03_01,@CP04_01,@CP05_01,@CP06_01,@CP07_01
+            ,@CP01_02,@CP02_02,@CP03_02,@CP04_02,@CP05_02,@CP06_02,@CP07_02
+            ,@CP01_03,@CP02_03,@CP03_03,@CP04_03,@CP05_03,@CP06_03,@CP07_03
+            ,@CP01_06,@CP02_06,@CP03_06,@CP04_06,@CP05_06,@CP06_06,@CP07_06
+            ,@CP01_0S,@CP02_0S,@CP03_0S,@CP04_0S,@CP05_0S,@CP06_0S,@CP07_0S)
+    END
+";
+                        using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                        {
+                            #region 參數
+                            Db.AddInParameter(cmd, "AUTOID", DbType.Int32, CP.AUTOID);
+                            Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, CP.DATETIME);
+                            Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
+                            Db.AddInParameter(cmd, "CP01_01", DbType.Single, CP.CP01_01);
+                            Db.AddInParameter(cmd, "CP02_01", DbType.Single, CP.CP02_01);
+                            Db.AddInParameter(cmd, "CP03_01", DbType.Single, CP.CP03_01);
+                            Db.AddInParameter(cmd, "CP04_01", DbType.Single, CP.CP04_01);
+                            Db.AddInParameter(cmd, "CP05_01", DbType.Single, CP.CP05_01);
+                            Db.AddInParameter(cmd, "CP06_01", DbType.Single, CP.CP06_01);
+                            Db.AddInParameter(cmd, "CP07_01", DbType.Single, CP.CP07_01);
+                            Db.AddInParameter(cmd, "CP01_02", DbType.Single, CP.CP01_02);
+                            Db.AddInParameter(cmd, "CP02_02", DbType.Single, CP.CP02_02);
+                            Db.AddInParameter(cmd, "CP03_02", DbType.Single, CP.CP03_02);
+                            Db.AddInParameter(cmd, "CP04_02", DbType.Single, CP.CP04_02);
+                            Db.AddInParameter(cmd, "CP05_02", DbType.Single, CP.CP05_02);
+                            Db.AddInParameter(cmd, "CP06_02", DbType.Single, CP.CP06_02);
+                            Db.AddInParameter(cmd, "CP07_02", DbType.Single, CP.CP07_02);
+                            Db.AddInParameter(cmd, "CP01_03", DbType.Single, CP.CP01_03);
+                            Db.AddInParameter(cmd, "CP02_03", DbType.Single, CP.CP02_03);
+                            Db.AddInParameter(cmd, "CP03_03", DbType.Single, CP.CP03_03);
+                            Db.AddInParameter(cmd, "CP04_03", DbType.Single, CP.CP04_03);
+                            Db.AddInParameter(cmd, "CP05_03", DbType.Single, CP.CP05_03);
+                            Db.AddInParameter(cmd, "CP06_03", DbType.Single, CP.CP06_03);
+                            Db.AddInParameter(cmd, "CP07_03", DbType.Single, CP.CP07_03);
+                            Db.AddInParameter(cmd, "CP01_06", DbType.Single, CP.CP01_06);
+                            Db.AddInParameter(cmd, "CP02_06", DbType.Single, CP.CP02_06);
+                            Db.AddInParameter(cmd, "CP03_06", DbType.Single, CP.CP03_06);
+                            Db.AddInParameter(cmd, "CP04_06", DbType.Single, CP.CP04_06);
+                            Db.AddInParameter(cmd, "CP05_06", DbType.Single, CP.CP05_06);
+                            Db.AddInParameter(cmd, "CP06_06", DbType.Single, CP.CP06_06);
+                            Db.AddInParameter(cmd, "CP07_06", DbType.Single, CP.CP07_06);
+                            Db.AddInParameter(cmd, "CP01_0S", DbType.Single, CP.CP01_0S);
+                            Db.AddInParameter(cmd, "CP02_0S", DbType.Single, CP.CP02_0S);
+                            Db.AddInParameter(cmd, "CP03_0S", DbType.Single, CP.CP03_0S);
+                            Db.AddInParameter(cmd, "CP04_0S", DbType.Single, CP.CP04_0S);
+                            Db.AddInParameter(cmd, "CP05_0S", DbType.Single, CP.CP05_0S);
+                            Db.AddInParameter(cmd, "CP06_0S", DbType.Single, CP.CP06_0S);
+                            Db.AddInParameter(cmd, "CP07_0S", DbType.Single, CP.CP07_0S);
+                            #endregion
+                            affected = Db.ExecuteNonQuery(cmd);
+                        }
+                    }
+
+                    scop.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return affected > 0;
+        }
     }
 }

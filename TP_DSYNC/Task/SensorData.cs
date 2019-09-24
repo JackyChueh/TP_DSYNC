@@ -14,7 +14,7 @@ namespace TP_DSYNC.Task
     {
         public static void AHU()
         {
-            bool temp;
+            bool buffer;
             int affected;
             AHU_ReadImplement AHU_ReadImplement = new AHU_ReadImplement("TP_B3");
             AHU_BufferImplement AHU_BufferImplement = new AHU_BufferImplement("TP_B3_BUFFER");
@@ -27,12 +27,14 @@ namespace TP_DSYNC.Task
             AHU_S03F AHU_S03F = AHU_ReadImplement.ReadDataFromAHU_S03F();
             AHU_SB1F AHU_SB1F = AHU_ReadImplement.ReadDataFromAHU_SB1F();
 
-            temp = (AHU_BufferImplement.WriteBufferForAHU_004F(AHU_004F));
-            temp = (AHU_BufferImplement.WriteBufferForAHU_0B1F(AHU_0B1F));
-            temp = (AHU_BufferImplement.WriteBufferForAHU_00RF(AHU_00RF));
-            temp = (AHU_BufferImplement.WriteBufferForAHU_014F(AHU_014F));
-            temp = (AHU_BufferImplement.WriteBufferForAHU_S03F(AHU_S03F));
-            temp = (AHU_BufferImplement.WriteBufferForAHU_SB1F(AHU_SB1F));
+       
+
+            buffer = (AHU_BufferImplement.WriteBufferForAHU_004F(AHU_004F));
+            buffer = (AHU_BufferImplement.WriteBufferForAHU_0B1F(AHU_0B1F));
+            buffer = (AHU_BufferImplement.WriteBufferForAHU_00RF(AHU_00RF));
+            buffer = (AHU_BufferImplement.WriteBufferForAHU_014F(AHU_014F));
+            buffer = (AHU_BufferImplement.WriteBufferForAHU_S03F(AHU_S03F));
+            buffer = (AHU_BufferImplement.WriteBufferForAHU_SB1F(AHU_SB1F));
 
             affected = AHU_WriteImplement.WriteDataForAHU_004F(AHU_004F);
             affected = AHU_WriteImplement.WriteDataForAHU_0B1F(AHU_0B1F);
@@ -41,6 +43,36 @@ namespace TP_DSYNC.Task
             affected = AHU_WriteImplement.WriteDataForAHU_S03F(AHU_S03F);
             affected = AHU_WriteImplement.WriteDataForAHU_SB1F(AHU_SB1F);
 
+
+            Chiller Chiller = AHU_ReadImplement.ReadDataFromChiller();
+            if (Chiller != null)
+            {
+                buffer = (AHU_BufferImplement.WriteBufferForChiller(Chiller));
+                if (buffer)
+                {
+                    affected = AHU_WriteImplement.WriteDataForChiller(Chiller);
+                }
+            }
+
+            COP COP = AHU_ReadImplement.ReadDataFromCOP();
+            if (COP != null)
+            {
+                buffer = (AHU_BufferImplement.WriteBufferForCOP(COP));
+                if (buffer)
+                {
+                    affected = AHU_WriteImplement.WriteDataForCOP(COP);
+                }
+            }
+
+            CP CP = AHU_ReadImplement.ReadDataFromCP();
+            if (CP != null)
+            {
+                buffer = (AHU_BufferImplement.WriteBufferForCP(CP));
+                if (buffer)
+                {
+                    affected = AHU_WriteImplement.WriteDataForCP(CP);
+                }
+            }
             //Log.Write(Thread.CurrentThread.ManagedThreadId.ToString());
             //System.Threading.Thread.Sleep(5000);
             //Log.Write(Thread.CurrentThread.ManagedThreadId.ToString()+ "*");

@@ -693,5 +693,233 @@ SELECT TOP 1 AUTOID, DATETIME
 
             return AHU_SB1;
         }
+
+        public Chiller ReadDataFromChiller()
+        {
+            Chiller Chiller = null;
+            try
+            {
+                string sql = @"
+SELECT TOP 1 AUTOID,DATETIME
+    ,Chiller01_R1,Chiller02_R1,Chiller03_R1,Chiller04_R1,Chiller05_R1,Chiller06_R1,Chiller07_R1,Chiller08_R1,Chiller09_R1,Chiller10_R1
+    ,Chiller01_R2,Chiller02_R2,Chiller03_R2,Chiller04_R2,Chiller05_R2,Chiller06_R2,Chiller07_R2,Chiller08_R2,Chiller09_R2,Chiller10_R2
+    ,Chiller01_R3,Chiller02_R3,Chiller03_R3,Chiller04_R3,Chiller05_R3,Chiller06_R3,Chiller07_R3,Chiller08_R3,Chiller09_R3,Chiller10_R3
+    ,Chiller01_R6,Chiller02_R6,Chiller03_R6,Chiller04_R6,Chiller05_R6,Chiller06_R6,Chiller07_R6,Chiller08_R6,Chiller09_R6,Chiller10_R6
+	FROM Chiller
+    ORDER BY AUTOID DESC
+";
+                using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                {
+                    //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
+                    using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                    {
+                        if (reader.Read())
+                        {
+                            Chiller = new Chiller()
+                            {
+                                AUTOID = (int)reader["AUTOID"],
+                                DATETIME = reader["DATETIME"] as DateTime? ?? null,
+                                Chiller01_R1 = reader["Chiller01_R1"] as Single? ?? null,
+                                Chiller02_R1 = reader["Chiller02_R1"] as Single? ?? null,
+                                Chiller03_R1 = reader["Chiller03_R1"] as Single? ?? null,
+                                Chiller04_R1 = reader["Chiller04_R1"] as Single? ?? null,
+                                Chiller05_R1 = reader["Chiller05_R1"] as Single? ?? null,
+                                Chiller06_R1 = reader["Chiller06_R1"] as Single? ?? null,
+                                Chiller07_R1 = reader["Chiller07_R1"] as Single? ?? null,
+                                Chiller08_R1 = reader["Chiller08_R1"] as Single? ?? null,
+                                Chiller09_R1 = reader["Chiller09_R1"] as Single? ?? null,
+                                Chiller10_R1 = reader["Chiller10_R1"] as Single? ?? null,
+                                Chiller01_R2 = reader["Chiller01_R2"] as Single? ?? null,
+                                Chiller02_R2 = reader["Chiller02_R2"] as Single? ?? null,
+                                Chiller03_R2 = reader["Chiller03_R2"] as Single? ?? null,
+                                Chiller04_R2 = reader["Chiller04_R2"] as Single? ?? null,
+                                Chiller05_R2 = reader["Chiller05_R2"] as Single? ?? null,
+                                Chiller06_R2 = reader["Chiller06_R2"] as Single? ?? null,
+                                Chiller07_R2 = reader["Chiller07_R2"] as Single? ?? null,
+                                Chiller08_R2 = reader["Chiller08_R2"] as Single? ?? null,
+                                Chiller09_R2 = reader["Chiller09_R2"] as Single? ?? null,
+                                Chiller10_R2 = reader["Chiller10_R2"] as Single? ?? null,
+                                Chiller01_R3 = reader["Chiller01_R3"] as Single? ?? null,
+                                Chiller02_R3 = reader["Chiller02_R3"] as Single? ?? null,
+                                Chiller03_R3 = reader["Chiller03_R3"] as Single? ?? null,
+                                Chiller04_R3 = reader["Chiller04_R3"] as Single? ?? null,
+                                Chiller05_R3 = reader["Chiller05_R3"] as Single? ?? null,
+                                Chiller06_R3 = reader["Chiller06_R3"] as Single? ?? null,
+                                Chiller07_R3 = reader["Chiller07_R3"] as Single? ?? null,
+                                Chiller08_R3 = reader["Chiller08_R3"] as Single? ?? null,
+                                Chiller09_R3 = reader["Chiller09_R3"] as Single? ?? null,
+                                Chiller10_R3 = reader["Chiller10_R3"] as Single? ?? null,
+                                Chiller01_R6 = reader["Chiller01_R6"] as Single? ?? null,
+                                Chiller02_R6 = reader["Chiller02_R6"] as Single? ?? null,
+                                Chiller03_R6 = reader["Chiller03_R6"] as Single? ?? null,
+                                Chiller04_R6 = reader["Chiller04_R6"] as Single? ?? null,
+                                Chiller05_R6 = reader["Chiller05_R6"] as Single? ?? null,
+                                Chiller06_R6 = reader["Chiller06_R6"] as Single? ?? null,
+                                Chiller07_R6 = reader["Chiller07_R6"] as Single? ?? null,
+                                Chiller08_R6 = reader["Chiller08_R6"] as Single? ?? null,
+                                Chiller09_R6 = reader["Chiller09_R6"] as Single? ?? null,
+                                Chiller10_R6 = reader["Chiller10_R6"] as Single? ?? null
+                            };
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+
+            return Chiller;
+        }
+
+        public COP ReadDataFromCOP()
+        {
+            COP COP = null;
+            try
+            {
+                string sql = @"
+SELECT TOP 1 AUTOID,DATETIME
+    ,COP01_001,COP02_001,COP03_001,COP04_001,COP05_001
+    ,COP01_002,COP02_002,COP03_002,COP04_002,COP05_002
+    ,COP01_003,COP02_003,COP03_003,COP04_003,COP05_003
+    ,COP01_006,COP02_006,COP03_006,COP04_006,COP05_006
+    ,COP01_12S,COP02_12S,COP03_12S,COP04_12S,COP05_12S
+    ,COP01_03S,COP02_03S,COP03_03S,COP04_03S,COP05_03S
+    ,COP01_06S,COP02_06S,COP03_06S,COP04_06S,COP05_06S
+	FROM COP
+    ORDER BY AUTOID DESC
+";
+                using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                {
+                    //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
+                    using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                    {
+                        if (reader.Read())
+                        {
+                            COP = new COP()
+                            {
+                                AUTOID = (int)reader["AUTOID"],
+                                DATETIME = reader["DATETIME"] as DateTime? ?? null,
+                                COP01_001 = reader["COP01_001"] as Single? ?? null,
+                                COP02_001 = reader["COP02_001"] as Single? ?? null,
+                                COP03_001 = reader["COP03_001"] as Single? ?? null,
+                                COP04_001 = reader["COP04_001"] as Single? ?? null,
+                                COP05_001 = reader["COP05_001"] as Single? ?? null,
+                                COP01_002 = reader["COP01_002"] as Single? ?? null,
+                                COP02_002 = reader["COP02_002"] as Single? ?? null,
+                                COP03_002 = reader["COP03_002"] as Single? ?? null,
+                                COP04_002 = reader["COP04_002"] as Single? ?? null,
+                                COP05_002 = reader["COP05_002"] as Single? ?? null,
+                                COP01_003 = reader["COP01_003"] as Single? ?? null,
+                                COP02_003 = reader["COP02_003"] as Single? ?? null,
+                                COP03_003 = reader["COP03_003"] as Single? ?? null,
+                                COP04_003 = reader["COP04_003"] as Single? ?? null,
+                                COP05_003 = reader["COP05_003"] as Single? ?? null,
+                                COP01_006 = reader["COP01_006"] as Single? ?? null,
+                                COP02_006 = reader["COP02_006"] as Single? ?? null,
+                                COP03_006 = reader["COP03_006"] as Single? ?? null,
+                                COP04_006 = reader["COP04_006"] as Single? ?? null,
+                                COP05_006 = reader["COP05_006"] as Single? ?? null,
+                                COP01_12S = reader["COP01_12S"] as Single? ?? null,
+                                COP02_12S = reader["COP02_12S"] as Single? ?? null,
+                                COP03_12S = reader["COP03_12S"] as Single? ?? null,
+                                COP04_12S = reader["COP04_12S"] as Single? ?? null,
+                                COP05_12S = reader["COP05_12S"] as Single? ?? null,
+                                COP01_03S = reader["COP01_03S"] as Single? ?? null,
+                                COP02_03S = reader["COP02_03S"] as Single? ?? null,
+                                COP03_03S = reader["COP03_03S"] as Single? ?? null,
+                                COP04_03S = reader["COP04_03S"] as Single? ?? null,
+                                COP05_03S = reader["COP05_03S"] as Single? ?? null,
+                                COP01_06S = reader["COP01_06S"] as Single? ?? null,
+                                COP02_06S = reader["COP02_06S"] as Single? ?? null,
+                                COP03_06S = reader["COP03_06S"] as Single? ?? null,
+                                COP04_06S = reader["COP04_06S"] as Single? ?? null,
+                                COP05_06S = reader["COP05_06S"] as Single? ?? null
+                            };
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+
+            return COP;
+        }
+
+        public CP ReadDataFromCP()
+        {
+            CP CP = null;
+            try
+            {
+                string sql = @"
+SELECT TOP 1 AUTOID,DATETIME
+    ,CP01_01,CP02_01,CP03_01,CP04_01,CP05_01,CP06_01,CP07_01
+    ,CP01_02,CP02_02,CP03_02,CP04_02,CP05_02,CP06_02,CP07_02
+    ,CP01_03,CP02_03,CP03_03,CP04_03,CP05_03,CP06_03,CP07_03
+    ,CP01_06,CP02_06,CP03_06,CP04_06,CP05_06,CP06_06,CP07_06
+    ,CP01_0S,CP02_0S,CP03_0S,CP04_0S,CP05_0S,CP06_0S,CP07_0S
+	FROM CP
+    ORDER BY AUTOID DESC
+";
+                using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                {
+                    //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
+                    using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                    {
+                        if (reader.Read())
+                        {
+                            CP = new CP()
+                            {
+                                AUTOID = (int)reader["AUTOID"],
+                                DATETIME = reader["DATETIME"] as DateTime? ?? null,
+                                CP01_01 = reader["CP01_01"] as Single? ?? null,
+                                CP02_01 = reader["CP02_01"] as Single? ?? null,
+                                CP03_01 = reader["CP03_01"] as Single? ?? null,
+                                CP04_01 = reader["CP04_01"] as Single? ?? null,
+                                CP05_01 = reader["CP05_01"] as Single? ?? null,
+                                CP06_01 = reader["CP06_01"] as Single? ?? null,
+                                CP07_01 = reader["CP07_01"] as Single? ?? null,
+                                CP01_02 = reader["CP01_02"] as Single? ?? null,
+                                CP02_02 = reader["CP02_02"] as Single? ?? null,
+                                CP03_02 = reader["CP03_02"] as Single? ?? null,
+                                CP04_02 = reader["CP04_02"] as Single? ?? null,
+                                CP05_02 = reader["CP05_02"] as Single? ?? null,
+                                CP06_02 = reader["CP06_02"] as Single? ?? null,
+                                CP07_02 = reader["CP07_02"] as Single? ?? null,
+                                CP01_03 = reader["CP01_03"] as Single? ?? null,
+                                CP02_03 = reader["CP02_03"] as Single? ?? null,
+                                CP03_03 = reader["CP03_03"] as Single? ?? null,
+                                CP04_03 = reader["CP04_03"] as Single? ?? null,
+                                CP05_03 = reader["CP05_03"] as Single? ?? null,
+                                CP06_03 = reader["CP06_03"] as Single? ?? null,
+                                CP07_03 = reader["CP07_03"] as Single? ?? null,
+                                CP01_06 = reader["CP01_06"] as Single? ?? null,
+                                CP02_06 = reader["CP02_06"] as Single? ?? null,
+                                CP03_06 = reader["CP03_06"] as Single? ?? null,
+                                CP04_06 = reader["CP04_06"] as Single? ?? null,
+                                CP05_06 = reader["CP05_06"] as Single? ?? null,
+                                CP06_06 = reader["CP06_06"] as Single? ?? null,
+                                CP07_06 = reader["CP07_06"] as Single? ?? null,
+                                CP01_0S = reader["CP01_0S"] as Single? ?? null,
+                                CP02_0S = reader["CP02_0S"] as Single? ?? null,
+                                CP03_0S = reader["CP03_0S"] as Single? ?? null,
+                                CP04_0S = reader["CP04_0S"] as Single? ?? null,
+                                CP05_0S = reader["CP05_0S"] as Single? ?? null,
+                                CP06_0S = reader["CP06_0S"] as Single? ?? null,
+                                CP07_0S = reader["CP07_0S"] as Single? ?? null
+                            };
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+
+            return CP;
+        }
     }
 }

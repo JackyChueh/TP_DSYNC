@@ -60,6 +60,9 @@
     <Compile Include="Models\DataDefine\B3\AHU_14F.cs" />
     <Compile Include="Models\DataDefine\B3\AHU_S03.cs" />
     <Compile Include="Models\DataDefine\B3\AHU_SB1.cs" />
+    <Compile Include="Models\DataDefine\B3\Chiller.cs" />
+    <Compile Include="Models\DataDefine\B3\COP.cs" />
+    <Compile Include="Models\DataDefine\B3\CP.cs" />
     <Compile Include="Models\Help\Config.cs" />
     <Compile Include="Models\Help\Log.cs" />
     <Compile Include="Models\Help\MailSender.cs" />

@@ -12,28 +12,28 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            bool onTime = true;
-            while (onTime)
-            {
-                if (DateTime.Now.Millisecond == 0 && DateTime.Now.Second == 29)
-                {
-                    break;
-                }
-            }
+            //bool onTime = true;
+            //while (onTime)
+            //{
+            //    if (DateTime.Now.Millisecond == 0 && DateTime.Now.Second == 29)
+            //    {
+            //        break;
+            //    }
+            //}
 
-            var timer = new System.Timers.Timer();
-            timer.Interval = 1000; // 60 seconds  
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer);
-            timer.Start();
+            //var timer = new System.Timers.Timer();
+            //timer.Interval = 1000; // 60 seconds  
+            //timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer);
+            //timer.Start();
 
-            //SensorData.AHU();   //單次測試用
+            new SensorData().ProcessData();   //單次測試用
 
             Console.ReadLine();
         }
 
         protected static void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
-            Thread thread = new Thread(SensorData.AHU);
+            Thread thread = new Thread(new SensorData().ProcessData);
             thread.Start();
         }
     }

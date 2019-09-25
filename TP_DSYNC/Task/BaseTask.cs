@@ -10,12 +10,12 @@ namespace TP_DSYNC.Task
         protected string ClassName;
         protected string MethodName;
         protected string CallerMethodName;
-        protected string ThreadId;
+        protected int ManagedThreadId;
         public BaseTask()
         {
             ClassName = this.GetType().Name;
             //MethodName = MethodBase.GetCurrentMethod().Name;
-            ThreadId = Thread.CurrentThread.ManagedThreadId.ToString();
+            ManagedThreadId = Thread.CurrentThread.ManagedThreadId;
         }
 
         private void Log(string Folder, string Text)

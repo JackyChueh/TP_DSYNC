@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Reflection;
 using System.Diagnostics;
 using TP_DSYNC.Models.Help;
@@ -10,12 +11,13 @@ namespace TP_DSYNC.Task
         protected string ClassName;
         protected string MethodName;
         protected string CallerMethodName;
-        protected int ManagedThreadId;
-        public BaseTask()
+        protected string TaskId;
+        public BaseTask(DateTime now)
         {
             ClassName = this.GetType().Name;
             //MethodName = MethodBase.GetCurrentMethod().Name;
-            ManagedThreadId = Thread.CurrentThread.ManagedThreadId;
+            int seconds = now.Hour * 60 + now.Minute * 60 + now.Second;
+            TaskId = Convert.ToString(seconds, 16);
         }
 
         private void Log(string Folder, string Text)

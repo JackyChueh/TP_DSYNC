@@ -30,7 +30,7 @@ namespace TP_DSYNC
 
         protected void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
-            Thread thread = new Thread(new SensorData().ProcessData);
+            Thread thread = new Thread(new SensorData(DateTime.Now).ProcessData);
             thread.Start();
         }
 

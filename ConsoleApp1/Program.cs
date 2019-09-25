@@ -21,20 +21,23 @@ namespace ConsoleApp1
             //    }
             //}
 
-            //var timer = new System.Timers.Timer();
-            //timer.Interval = 1000; // 60 seconds  
-            //timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer);
-            //timer.Start();
+            var timer = new System.Timers.Timer();
+            timer.Interval = 1000; // 60 seconds  
+            timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer);
+            timer.Start();
 
-            new SensorData().ProcessData();   //單次測試用
+            //new SensorData().ProcessData();   //單次測試用
 
             Console.ReadLine();
         }
 
         protected static void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
-            Thread thread = new Thread(new SensorData().ProcessData);
-            thread.Start();
+            //Thread thread = new Thread(new SensorData().ProcessData);
+            //thread.Start();
+            var t = new Task(new SensorData(DateTime.Now).ProcessData);
+            t.Start();
         }
+
     }
 }

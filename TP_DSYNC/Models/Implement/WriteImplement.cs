@@ -44,11 +44,11 @@ namespace TP_DSYNC.Models.Implement
                                 {
                                     sql = @"
 INSERT INTO AHU (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU05,AHU06,AHU07,AHU08,AHU09,AHU10,AHU11)     
-    VALUES (@SID,@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@AHU01,@AHU02,@AHU03,@AHU04,@AHU05,@AHU06,@AHU07,@AHU08,@AHU09,@AHU10,@AHU11)
+    VALUES (NEXT VALUE FOR [AHU_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@AHU01,@AHU02,@AHU03,@AHU04,@AHU05,@AHU06,@AHU07,@AHU08,@AHU09,@AHU10,@AHU11)
 ";
                                     cmdDSCCR.CommandText = sql;
                                     #region 參數
-                                    DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
@@ -65,7 +65,7 @@ INSERT INTO AHU (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AHU10", DbType.Single);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AHU11", DbType.Single);
 
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 91);
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 91);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", AHU_004F.AUTOID);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", AHU_004F.DATETIME);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "004F");
@@ -189,11 +189,11 @@ UPDATE AHU_04F SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
                                 {
                                     sql = @"
 INSERT INTO AHU (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU05,AHU06,AHU07,AHU08,AHU09,AHU10,AHU11)     
-    VALUES (@SID,@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@AHU01,@AHU02,@AHU03,@AHU04,@AHU05,@AHU06,@AHU07,@AHU08,@AHU09,@AHU10,@AHU11)
+    VALUES (NEXT VALUE FOR [AHU_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@AHU01,@AHU02,@AHU03,@AHU04,@AHU05,@AHU06,@AHU07,@AHU08,@AHU09,@AHU10,@AHU11)
 ";
                                     cmdDSCCR.CommandText = sql;
                                     #region 參數
-                                    DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
@@ -210,7 +210,7 @@ INSERT INTO AHU (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AHU10", DbType.Single);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AHU11", DbType.Single);
 
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 91);
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 91);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", AHU_0B1F.AUTOID);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", AHU_0B1F.DATETIME);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "0B1F");
@@ -394,11 +394,11 @@ UPDATE AHU_0B1 SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
                                 {
                                     sql = @"
 INSERT INTO AHU (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU05,AHU06,AHU07,AHU08,AHU09,AHU10,AHU11)     
-    VALUES (@SID,@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@AHU01,@AHU02,@AHU03,@AHU04,@AHU05,@AHU06,@AHU07,@AHU08,@AHU09,@AHU10,@AHU11)
+    VALUES (NEXT VALUE FOR [AHU_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@AHU01,@AHU02,@AHU03,@AHU04,@AHU05,@AHU06,@AHU07,@AHU08,@AHU09,@AHU10,@AHU11)
 ";
                                     cmdDSCCR.CommandText = sql;
                                     #region 參數
-                                    DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
@@ -415,7 +415,7 @@ INSERT INTO AHU (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AHU10", DbType.Single);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AHU11", DbType.Single);
 
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 91);
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 91);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", AHU_00RF.AUTOID);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", AHU_00RF.DATETIME);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "00RF");
@@ -614,11 +614,11 @@ UPDATE AHU_0RF SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
                                 {
                                     sql = @"
 INSERT INTO AHU (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU05,AHU06,AHU07,AHU08,AHU09,AHU10,AHU11)     
-    VALUES (@SID,@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@AHU01,@AHU02,@AHU03,@AHU04,@AHU05,@AHU06,@AHU07,@AHU08,@AHU09,@AHU10,@AHU11)
+    VALUES (NEXT VALUE FOR [AHU_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@AHU01,@AHU02,@AHU03,@AHU04,@AHU05,@AHU06,@AHU07,@AHU08,@AHU09,@AHU10,@AHU11)
 ";
                                     cmdDSCCR.CommandText = sql;
                                     #region 參數
-                                    DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
@@ -635,7 +635,7 @@ INSERT INTO AHU (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AHU10", DbType.Single);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AHU11", DbType.Single);
 
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 141);
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 141);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", AHU_014F.AUTOID);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", AHU_014F.DATETIME);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "014F");
@@ -939,11 +939,11 @@ UPDATE AHU_14F SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
                                 {
                                     sql = @"
 INSERT INTO AHU (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU05,AHU06,AHU07,AHU08,AHU09,AHU10,AHU11)     
-    VALUES (@SID,@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@AHU01,@AHU02,@AHU03,@AHU04,@AHU05,@AHU06,@AHU07,@AHU08,@AHU09,@AHU10,@AHU11)
+    VALUES (NEXT VALUE FOR [AHU_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@AHU01,@AHU02,@AHU03,@AHU04,@AHU05,@AHU06,@AHU07,@AHU08,@AHU09,@AHU10,@AHU11)
 ";
                                     cmdDSCCR.CommandText = sql;
                                     #region 參數
-                                    DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
@@ -960,7 +960,7 @@ INSERT INTO AHU (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AHU10", DbType.Single);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AHU11", DbType.Single);
 
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 1);
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 1);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", AHU_S03F.AUTOID);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", AHU_S03F.DATETIME);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S03F");
@@ -1037,11 +1037,11 @@ UPDATE AHU_S03 SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
                                 {
                                     sql = @"
 INSERT INTO AHU (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,AHU05,AHU06,AHU07,AHU08,AHU09,AHU10,AHU11)     
-    VALUES (@SID,@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@AHU01,@AHU02,@AHU03,@AHU04,@AHU05,@AHU06,@AHU07,@AHU08,@AHU09,@AHU10,@AHU11)
+    VALUES (NEXT VALUE FOR [AHU_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@AHU01,@AHU02,@AHU03,@AHU04,@AHU05,@AHU06,@AHU07,@AHU08,@AHU09,@AHU10,@AHU11)
 ";
                                     cmdDSCCR.CommandText = sql;
                                     #region 參數
-                                    DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
@@ -1058,7 +1058,7 @@ INSERT INTO AHU (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,AHU01,AHU02,AHU03,AHU04,
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AHU10", DbType.Single);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AHU11", DbType.Single);
 
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 91);
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 91);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", AHU_SB1F.AUTOID);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", AHU_SB1F.DATETIME);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "SB1F");
@@ -1152,11 +1152,11 @@ UPDATE AHU_SB1 SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
                                 {
                                     sql = @"
 INSERT INTO Chiller (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,Chiller01,Chiller02,Chiller03,Chiller04,Chiller05,Chiller06,Chiller07,Chiller08,Chiller09,Chiller10)
-    VALUES (@SID,@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@Chiller01,@Chiller02,@Chiller03,@Chiller04,@Chiller05,@Chiller06,@Chiller07,@Chiller08,@Chiller09,@Chiller10)
+    VALUES (NEXT VALUE FOR [Chiller_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@Chiller01,@Chiller02,@Chiller03,@Chiller04,@Chiller05,@Chiller06,@Chiller07,@Chiller08,@Chiller09,@Chiller10)
 ";
                                     cmdDSCCR.CommandText = sql;
                                     #region 參數
-                                    DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
@@ -1172,7 +1172,7 @@ INSERT INTO Chiller (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,Chiller01,Chiller02,
                                     DbDSCCR.AddInParameter(cmdDSCCR, "Chiller09", DbType.Single);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "Chiller10", DbType.Single);
 
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 71);
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 71);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", Chiller.AUTOID);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", Chiller.DATETIME);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "XXXF");
@@ -1292,11 +1292,11 @@ UPDATE Chiller SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
                                 {
                                     sql = @"
 INSERT INTO COP (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,COP01,COP02,COP03,COP04,COP05)
-    VALUES (@SID,@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@COP01,@COP02,@COP03,@COP04,@COP05)
+    VALUES (NEXT VALUE FOR [COP_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@COP01,@COP02,@COP03,@COP04,@COP05)
 ";
                                     cmdDSCCR.CommandText = sql;
                                     #region 參數
-                                    DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
@@ -1307,7 +1307,7 @@ INSERT INTO COP (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,COP01,COP02,COP03,COP04,
                                     DbDSCCR.AddInParameter(cmdDSCCR, "COP04", DbType.Single);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "COP05", DbType.Single);
 
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 81);
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 81);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", COP.AUTOID);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", COP.DATETIME);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "COPF");
@@ -1435,11 +1435,11 @@ UPDATE COP SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
                                 {
                                     sql = @"
 INSERT INTO CP (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,CP01,CP02,CP03,CP04,CP05,CP06,CP07)
-    VALUES (@SID,@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@CP01,@CP02,@CP03,@CP04,@CP05,@CP06,@CP07)
+    VALUES (NEXT VALUE FOR [CP_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@CP01,@CP02,@CP03,@CP04,@CP05,@CP06,@CP07)
 ";
                                     cmdDSCCR.CommandText = sql;
                                     #region 參數
-                                    DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
@@ -1452,7 +1452,7 @@ INSERT INTO CP (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,CP01,CP02,CP03,CP04,CP05,
                                     DbDSCCR.AddInParameter(cmdDSCCR, "CP06", DbType.Single);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "CP07", DbType.Single);
 
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 61);
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 61);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", CP.AUTOID);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", CP.DATETIME);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "CPF");

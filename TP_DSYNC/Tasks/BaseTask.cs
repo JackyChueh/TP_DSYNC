@@ -3,8 +3,9 @@ using System.Threading;
 using System.Reflection;
 using System.Diagnostics;
 using TP_DSYNC.Models.Help;
+using TP_DSYNC.Models.Enums;
 
-namespace TP_DSYNC.Task
+namespace TP_DSYNC.Tasks
 {
     public class BaseTask
     {
@@ -16,7 +17,7 @@ namespace TP_DSYNC.Task
         {
             ClassName = this.GetType().Name;
             //MethodName = MethodBase.GetCurrentMethod().Name;
-            int seconds = now.Hour * 60 + now.Minute * 60 + now.Second;
+            int seconds = now.Hour * 3600 + now.Minute * 60 + now.Second;
             TaskId = Convert.ToString(seconds, 16);
         }
 
@@ -37,6 +38,20 @@ namespace TP_DSYNC.Task
             StackTrace stackTrace = new StackTrace();
             CallerMethodName = stackTrace.GetFrame(1).GetMethod().Name;
             Log(ClassName + "\\" + CallerMethodName, string.Format(Format, args));
+        }
+
+
+        public void EventLog(EventLogEnum EventLogEnum, EventLogEntryType EventLogEntryType, string Message)
+        {
+            EventLog((int)EventLogEnum, EventLogEntryType, Message);
+        }
+        public void EventLog(EventLogEnum EventLogEnum, EventLogEntryType EventLogEntryType, string Format, params object[] args)
+        {
+            EventLog((int)EventLogEnum, EventLogEntryType, string.Format(Format, args));
+        }
+        public void EventLog(int EventId, EventLogEntryType EventLogEntryType, string Message)
+        {
+            EventLogs.Write(Message, EventId, EventLogEntryType);
         }
     }
 }

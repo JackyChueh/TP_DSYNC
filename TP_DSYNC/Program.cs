@@ -9,6 +9,7 @@ namespace TP_DSYNC
 {
     static class Program
     {
+        public static string EventLogSource = "TP_DSYNC";
         /// <summary>
         /// 應用程式的主要進入點。
         /// </summary>

@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="db\InstallService.bat" />
+    <None Include="db\UnInstallService.bat" />
     <None Include="db\專案甘特圖.xlsx" />
     <None Include="db\系統分析問題.docx" />
   </ItemGroup>

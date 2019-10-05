@@ -96,6 +96,8 @@
     <Compile Include="Models\DataDefine\B3\Chiller.cs" />
     <Compile Include="Models\DataDefine\B3\COP.cs" />
     <Compile Include="Models\DataDefine\B3\CP.cs" />
+    <Compile Include="Models\DataDefine\B3\CT.cs" />
+    <Compile Include="Models\DataDefine\B3\ZP.cs" />
     <Compile Include="Models\Enums\EventLogEnum.cs" />
     <Compile Include="Models\Help\Config.cs" />
     <Compile Include="Models\Help\EventLogs.cs" />

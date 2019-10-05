@@ -1537,5 +1537,264 @@ UPDATE CP SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
 
             return affected;
         }
+
+        public int WriteDataForZP(ZP ZP)
+        {
+            string sql;
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.RepeatableRead }))
+            {
+                using (DbConnection connB3BUFFER = DbB3BUFFER.CreateConnection())
+                {
+                    string active = null;
+                    connB3BUFFER.Open();
+                    using (DbCommand cmd = connB3BUFFER.CreateCommand())
+                    {
+                        sql = @"
+                SELEZP ACTIVE FROM ZP WITH(UPDLOCK,ROWLOCK) WHERE AUTOID=@AUTOID AND AZPIVE='A'
+                ";
+                        cmd.CommandText = sql;
+                        DbB3BUFFER.AddInParameter(cmd, "AUTOID", DbType.Int32, ZP.AUTOID);
+                        var obj = DbB3BUFFER.ExecuteScalar(cmd);
+                        if (obj != null)
+                        {
+                            active = obj.ToString();
+                        }
+
+                        if (active == "A")
+                        {
+                            using (DbConnection connDSCCR = DbDSCCR.CreateConnection())
+                            {
+                                connDSCCR.Open();
+                                using (DbCommand cmdDSCCR = connDSCCR.CreateCommand())
+                                {
+                                    sql = @"
+INSERT INTO ZP (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,ZP01,ZP02,ZP03,ZP04,ZP05,ZP06)
+    VALUES (NEXT VALUE FOR [ZP_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@ZP01,@ZP02,@ZP03,@ZP04,@ZP05,@ZP06)
+";
+                                    cmdDSCCR.CommandText = sql;
+                                    #region 參數
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DEVICE_ID", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "ZP01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "ZP02", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "ZP03", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "ZP04", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "ZP05", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "ZP06", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "ZP07", DbType.Single);
+
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 61);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", ZP.AUTOID);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", ZP.DATETIME);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "ZPF");
+
+                                    #region 00
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "00");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP01", ZP.ZP01_00);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP02", ZP.ZP02_00);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP03", ZP.ZP03_00);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP04", ZP.ZP04_00);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP05", ZP.ZP05_00);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP06", ZP.ZP06_00);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 01
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "01");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP01", ZP.ZP01_01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP02", ZP.ZP02_01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP03", ZP.ZP03_01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP04", ZP.ZP04_01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP05", ZP.ZP05_01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP06", ZP.ZP06_01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 02
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "02");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP01", ZP.ZP01_02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP02", ZP.ZP02_02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP03", ZP.ZP03_02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP04", ZP.ZP04_02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP05", ZP.ZP05_02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "ZP06", ZP.ZP06_02);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #endregion
+
+                                    affected = 0;
+                                    sql = @"
+UPDATE ZP SET AZPIVE='S' WHERE AUTOID=@AUTOID AND AZPIVE='A'
+";
+                                    cmd.CommandText = sql;
+                                    //DbDSCCR.AddInParameter(cmd, "AUTOID", DbType.Int32, ZPF.AUTOID);
+                                    affected = DbB3BUFFER.ExecuteNonQuery(cmd);
+                                    if (affected == 0)
+                                    {
+                                        //throw new Exception("更新AZPIVE='A'->'S'失敗 AUTOID = " + ZPF.AUTOID.ToString());
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+                scop.Complete();
+            }
+
+            return affected;
+        }
+
+        public int WriteDataForCT(CT CT)
+        {
+            string sql;
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.RepeatableRead }))
+            {
+                using (DbConnection connB3BUFFER = DbB3BUFFER.CreateConnection())
+                {
+                    string active = null;
+                    connB3BUFFER.Open();
+                    using (DbCommand cmd = connB3BUFFER.CreateCommand())
+                    {
+                        sql = @"
+                SELECT ACTIVE FROM CT WITH(UPDLOCK,ROWLOCK) WHERE AUTOID=@AUTOID AND ACTIVE='A'
+                ";
+                        cmd.CommandText = sql;
+                        DbB3BUFFER.AddInParameter(cmd, "AUTOID", DbType.Int32, CT.AUTOID);
+                        var obj = DbB3BUFFER.ExecuteScalar(cmd);
+                        if (obj != null)
+                        {
+                            active = obj.ToString();
+                        }
+
+                        if (active == "A")
+                        {
+                            using (DbConnection connDSCCR = DbDSCCR.CreateConnection())
+                            {
+                                connDSCCR.Open();
+                                using (DbCommand cmdDSCCR = connDSCCR.CreateCommand())
+                                {
+                                    sql = @"
+INSERT INTO CT (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,CT01,CT02,CT03,CT04,CT05,CT06,CT07)
+    VALUES (NEXT VALUE FOR [CT_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@CT01,@CT02,@CT03,@CT04,@CT05,@CT06,@CT07)
+";
+                                    cmdDSCCR.CommandText = sql;
+                                    #region 參數
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DEVICE_ID", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "CT01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "CT02", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "CT03", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "CT04", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "CT05", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "CT06", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "CT07", DbType.Single);
+
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 61);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", CT.AUTOID);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", CT.DATETIME);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "CTF");
+
+                                    #region 01
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "01");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT01", CT.CT01_01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT02", CT.CT02_01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT03", CT.CT03_01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT04", CT.CT04_01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT05", CT.CT05_01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT06", CT.CT06_01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT07", CT.CT07_01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 02
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "02");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT01", CT.CT01_02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT02", CT.CT02_02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT03", CT.CT03_02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT04", CT.CT04_02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT05", CT.CT05_02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT06", CT.CT06_02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT07", CT.CT07_02);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 03
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "03");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT01", CT.CT01_03);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT02", CT.CT02_03);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT03", CT.CT03_03);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT04", CT.CT04_03);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT05", CT.CT05_03);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT06", CT.CT06_03);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT07", CT.CT07_03);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 04
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "04");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT01", CT.CT01_04);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT02", CT.CT02_04);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT04", CT.CT04_04);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT04", CT.CT04_04);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT05", CT.CT05_04);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT06", CT.CT06_04);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT07", CT.CT07_04);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 05
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "05");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT01", CT.CT01_05);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT02", CT.CT02_05);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT05", CT.CT05_05);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT05", CT.CT05_05);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT05", CT.CT05_05);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT06", CT.CT06_05);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT07", CT.CT07_05);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 06
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "06");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT01", CT.CT01_06);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT02", CT.CT02_06);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT03", CT.CT03_06);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT04", CT.CT04_06);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT05", CT.CT05_06);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT06", CT.CT06_06);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT07", CT.CT07_06);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                
+                                    #endregion
+
+                                    affected = 0;
+                                    sql = @"
+UPDATE CT SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
+";
+                                    cmd.CommandText = sql;
+                                    //DbDSCCR.AddInParameter(cmd, "AUTOID", DbType.Int32, CTF.AUTOID);
+                                    affected = DbB3BUFFER.ExecuteNonQuery(cmd);
+                                    if (affected == 0)
+                                    {
+                                        //throw new Exception("更新ACTIVE='A'->'S'失敗 AUTOID = " + CTF.AUTOID.ToString());
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+                scop.Complete();
+            }
+
+            return affected;
+        }
     }
 }

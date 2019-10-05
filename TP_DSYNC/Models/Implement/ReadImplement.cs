@@ -868,5 +868,133 @@ SELECT TOP 1 AUTOID,DATETIME
 
             return CP;
         }
+
+        public ZP ReadDataFromZP()
+        {
+            ZP ZP = null;
+
+            string sql = @"
+SELEZP TOP 1 AUTOID,DATETIME
+    ,ZP01_00,ZP02_00,ZP03_00,ZP04_00,ZP05_00,ZP06_00
+    ,ZP01_01,ZP02_01,ZP03_01,ZP04_01,ZP05_01,ZP06_01
+    ,ZP01_02,ZP02_02,ZP03_02,ZP04_02,ZP05_02,ZP06_02
+	FROM ZP
+    ORDER BY AUTOID DESC
+";
+            using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+            {
+                //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
+                using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                {
+                    if (reader.Read())
+                    {
+                        ZP = new ZP()
+                        {
+                            AUTOID = (int)reader["AUTOID"],
+                            DATETIME = reader["DATETIME"] as DateTime? ?? null,
+                            ZP01_00 = reader["ZP01_00"] as Single? ?? null,
+                            ZP02_00 = reader["ZP02_00"] as Single? ?? null,
+                            ZP03_00 = reader["ZP03_00"] as Single? ?? null,
+                            ZP04_00 = reader["ZP04_00"] as Single? ?? null,
+                            ZP05_00 = reader["ZP05_00"] as Single? ?? null,
+                            ZP06_00 = reader["ZP06_00"] as Single? ?? null,
+                            ZP01_01 = reader["ZP01_01"] as Single? ?? null,
+                            ZP02_01 = reader["ZP02_01"] as Single? ?? null,
+                            ZP03_01 = reader["ZP03_01"] as Single? ?? null,
+                            ZP04_01 = reader["ZP04_01"] as Single? ?? null,
+                            ZP05_01 = reader["ZP05_01"] as Single? ?? null,
+                            ZP06_01 = reader["ZP06_01"] as Single? ?? null,
+                            ZP01_02 = reader["ZP01_02"] as Single? ?? null,
+                            ZP02_02 = reader["ZP02_02"] as Single? ?? null,
+                            ZP03_02 = reader["ZP03_02"] as Single? ?? null,
+                            ZP04_02 = reader["ZP04_02"] as Single? ?? null,
+                            ZP05_02 = reader["ZP05_02"] as Single? ?? null,
+                            ZP06_02 = reader["ZP06_02"] as Single? ?? null
+                        };
+                    }
+                }
+            }
+
+            return ZP;
+        }
+
+        public CT ReadDataFromCT()
+        {
+            CT CT = null;
+
+            string sql = @"
+SELECT TOP 1 AUTOID,DATETIME
+    ,CT01_01,CT02_01,CT03_01,CT04_01,CT05_01,CT06_01,CT07_01
+    ,CT01_02,CT02_02,CT03_02,CT04_02,CT05_02,CT06_02,CT07_02
+    ,CT01_03,CT02_03,CT03_03,CT04_03,CT05_03,CT06_03,CT07_03
+    ,CT01_04,CT02_04,CT03_04,CT04_04,CT05_04,CT06_04,CT07_04
+    ,CT01_05,CT02_05,CT03_05,CT04_05,CT05_05,CT06_05,CT07_05
+    ,CT01_06,CT02_06,CT03_06,CT04_06,CT05_06,CT06_06,CT07_06
+	FROM CT
+    ORDER BY AUTOID DESC
+";
+            using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+            {
+                //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
+                using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                {
+                    if (reader.Read())
+                    {
+                        CT = new CT()
+                        {
+                            AUTOID = (int)reader["AUTOID"],
+                            DATETIME = reader["DATETIME"] as DateTime? ?? null,
+                            CT01_01 = reader["CT01_01"] as Single? ?? null,
+                            CT02_01 = reader["CT02_01"] as Single? ?? null,
+                            CT03_01 = reader["CT03_01"] as Single? ?? null,
+                            CT04_01 = reader["CT04_01"] as Single? ?? null,
+                            CT05_01 = reader["CT05_01"] as Single? ?? null,
+                            CT06_01 = reader["CT06_01"] as Single? ?? null,
+                            CT07_01 = reader["CT07_01"] as Single? ?? null,
+                            CT01_02 = reader["CT01_02"] as Single? ?? null,
+                            CT02_02 = reader["CT02_02"] as Single? ?? null,
+                            CT03_02 = reader["CT03_02"] as Single? ?? null,
+                            CT04_02 = reader["CT04_02"] as Single? ?? null,
+                            CT05_02 = reader["CT05_02"] as Single? ?? null,
+                            CT06_02 = reader["CT06_02"] as Single? ?? null,
+                            CT07_02 = reader["CT07_02"] as Single? ?? null,
+                            CT01_03 = reader["CT01_03"] as Single? ?? null,
+                            CT02_03 = reader["CT02_03"] as Single? ?? null,
+                            CT03_03 = reader["CT03_03"] as Single? ?? null,
+                            CT04_03 = reader["CT04_03"] as Single? ?? null,
+                            CT05_03 = reader["CT05_03"] as Single? ?? null,
+                            CT06_03 = reader["CT06_03"] as Single? ?? null,
+                            CT07_03 = reader["CT07_03"] as Single? ?? null,
+                            CT01_04 = reader["CT01_04"] as Single? ?? null,
+                            CT02_04 = reader["CT02_04"] as Single? ?? null,
+                            CT03_04 = reader["CT03_04"] as Single? ?? null,
+                            CT04_04 = reader["CT04_04"] as Single? ?? null,
+                            CT05_04 = reader["CT05_04"] as Single? ?? null,
+                            CT06_04 = reader["CT06_04"] as Single? ?? null,
+                            CT07_04 = reader["CT07_04"] as Single? ?? null,
+                            CT01_05 = reader["CT01_05"] as Single? ?? null,
+                            CT02_05 = reader["CT02_05"] as Single? ?? null,
+                            CT03_05 = reader["CT03_05"] as Single? ?? null,
+                            CT04_05 = reader["CT04_05"] as Single? ?? null,
+                            CT05_05 = reader["CT05_05"] as Single? ?? null,
+                            CT06_05 = reader["CT06_05"] as Single? ?? null,
+                            CT07_05 = reader["CT07_05"] as Single? ?? null,
+                            CT01_06 = reader["CT01_06"] as Single? ?? null,
+                            CT02_06 = reader["CT02_06"] as Single? ?? null,
+                            CT03_06 = reader["CT03_06"] as Single? ?? null,
+                            CT04_06 = reader["CT04_06"] as Single? ?? null,
+                            CT05_06 = reader["CT05_06"] as Single? ?? null,
+                            CT06_06 = reader["CT06_06"] as Single? ?? null,
+                            CT07_06 = reader["CT07_06"] as Single? ?? null
+                        };
+                    }
+                }
+            }
+
+            return CT;
+        }
+
+
     }
+
 }

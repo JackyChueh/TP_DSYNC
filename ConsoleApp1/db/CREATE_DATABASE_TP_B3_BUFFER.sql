@@ -1,12 +1,12 @@
 USE [master]
 GO
-/****** Object:  Database [TP_B3_BUFFER]    Script Date: 2019/9/28 下午 09:34:51 ******/
+/****** Object:  Database [TP_B3_BUFFER]    Script Date: 2019/10/5 上午 08:58:33 ******/
 CREATE DATABASE [TP_B3_BUFFER]
  CONTAINMENT = NONE
  ON  PRIMARY 
-( NAME = N'TP_B3_BUFFER', FILENAME = N'D:\DATA\TP_B3_BUFFER.mdf' , SIZE = 65536KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+( NAME = N'TP_B3_BUFFER', FILENAME = N'D:\DATA\TP_B3_BUFFER.mdf' , SIZE = 73728KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
  LOG ON 
-( NAME = N'TP_B3_BUFFER_log', FILENAME = N'D:\DATA\TP_B3_BUFFER_log.ldf' , SIZE = 65536KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+( NAME = N'TP_B3_BUFFER_log', FILENAME = N'D:\DATA\TP_B3_BUFFER_log.ldf' , SIZE = 401408KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
 GO
 ALTER DATABASE [TP_B3_BUFFER] SET COMPATIBILITY_LEVEL = 140
 GO
@@ -79,7 +79,7 @@ ALTER DATABASE [TP_B3_BUFFER] SET QUERY_STORE = OFF
 GO
 USE [TP_B3_BUFFER]
 GO
-/****** Object:  Table [dbo].[AHU_04F]    Script Date: 2019/9/28 下午 09:34:51 ******/
+/****** Object:  Table [dbo].[AHU_04F]    Script Date: 2019/10/5 上午 08:58:33 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -138,7 +138,7 @@ CREATE TABLE [dbo].[AHU_04F](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AHU_0B1]    Script Date: 2019/9/28 下午 09:34:51 ******/
+/****** Object:  Table [dbo].[AHU_0B1]    Script Date: 2019/10/5 上午 08:58:33 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -241,7 +241,7 @@ CREATE TABLE [dbo].[AHU_0B1](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AHU_0RF]    Script Date: 2019/9/28 下午 09:34:51 ******/
+/****** Object:  Table [dbo].[AHU_0RF]    Script Date: 2019/10/5 上午 08:58:33 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -355,7 +355,7 @@ CREATE TABLE [dbo].[AHU_0RF](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AHU_14F]    Script Date: 2019/9/28 下午 09:34:51 ******/
+/****** Object:  Table [dbo].[AHU_14F]    Script Date: 2019/10/5 上午 08:58:33 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -546,7 +546,7 @@ CREATE TABLE [dbo].[AHU_14F](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AHU_S03]    Script Date: 2019/9/28 下午 09:34:51 ******/
+/****** Object:  Table [dbo].[AHU_S03]    Script Date: 2019/10/5 上午 08:58:33 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -572,7 +572,7 @@ CREATE TABLE [dbo].[AHU_S03](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AHU_SB1]    Script Date: 2019/9/28 下午 09:34:51 ******/
+/****** Object:  Table [dbo].[AHU_SB1]    Script Date: 2019/10/5 上午 08:58:33 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -609,7 +609,7 @@ CREATE TABLE [dbo].[AHU_SB1](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Chiller]    Script Date: 2019/9/28 下午 09:34:51 ******/
+/****** Object:  Table [dbo].[Chiller]    Script Date: 2019/10/5 上午 08:58:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -664,7 +664,7 @@ CREATE TABLE [dbo].[Chiller](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[COP]    Script Date: 2019/9/28 下午 09:34:51 ******/
+/****** Object:  Table [dbo].[COP]    Script Date: 2019/10/5 上午 08:58:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -714,7 +714,7 @@ CREATE TABLE [dbo].[COP](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CP]    Script Date: 2019/9/28 下午 09:34:51 ******/
+/****** Object:  Table [dbo].[CP]    Script Date: 2019/10/5 上午 08:58:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -759,6 +759,96 @@ CREATE TABLE [dbo].[CP](
 	[CP06_0S] [real] NULL,
 	[CP07_0S] [real] NULL,
  CONSTRAINT [PK_CP] PRIMARY KEY CLUSTERED 
+(
+	[AUTOID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[CT]    Script Date: 2019/10/5 上午 08:58:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CT](
+	[AUTOID] [int] NOT NULL,
+	[DATETIME] [datetime] NULL,
+	[ACTIVE] [varchar](1) NOT NULL,
+	[CT01_01] [real] NULL,
+	[CT02_01] [real] NULL,
+	[CT03_01] [real] NULL,
+	[CT04_01] [real] NULL,
+	[CT05_01] [real] NULL,
+	[CT06_01] [real] NULL,
+	[CT07_01] [real] NULL,
+	[CT01_02] [real] NULL,
+	[CT02_02] [real] NULL,
+	[CT03_02] [real] NULL,
+	[CT04_02] [real] NULL,
+	[CT05_02] [real] NULL,
+	[CT06_02] [real] NULL,
+	[CT07_02] [real] NULL,
+	[CT01_03] [real] NULL,
+	[CT02_03] [real] NULL,
+	[CT03_03] [real] NULL,
+	[CT04_03] [real] NULL,
+	[CT05_03] [real] NULL,
+	[CT06_03] [real] NULL,
+	[CT07_03] [real] NULL,
+	[CT01_04] [real] NULL,
+	[CT02_04] [real] NULL,
+	[CT03_04] [real] NULL,
+	[CT04_04] [real] NULL,
+	[CT05_04] [real] NULL,
+	[CT06_04] [real] NULL,
+	[CT07_04] [real] NULL,
+	[CT01_05] [real] NULL,
+	[CT02_05] [real] NULL,
+	[CT03_05] [real] NULL,
+	[CT04_05] [real] NULL,
+	[CT05_05] [real] NULL,
+	[CT06_05] [real] NULL,
+	[CT07_05] [real] NULL,
+	[CT01_06] [real] NULL,
+	[CT02_06] [real] NULL,
+	[CT03_06] [real] NULL,
+	[CT04_06] [real] NULL,
+	[CT05_06] [real] NULL,
+	[CT06_06] [real] NULL,
+	[CT07_06] [real] NULL,
+ CONSTRAINT [PK_CT] PRIMARY KEY CLUSTERED 
+(
+	[AUTOID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ZP]    Script Date: 2019/10/5 上午 08:58:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ZP](
+	[AUTOID] [int] NOT NULL,
+	[DATETIME] [datetime] NULL,
+	[ACTIVE] [varchar](1) NOT NULL,
+	[ZP01_00] [real] NULL,
+	[ZP02_00] [real] NULL,
+	[ZP03_00] [real] NULL,
+	[ZP04_00] [real] NULL,
+	[ZP05_00] [real] NULL,
+	[ZP06_00] [real] NULL,
+	[ZP01_01] [real] NULL,
+	[ZP02_01] [real] NULL,
+	[ZP03_01] [real] NULL,
+	[ZP04_01] [real] NULL,
+	[ZP05_01] [real] NULL,
+	[ZP06_01] [real] NULL,
+	[ZP01_02] [real] NULL,
+	[ZP02_02] [real] NULL,
+	[ZP03_02] [real] NULL,
+	[ZP04_02] [real] NULL,
+	[ZP05_02] [real] NULL,
+	[ZP06_02] [real] NULL,
+ CONSTRAINT [PK_ZP] PRIMARY KEY CLUSTERED 
 (
 	[AUTOID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]

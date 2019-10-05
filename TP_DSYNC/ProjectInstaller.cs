@@ -19,10 +19,10 @@ namespace TP_DSYNC
 
         private void ServiceInstaller1_BeforeInstall(object sender, InstallEventArgs e)
         {
-            if (EventLog.SourceExists(Program.EventLogSource))
-            {
-                EventLog.DeleteEventSource(Program.EventLogSource);
-            }
+            //if (EventLog.SourceExists(Program.EventLogSource))
+            //{
+            //    EventLog.DeleteEventSource(Program.EventLogSource);
+            //}
         }
         private void ServiceInstaller1_AfterInstall(object sender, InstallEventArgs e)
         {

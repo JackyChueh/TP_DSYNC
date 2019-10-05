@@ -24,7 +24,6 @@ namespace TP_DSYNC.Tasks
             WriteImplement WriteImplement = new WriteImplement("TP_B3_BUFFER", "TP_DSCCR");
             int.TryParse(ConfigurationManager.AppSettings["ExecuteAlertSecond"], out int executeAlertSecond);
 
-
             //AHU_004F
             try
             {

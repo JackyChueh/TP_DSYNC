@@ -17,36 +17,60 @@ namespace TP_DSYNC
 
         protected override void OnStart(string[] args)
         {
-            EventLogs.Write(this.ServiceName + " on Start", (int)EventLogEnum.START_OR_STOP, System.Diagnostics.EventLogEntryType.Information);
-            int.TryParse(ConfigurationManager.AppSettings["StartTimerAtSecond"], out int startTimerAtSecond);
-            while (true)
+            try
             {
-                if (DateTime.Now.Millisecond == 0 && DateTime.Now.Second == startTimerAtSecond)
+                Logs.Write(this.ServiceName + " on Start");
+                EventLogs.Write(this.ServiceName + " on Start", (int)EventLogEnum.START_OR_STOP, System.Diagnostics.EventLogEntryType.Information);
+                int.TryParse(ConfigurationManager.AppSettings["StartTimerAtSecond"], out int startTimerAtSecond);
+                while (true)
                 {
-                    break;
+                    if (DateTime.Now.Second == startTimerAtSecond)
+                    {
+                        break;
+                    }
                 }
-            }
 
-            int.TryParse(ConfigurationManager.AppSettings["ProcessDataTiming"], out int processDataTiming);
-            if (processDataTiming == 0)
-                processDataTiming = 60000;   // 60 seconds  
-            var timer = new Timer();
-            timer.Interval = processDataTiming;
-            timer.Elapsed += new ElapsedEventHandler(OnTimer);
-            timer.Start();
+                int.TryParse(ConfigurationManager.AppSettings["ProcessDataTiming"], out int processDataTiming);
+                if (processDataTiming == 0)
+                    processDataTiming = 60000;   // 60 seconds  
+                var timer = new Timer();
+                timer.Interval = processDataTiming;
+                timer.Elapsed += new ElapsedEventHandler(OnTimer);
+                timer.Start();
+            }
+            catch(Exception ex)
+            {
+                Logs.Write("OnStart Error="+ ex.Message + ex.StackTrace);
+            }
         }
 
         protected void OnTimer(object sender, ElapsedEventArgs args)
         {
-            //Thread thread = new Thread(new SensorData(DateTime.Now).ProcessData);
-            //thread.Start();
-            var t = new Task(new SensorData(DateTime.Now).ProcessData);
-            t.Start();
+            try
+            {
+                //Thread thread = new Thread(new SensorData(DateTime.Now).ProcessData);
+                //thread.Start();
+                var t = new Task(new SensorData(DateTime.Now).ProcessData);
+                t.Start();
+            }
+            catch (Exception ex)
+            {
+                Logs.Write("OnTimer Error=" + ex.Message + ex.StackTrace);
+            }
         }
 
         protected override void OnStop()
         {
-            EventLogs.Write(this.ServiceName + " on Stop", (int)EventLogEnum.START_OR_STOP, System.Diagnostics.EventLogEntryType.Error);
+            try
+            {
+                Logs.Write(this.ServiceName + " on Stop");
+                EventLogs.Write(this.ServiceName + " on Stop", (int)EventLogEnum.START_OR_STOP, System.Diagnostics.EventLogEntryType.Error);
+            }
+            catch (Exception ex)
+            {
+                Logs.Write("OnStop Error=" + ex.Message + ex.StackTrace);
+            }
+            
         }
     }
 }

@@ -19,7 +19,7 @@ namespace TP_DSYNC.Models.Help
                 }
                 EventLog.WriteEntry(Program.EventLogSource, Message, EventLogEntryType, EventId);
             }
-            catch(Exception ex)
+            catch
             {
             }
         }

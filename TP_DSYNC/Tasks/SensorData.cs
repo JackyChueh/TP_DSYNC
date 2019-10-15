@@ -384,8 +384,87 @@ namespace TP_DSYNC.Tasks
                 EventLog(EventLogEnum.EXCEPTION, EventLogEntryType.Error, "[{1}] {0} : {2}", "CP", TaskId, "Error=" + ex.Message + ex.StackTrace);
             }
 
-            Log("[{1}] {0} : {2}", "ProcessData", TaskId, "Done");
+            //CT
+            try
+            {
+                Log("[{1}] {0} : {2}", "CT", TaskId, "Start");
+                total.Restart();
 
+                unit.Restart();
+                CT CT = ReadImplement.ReadDataFromCT();
+                unit.Stop();
+                Log("[{1}] {0} : {2}", "CT", TaskId, "Read Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                Log("[{1}] {0} : {2}", "CT", TaskId, "Data=" + JsonConvert.SerializeObject(CT));
+                if (CT != null)
+                {
+                    unit.Restart();
+                    buffer = (BufferImplement.WriteBufferForCT(CT));
+                    unit.Stop();
+                    Log("[{1}] {0} : {2}", "CT", TaskId, "Buffer Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                    if (buffer)
+                    {
+                        unit.Restart();
+                        affected = WriteImplement.WriteDataForCT(CT);
+                        unit.Stop();
+                        Log("[{1}] {0} : {2}", "CT", TaskId, "Write Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                    }
+                }
+                total.Stop();
+                string alert = "";
+                if (total.Elapsed.Seconds > executeAlertSecond)
+                {
+                    alert = total.Elapsed.Seconds > executeAlertSecond ? " > " + executeAlertSecond.ToString() : "";
+                    EventLog(EventLogEnum.EXECUTE_ALERT_SECOND, EventLogEntryType.Warning, "[{1}] {0} : {2}", "CT", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
+                }
+                Log("[{1}] {0} : {2}", "CT", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
+            }
+            catch (Exception ex)
+            {
+                Log("[{1}] {0} : {2}", "CT", TaskId, "Error=" + ex.Message + ex.StackTrace);
+                EventLog(EventLogEnum.EXCEPTION, EventLogEntryType.Error, "[{1}] {0} : {2}", "CT", TaskId, "Error=" + ex.Message + ex.StackTrace);
+            }
+
+            //ZP
+            try
+            {
+                Log("[{1}] {0} : {2}", "ZP", TaskId, "Start");
+                total.Restart();
+
+                unit.Restart();
+                ZP ZP = ReadImplement.ReadDataFromZP();
+                unit.Stop();
+                Log("[{1}] {0} : {2}", "ZP", TaskId, "Read Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                Log("[{1}] {0} : {2}", "ZP", TaskId, "Data=" + JsonConvert.SerializeObject(ZP));
+                if (ZP != null)
+                {
+                    unit.Restart();
+                    buffer = (BufferImplement.WriteBufferForZP(ZP));
+                    unit.Stop();
+                    Log("[{1}] {0} : {2}", "ZP", TaskId, "Buffer Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                    if (buffer)
+                    {
+                        unit.Restart();
+                        affected = WriteImplement.WriteDataForZP(ZP);
+                        unit.Stop();
+                        Log("[{1}] {0} : {2}", "ZP", TaskId, "Write Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                    }
+                }
+                total.Stop();
+                string alert = "";
+                if (total.Elapsed.Seconds > executeAlertSecond)
+                {
+                    alert = total.Elapsed.Seconds > executeAlertSecond ? " > " + executeAlertSecond.ToString() : "";
+                    EventLog(EventLogEnum.EXECUTE_ALERT_SECOND, EventLogEntryType.Warning, "[{1}] {0} : {2}", "ZP", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
+                }
+                Log("[{1}] {0} : {2}", "ZP", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
+            }
+            catch (Exception ex)
+            {
+                Log("[{1}] {0} : {2}", "ZP", TaskId, "Error=" + ex.Message + ex.StackTrace);
+                EventLog(EventLogEnum.EXCEPTION, EventLogEntryType.Error, "[{1}] {0} : {2}", "ZP", TaskId, "Error=" + ex.Message + ex.StackTrace);
+            }
+
+            Log("[{1}] {0} : {2}", "ProcessData", TaskId, "Done");
         }
     }
 }

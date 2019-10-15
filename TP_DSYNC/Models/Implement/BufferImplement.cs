@@ -988,13 +988,13 @@ IF NOT EXISTS (SELECT 1 FROM CP WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
                     conn.Open();
 
                     string sql = @"
-IF NOT EXISTS (SELEZP 1 FROM ZP WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
+IF NOT EXISTS (SELECT 1 FROM ZP WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
     BEGIN
-        INSERT INTO ZP (AUTOID,DATETIME,AZPIVE
+        INSERT INTO ZP (AUTOID,DATETIME,ACTIVE
             ,ZP01_00,ZP02_00,ZP03_00,ZP04_00,ZP05_00,ZP06_00
             ,ZP01_01,ZP02_01,ZP03_01,ZP04_01,ZP05_01,ZP06_01
             ,ZP01_02,ZP02_02,ZP03_02,ZP04_02,ZP05_02,ZP06_02)
-        VALUES (@AUTOID,@DATETIME,@AZPIVE
+        VALUES (@AUTOID,@DATETIME,@ACTIVE
             ,@ZP01_00,@ZP02_00,@ZP03_00,@ZP04_00,@ZP05_00,@ZP06_00
             ,@ZP01_01,@ZP02_01,@ZP03_01,@ZP04_01,@ZP05_01,@ZP06_01
             ,@ZP01_02,@ZP02_02,@ZP03_02,@ZP04_02,@ZP05_02,@ZP06_02)
@@ -1005,7 +1005,7 @@ IF NOT EXISTS (SELEZP 1 FROM ZP WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
                         #region 參數
                         Db.AddInParameter(cmd, "AUTOID", DbType.Int32, ZP.AUTOID);
                         Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, ZP.DATETIME);
-                        Db.AddInParameter(cmd, "AZPIVE", DbType.String, "A");
+                        Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
                         Db.AddInParameter(cmd, "ZP01_00", DbType.Single, ZP.ZP01_00);
                         Db.AddInParameter(cmd, "ZP02_00", DbType.Single, ZP.ZP02_00);
                         Db.AddInParameter(cmd, "ZP03_00", DbType.Single, ZP.ZP03_00);

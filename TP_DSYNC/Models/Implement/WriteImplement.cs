@@ -1552,7 +1552,7 @@ UPDATE CP SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
                     using (DbCommand cmd = connB3BUFFER.CreateCommand())
                     {
                         sql = @"
-                SELEZP ACTIVE FROM ZP WITH(UPDLOCK,ROWLOCK) WHERE AUTOID=@AUTOID AND AZPIVE='A'
+                SELECT ACTIVE FROM ZP WITH(UPDLOCK,ROWLOCK) WHERE AUTOID=@AUTOID AND ACTIVE='A'
                 ";
                         cmd.CommandText = sql;
                         DbB3BUFFER.AddInParameter(cmd, "AUTOID", DbType.Int32, ZP.AUTOID);
@@ -1627,14 +1627,14 @@ INSERT INTO ZP (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,ZP01,ZP02,ZP03,ZP04,ZP05,
 
                                     affected = 0;
                                     sql = @"
-UPDATE ZP SET AZPIVE='S' WHERE AUTOID=@AUTOID AND AZPIVE='A'
+UPDATE ZP SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
 ";
                                     cmd.CommandText = sql;
                                     //DbDSCCR.AddInParameter(cmd, "AUTOID", DbType.Int32, ZPF.AUTOID);
                                     affected = DbB3BUFFER.ExecuteNonQuery(cmd);
                                     if (affected == 0)
                                     {
-                                        //throw new Exception("更新AZPIVE='A'->'S'失敗 AUTOID = " + ZPF.AUTOID.ToString());
+                                        //throw new Exception("ACTIVE='A'->'S'失敗 AUTOID = " + ZPF.AUTOID.ToString());
                                     }
                                 }
                             }
@@ -1741,7 +1741,7 @@ INSERT INTO CT (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,CT01,CT02,CT03,CT04,CT05,
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "04");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "CT01", CT.CT01_04);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "CT02", CT.CT02_04);
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT04", CT.CT04_04);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT03", CT.CT03_04);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "CT04", CT.CT04_04);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "CT05", CT.CT05_04);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "CT06", CT.CT06_04);
@@ -1752,8 +1752,8 @@ INSERT INTO CT (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,CT01,CT02,CT03,CT04,CT05,
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "05");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "CT01", CT.CT01_05);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "CT02", CT.CT02_05);
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT05", CT.CT05_05);
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT05", CT.CT05_05);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT03", CT.CT03_05);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT04", CT.CT04_05);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "CT05", CT.CT05_05);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "CT06", CT.CT06_05);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "CT07", CT.CT07_05);

@@ -1122,5 +1122,308 @@ IF NOT EXISTS (SELECT 1 FROM CT WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
 
             return affected > 0;
         }
+
+        public bool WriteBufferForRRS_VFLH(RRS_VFLH RRS_VFLH)
+        {
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
+            {
+                using (DbConnection conn = Db.CreateConnection())
+                {
+                    conn.Open();
+
+                    string sql = @"
+IF NOT EXISTS (SELECT 1 FROM RRS_VFLH WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
+    BEGIN
+        INSERT INTO RRS_VFLH (AUTOID,DATETIME,ACTIVE
+            ,RRS01_VFLH01,RRS02_VFLH01,RRS03_VFLH01,RRS04_VFLH01,RRS05_VFLH01,RRS06_VFLH01)
+        VALUES (@AUTOID,@DATETIME,@ACTIVE
+            ,@RRS01_VFLH01,@RRS02_VFLH01,@RRS03_VFLH01,@RRS04_VFLH01,@RRS05_VFLH01,@RRS06_VFLH01)
+    END
+";
+                    using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                    {
+                        #region 參數
+                        Db.AddInParameter(cmd, "AUTOID", DbType.Int32, RRS_VFLH.AUTOID);
+                        Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, RRS_VFLH.DATETIME);
+                        Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
+                        Db.AddInParameter(cmd, "RRS01_VFLH01", DbType.Single, RRS_VFLH.RRS01_VFLH01);
+                        Db.AddInParameter(cmd, "RRS02_VFLH01", DbType.Single, RRS_VFLH.RRS02_VFLH01);
+                        Db.AddInParameter(cmd, "RRS03_VFLH01", DbType.Single, RRS_VFLH.RRS03_VFLH01);
+                        Db.AddInParameter(cmd, "RRS04_VFLH01", DbType.Single, RRS_VFLH.RRS04_VFLH01);
+                        Db.AddInParameter(cmd, "RRS05_VFLH01", DbType.Single, RRS_VFLH.RRS05_VFLH01);
+                        Db.AddInParameter(cmd, "RRS06_VFLH01", DbType.Single, RRS_VFLH.RRS06_VFLH01);
+                        #endregion
+                        affected = Db.ExecuteNonQuery(cmd);
+                    }
+                }
+
+                scop.Complete();
+            }
+
+            return affected > 0;
+        }
+
+        public bool WriteBufferForRRS_PVOI(RRS_PVOI RRS_PVOI)
+        {
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
+            {
+                using (DbConnection conn = Db.CreateConnection())
+                {
+                    conn.Open();
+
+                    string sql = @"
+IF NOT EXISTS (SELECT 1 FROM RRS_PVOI WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
+    BEGIN
+        INSERT INTO RRS_PVOI (AUTOID,DATETIME,ACTIVE
+            ,RRS01_PVOI01,RRS02_PVOI01,RRS03_PVOI01,RRS04_PVOI01,RRS05_PVOI01,RRS06_PVOI01,RRS07_PVOI01)
+        VALUES (@AUTOID,@DATETIME,@ACTIVE
+            ,@RRS01_PVOI01,@RRS02_PVOI01,@RRS03_PVOI01,@RRS04_PVOI01,@RRS05_PVOI01,@RRS06_PVOI01,@RRS07_PVOI01)
+    END
+";
+                    using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                    {
+                        #region 參數
+                        Db.AddInParameter(cmd, "AUTOID", DbType.Int32, RRS_PVOI.AUTOID);
+                        Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, RRS_PVOI.DATETIME);
+                        Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
+                        Db.AddInParameter(cmd, "RRS01_PVOI01", DbType.Single, RRS_PVOI.RRS01_PVOI01);
+                        Db.AddInParameter(cmd, "RRS02_PVOI01", DbType.Single, RRS_PVOI.RRS02_PVOI01);
+                        Db.AddInParameter(cmd, "RRS03_PVOI01", DbType.Single, RRS_PVOI.RRS03_PVOI01);
+                        Db.AddInParameter(cmd, "RRS04_PVOI01", DbType.Single, RRS_PVOI.RRS04_PVOI01);
+                        Db.AddInParameter(cmd, "RRS05_PVOI01", DbType.Single, RRS_PVOI.RRS05_PVOI01);
+                        Db.AddInParameter(cmd, "RRS06_PVOI01", DbType.Single, RRS_PVOI.RRS06_PVOI01);
+                        Db.AddInParameter(cmd, "RRS07_PVOI01", DbType.Single, RRS_PVOI.RRS07_PVOI01);
+                        #endregion
+                        affected = Db.ExecuteNonQuery(cmd);
+                    }
+                }
+
+                scop.Complete();
+            }
+
+            return affected > 0;
+        }
+
+        public bool WriteBufferForRRS_PWLS(RRS_PWLS RRS_PWLS)
+        {
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
+            {
+                using (DbConnection conn = Db.CreateConnection())
+                {
+                    conn.Open();
+
+                    string sql = @"
+IF NOT EXISTS (SELECT 1 FROM RRS_PWLS WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
+    BEGIN
+        INSERT INTO RRS_PWLS (AUTOID,DATETIME,ACTIVE
+            ,RRS01_PWLS01,RRS02_PWLS01,RRS03_PWLS01,RRS04_PWLS01,RRS05_PWLS01,RRS06_PWLS01,RRS07_PWLS01,RRS08_PWLS01,RRS09_PWLS01,RRS10_PWLS01,RRS11_PWLS01,RRS12_PWLS01,RRS13_PWLS01)
+        VALUES (@AUTOID,@DATETIME,@ACTIVE
+            ,@RRS01_PWLS01,@RRS02_PWLS01,@RRS03_PWLS01,@RRS04_PWLS01,@RRS05_PWLS01,@RRS06_PWLS01,@RRS07_PWLS01,@RRS08_PWLS01,@RRS09_PWLS01,@RRS10_PWLS01,@RRS11_PWLS01,@RRS12_PWLS01,@RRS13_PWLS01)
+    END
+";
+                    using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                    {
+                        #region 參數
+                        Db.AddInParameter(cmd, "AUTOID", DbType.Int32, RRS_PWLS.AUTOID);
+                        Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, RRS_PWLS.DATETIME);
+                        Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
+                        Db.AddInParameter(cmd, "RRS01_PWLS01", DbType.Single, RRS_PWLS.RRS01_PWLS01);
+                        Db.AddInParameter(cmd, "RRS02_PWLS01", DbType.Single, RRS_PWLS.RRS02_PWLS01);
+                        Db.AddInParameter(cmd, "RRS03_PWLS01", DbType.Single, RRS_PWLS.RRS03_PWLS01);
+                        Db.AddInParameter(cmd, "RRS04_PWLS01", DbType.Single, RRS_PWLS.RRS04_PWLS01);
+                        Db.AddInParameter(cmd, "RRS05_PWLS01", DbType.Single, RRS_PWLS.RRS05_PWLS01);
+                        Db.AddInParameter(cmd, "RRS06_PWLS01", DbType.Single, RRS_PWLS.RRS06_PWLS01);
+                        Db.AddInParameter(cmd, "RRS07_PWLS01", DbType.Single, RRS_PWLS.RRS07_PWLS01);
+                        Db.AddInParameter(cmd, "RRS08_PWLS01", DbType.Single, RRS_PWLS.RRS08_PWLS01);
+                        Db.AddInParameter(cmd, "RRS09_PWLS01", DbType.Single, RRS_PWLS.RRS09_PWLS01);
+                        Db.AddInParameter(cmd, "RRS10_PWLS01", DbType.Single, RRS_PWLS.RRS10_PWLS01);
+                        Db.AddInParameter(cmd, "RRS11_PWLS01", DbType.Single, RRS_PWLS.RRS11_PWLS01);
+                        Db.AddInParameter(cmd, "RRS12_PWLS01", DbType.Single, RRS_PWLS.RRS12_PWLS01);
+                        Db.AddInParameter(cmd, "RRS13_PWLS01", DbType.Single, RRS_PWLS.RRS13_PWLS01);
+                        #endregion
+                        affected = Db.ExecuteNonQuery(cmd);
+                    }
+                }
+
+                scop.Complete();
+            }
+
+            return affected > 0;
+        }
+
+        public bool WriteBufferForWSDS_PVOI(WSDS_PVOI WSDS_PVOI)
+        {
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
+            {
+                using (DbConnection conn = Db.CreateConnection())
+                {
+                    conn.Open();
+
+                    string sql = @"
+IF NOT EXISTS (SELECT 1 FROM WSDS_PVOI WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
+    BEGIN
+        INSERT INTO WSDS_PVOI (AUTOID,DATETIME,ACTIVE
+            ,WSDS01_PVOI01,WSDS02_PVOI01,WSDS03_PVOI01,WSDS04_PVOI01,WSDS05_PVOI01,WSDS06_PVOI01,WSDS07_PVOI01,WSDS08_PVOI01
+            ,WSDS09_PVOI01,WSDS10_PVOI01,WSDS11_PVOI01,WSDS12_PVOI01,WSDS13_PVOI01,WSDS14_PVOI01,WSDS15_PVOI01,WSDS16_PVOI01
+            ,WSDS17_PVOI01,WSDS18_PVOI01,WSDS19_PVOI01,WSDS20_PVOI01,WSDS21_PVOI01,WSDS22_PVOI01,WSDS23_PVOI01,WSDS24_PVOI01
+            ,WSDS25_PVOI01,WSDS26_PVOI01)
+        VALUES (@AUTOID,@DATETIME,@ACTIVE
+            ,@WSDS01_PVOI01,@WSDS02_PVOI01,@WSDS03_PVOI01,@WSDS04_PVOI01,@WSDS05_PVOI01,@WSDS06_PVOI01,@WSDS07_PVOI01,@WSDS08_PVOI01
+            ,@WSDS09_PVOI01,@WSDS10_PVOI01,@WSDS11_PVOI01,@WSDS12_PVOI01,@WSDS13_PVOI01,@WSDS14_PVOI01,@WSDS15_PVOI01,@WSDS16_PVOI01
+            ,@WSDS17_PVOI01,@WSDS18_PVOI01,@WSDS19_PVOI01,@WSDS20_PVOI01,@WSDS21_PVOI01,@WSDS22_PVOI01,@WSDS23_PVOI01,@WSDS24_PVOI01
+            ,@WSDS25_PVOI01,@WSDS26_PVOI01)
+    END
+";
+                    using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                    {
+                        #region 參數
+                        Db.AddInParameter(cmd, "AUTOID", DbType.Int32, WSDS_PVOI.AUTOID);
+                        Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, WSDS_PVOI.DATETIME);
+                        Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
+                        Db.AddInParameter(cmd, "WSDS01_PVOI01", DbType.Single, WSDS_PVOI.WSDS01_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS02_PVOI01", DbType.Single, WSDS_PVOI.WSDS02_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS03_PVOI01", DbType.Single, WSDS_PVOI.WSDS03_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS04_PVOI01", DbType.Single, WSDS_PVOI.WSDS04_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS05_PVOI01", DbType.Single, WSDS_PVOI.WSDS05_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS06_PVOI01", DbType.Single, WSDS_PVOI.WSDS06_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS07_PVOI01", DbType.Single, WSDS_PVOI.WSDS07_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS08_PVOI01", DbType.Single, WSDS_PVOI.WSDS08_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS09_PVOI01", DbType.Single, WSDS_PVOI.WSDS09_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS10_PVOI01", DbType.Single, WSDS_PVOI.WSDS10_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS11_PVOI01", DbType.Single, WSDS_PVOI.WSDS11_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS12_PVOI01", DbType.Single, WSDS_PVOI.WSDS12_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS13_PVOI01", DbType.Single, WSDS_PVOI.WSDS13_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS14_PVOI01", DbType.Single, WSDS_PVOI.WSDS14_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS15_PVOI01", DbType.Single, WSDS_PVOI.WSDS15_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS16_PVOI01", DbType.Single, WSDS_PVOI.WSDS16_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS17_PVOI01", DbType.Single, WSDS_PVOI.WSDS17_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS18_PVOI01", DbType.Single, WSDS_PVOI.WSDS18_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS19_PVOI01", DbType.Single, WSDS_PVOI.WSDS19_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS20_PVOI01", DbType.Single, WSDS_PVOI.WSDS20_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS21_PVOI01", DbType.Single, WSDS_PVOI.WSDS21_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS22_PVOI01", DbType.Single, WSDS_PVOI.WSDS22_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS23_PVOI01", DbType.Single, WSDS_PVOI.WSDS23_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS24_PVOI01", DbType.Single, WSDS_PVOI.WSDS24_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS25_PVOI01", DbType.Single, WSDS_PVOI.WSDS25_PVOI01);
+                        Db.AddInParameter(cmd, "WSDS26_PVOI01", DbType.Single, WSDS_PVOI.WSDS26_PVOI01);
+                        #endregion
+                        affected = Db.ExecuteNonQuery(cmd);
+                    }
+                }
+
+                scop.Complete();
+            }
+
+            return affected > 0;
+        }
+
+        public bool WriteBufferForWSDS_PWLS(WSDS_PWLS WSDS_PWLS)
+        {
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
+            {
+                using (DbConnection conn = Db.CreateConnection())
+                {
+                    conn.Open();
+
+                    string sql = @"
+IF NOT EXISTS (SELECT 1 FROM WSDS_PWLS WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
+    BEGIN
+        INSERT INTO WSDS_PWLS (AUTOID,DATETIME,ACTIVE
+            ,WSDS01_PVOI01,WSDS02_PVOI01,WSDS03_PVOI01,WSDS04_PVOI01,WSDS05_PVOI01,WSDS06_PVOI01,WSDS07_PVOI01,WSDS08_PVOI01
+            ,WSDS09_PVOI01,WSDS10_PVOI01,WSDS11_PVOI01,WSDS12_PVOI01,WSDS13_PVOI01,WSDS14_PVOI01,WSDS15_PVOI01,WSDS16_PVOI01
+            ,WSDS17_PVOI01,WSDS18_PVOI01,WSDS19_PVOI01,WSDS20_PVOI01,WSDS21_PVOI01,WSDS22_PVOI01,WSDS23_PVOI01,WSDS24_PVOI01
+            ,WSDS25_PVOI01,WSDS26_PVOI01)
+        VALUES (@AUTOID,@DATETIME,@ACTIVE
+            ,@WSDS01_PVOI01,@WSDS02_PVOI01,@WSDS03_PVOI01,@WSDS04_PVOI01,@WSDS05_PVOI01,@WSDS06_PVOI01,@WSDS07_PVOI01,@WSDS08_PVOI01
+            ,@WSDS09_PVOI01,@WSDS10_PVOI01,@WSDS11_PVOI01,@WSDS12_PVOI01,@WSDS13_PVOI01,@WSDS14_PVOI01,@WSDS15_PVOI01,@WSDS16_PVOI01
+            ,@WSDS17_PVOI01,@WSDS18_PVOI01,@WSDS19_PVOI01,@WSDS20_PVOI01,@WSDS21_PVOI01,@WSDS22_PVOI01,@WSDS23_PVOI01,@WSDS24_PVOI01
+            ,@WSDS25_PVOI01,@WSDS26_PVOI01)
+    END
+";
+                    using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                    {
+                        #region 參數
+                        Db.AddInParameter(cmd, "AUTOID", DbType.Int32, WSDS_PWLS.AUTOID);
+                        Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, WSDS_PWLS.DATETIME);
+                        Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
+                        Db.AddInParameter(cmd, "WSDS01_PWLS01", DbType.Single, WSDS_PWLS.WSDS01_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS02_PWLS01", DbType.Single, WSDS_PWLS.WSDS02_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS03_PWLS01", DbType.Single, WSDS_PWLS.WSDS03_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS04_PWLS01", DbType.Single, WSDS_PWLS.WSDS04_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS05_PWLS01", DbType.Single, WSDS_PWLS.WSDS05_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS06_PWLS01", DbType.Single, WSDS_PWLS.WSDS06_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS07_PWLS01", DbType.Single, WSDS_PWLS.WSDS07_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS08_PWLS01", DbType.Single, WSDS_PWLS.WSDS08_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS09_PWLS01", DbType.Single, WSDS_PWLS.WSDS09_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS10_PWLS01", DbType.Single, WSDS_PWLS.WSDS10_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS11_PWLS01", DbType.Single, WSDS_PWLS.WSDS11_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS12_PWLS01", DbType.Single, WSDS_PWLS.WSDS12_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS13_PWLS01", DbType.Single, WSDS_PWLS.WSDS13_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS14_PWLS01", DbType.Single, WSDS_PWLS.WSDS14_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS15_PWLS01", DbType.Single, WSDS_PWLS.WSDS15_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS16_PWLS01", DbType.Single, WSDS_PWLS.WSDS16_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS17_PWLS01", DbType.Single, WSDS_PWLS.WSDS17_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS18_PWLS01", DbType.Single, WSDS_PWLS.WSDS18_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS19_PWLS01", DbType.Single, WSDS_PWLS.WSDS19_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS20_PWLS01", DbType.Single, WSDS_PWLS.WSDS20_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS21_PWLS01", DbType.Single, WSDS_PWLS.WSDS21_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS22_PWLS01", DbType.Single, WSDS_PWLS.WSDS22_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS23_PWLS01", DbType.Single, WSDS_PWLS.WSDS23_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS24_PWLS01", DbType.Single, WSDS_PWLS.WSDS24_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS25_PWLS01", DbType.Single, WSDS_PWLS.WSDS25_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS26_PWLS01", DbType.Single, WSDS_PWLS.WSDS26_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS27_PWLS01", DbType.Single, WSDS_PWLS.WSDS27_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS28_PWLS01", DbType.Single, WSDS_PWLS.WSDS28_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS29_PWLS01", DbType.Single, WSDS_PWLS.WSDS29_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS30_PWLS01", DbType.Single, WSDS_PWLS.WSDS30_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS31_PWLS01", DbType.Single, WSDS_PWLS.WSDS31_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS32_PWLS01", DbType.Single, WSDS_PWLS.WSDS32_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS33_PWLS01", DbType.Single, WSDS_PWLS.WSDS33_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS34_PWLS01", DbType.Single, WSDS_PWLS.WSDS34_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS35_PWLS01", DbType.Single, WSDS_PWLS.WSDS35_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS36_PWLS01", DbType.Single, WSDS_PWLS.WSDS36_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS37_PWLS01", DbType.Single, WSDS_PWLS.WSDS37_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS38_PWLS01", DbType.Single, WSDS_PWLS.WSDS38_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS39_PWLS01", DbType.Single, WSDS_PWLS.WSDS39_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS40_PWLS01", DbType.Single, WSDS_PWLS.WSDS40_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS41_PWLS01", DbType.Single, WSDS_PWLS.WSDS41_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS42_PWLS01", DbType.Single, WSDS_PWLS.WSDS42_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS43_PWLS01", DbType.Single, WSDS_PWLS.WSDS43_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS44_PWLS01", DbType.Single, WSDS_PWLS.WSDS44_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS45_PWLS01", DbType.Single, WSDS_PWLS.WSDS45_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS46_PWLS01", DbType.Single, WSDS_PWLS.WSDS46_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS47_PWLS01", DbType.Single, WSDS_PWLS.WSDS47_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS48_PWLS01", DbType.Single, WSDS_PWLS.WSDS48_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS49_PWLS01", DbType.Single, WSDS_PWLS.WSDS49_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS50_PWLS01", DbType.Single, WSDS_PWLS.WSDS50_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS51_PWLS01", DbType.Single, WSDS_PWLS.WSDS51_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS52_PWLS01", DbType.Single, WSDS_PWLS.WSDS52_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS53_PWLS01", DbType.Single, WSDS_PWLS.WSDS53_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS54_PWLS01", DbType.Single, WSDS_PWLS.WSDS54_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS55_PWLS01", DbType.Single, WSDS_PWLS.WSDS55_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS56_PWLS01", DbType.Single, WSDS_PWLS.WSDS56_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS57_PWLS01", DbType.Single, WSDS_PWLS.WSDS57_PWLS01);
+                        Db.AddInParameter(cmd, "WSDS58_PWLS01", DbType.Single, WSDS_PWLS.WSDS58_PWLS01);
+
+                        #endregion
+                        affected = Db.ExecuteNonQuery(cmd);
+                    }
+                }
+
+                scop.Complete();
+            }
+
+            return affected > 0;
+        }
     }
 }

@@ -994,7 +994,269 @@ SELECT TOP 1 AUTOID,DATETIME
             return CT;
         }
 
+        public RRS_VFLH ReadDataFromRRS_VFLH()
+        {
+            RRS_VFLH RRS_VFLH = null;
 
+            string sql = @"
+SELECT TOP 1 AUTOID,DATETIME
+    ,RRS01_VFLH01,RRS02_VFLH01,RRS03_VFLH01,RRS04_VFLH01,RRS05_VFLH01,RRS06_VFLH01
+	FROM RRS_VFLH
+    ORDER BY AUTOID DESC
+";
+            using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+            {
+                //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
+                using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                {
+                    if (reader.Read())
+                    {
+                        RRS_VFLH = new RRS_VFLH()
+                        {
+                            AUTOID = (int)reader["AUTOID"],
+                            DATETIME = reader["DATETIME"] as DateTime? ?? null,
+                            RRS01_VFLH01 = reader["RRS01_VFLH01"] as Single? ?? null,
+                            RRS02_VFLH01 = reader["RRS02_VFLH01"] as Single? ?? null,
+                            RRS03_VFLH01 = reader["RRS03_VFLH01"] as Single? ?? null,
+                            RRS04_VFLH01 = reader["RRS04_VFLH01"] as Single? ?? null,
+                            RRS05_VFLH01 = reader["RRS05_VFLH01"] as Single? ?? null,
+                            RRS06_VFLH01 = reader["RRS06_VFLH01"] as Single? ?? null
+                        };
+                    }
+                }
+            }
+
+            return RRS_VFLH;
+        }
+
+        public RRS_PVOI ReadDataFromRRS_PVOI()
+        {
+            RRS_PVOI RRS_PVOI = null;
+
+            string sql = @"
+SELECT TOP 1 AUTOID,DATETIME
+    ,RRS01_PVOI01,RRS02_PVOI01,RRS03_PVOI01,RRS04_PVOI01,RRS05_PVOI01,RRS06_PVOI01,RRS07_PVOI01
+	FROM RRS_PVOI
+    ORDER BY AUTOID DESC
+";
+            using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+            {
+                //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
+                using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                {
+                    if (reader.Read())
+                    {
+                        RRS_PVOI = new RRS_PVOI()
+                        {
+                            AUTOID = (int)reader["AUTOID"],
+                            DATETIME = reader["DATETIME"] as DateTime? ?? null,
+                            RRS01_PVOI01 = reader["RRS01_PVOI01"] as Single? ?? null,
+                            RRS02_PVOI01 = reader["RRS02_PVOI01"] as Single? ?? null,
+                            RRS03_PVOI01 = reader["RRS03_PVOI01"] as Single? ?? null,
+                            RRS04_PVOI01 = reader["RRS04_PVOI01"] as Single? ?? null,
+                            RRS05_PVOI01 = reader["RRS05_PVOI01"] as Single? ?? null,
+                            RRS06_PVOI01 = reader["RRS06_PVOI01"] as Single? ?? null,
+                            RRS07_PVOI01 = reader["RRS07_PVOI01"] as Single? ?? null
+                        };
+                    }
+                }
+            }
+
+            return RRS_PVOI;
+        }
+
+        public RRS_PWLS ReadDataFromRRS_PWLS()
+        {
+            RRS_PWLS RRS_PWLS = null;
+
+            string sql = @"
+SELECT TOP 1 AUTOID,DATETIME
+    ,RRS01_PWLS01,RRS02_PWLS01,RRS03_PWLS01,RRS04_PWLS01,RRS05_PWLS01,RRS06_PWLS01,RRS07_PWLS01,RRS08_PWLS01,RRS09_PWLS01,RRS10_PWLS01,RRS11_PWLS01,RRS12_PWLS01,RRS13_PWLS01
+	FROM RRS_PWLS
+    ORDER BY AUTOID DESC
+";
+            using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+            {
+                //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
+                using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                {
+                    if (reader.Read())
+                    {
+                        RRS_PWLS = new RRS_PWLS()
+                        {
+                            AUTOID = (int)reader["AUTOID"],
+                            DATETIME = reader["DATETIME"] as DateTime? ?? null,
+                            RRS01_PWLS01 = reader["RRS01_PWLS01"] as Single? ?? null,
+                            RRS02_PWLS01 = reader["RRS02_PWLS01"] as Single? ?? null,
+                            RRS03_PWLS01 = reader["RRS03_PWLS01"] as Single? ?? null,
+                            RRS04_PWLS01 = reader["RRS04_PWLS01"] as Single? ?? null,
+                            RRS05_PWLS01 = reader["RRS05_PWLS01"] as Single? ?? null,
+                            RRS06_PWLS01 = reader["RRS06_PWLS01"] as Single? ?? null,
+                            RRS07_PWLS01 = reader["RRS07_PWLS01"] as Single? ?? null,
+                            RRS08_PWLS01 = reader["RRS08_PWLS01"] as Single? ?? null,
+                            RRS09_PWLS01 = reader["RRS09_PWLS01"] as Single? ?? null,
+                            RRS10_PWLS01 = reader["RRS10_PWLS01"] as Single? ?? null,
+                            RRS11_PWLS01 = reader["RRS11_PWLS01"] as Single? ?? null,
+                            RRS12_PWLS01 = reader["RRS12_PWLS01"] as Single? ?? null,
+                            RRS13_PWLS01 = reader["RRS13_PWLS01"] as Single? ?? null
+                        };
+                    }
+                }
+            }
+
+            return RRS_PWLS;
+        }
+
+        public WSDS_PVOI ReadDataFromWSDS_PVOI()
+        {
+            WSDS_PVOI WSDS_PVOI = null;
+
+            string sql = @"
+SELECT TOP 1 AUTOID,DATETIME
+    ,WSDS01_PVOI01,WSDS02_PVOI01,WSDS03_PVOI01,WSDS04_PVOI01,WSDS05_PVOI01,WSDS06_PVOI01,WSDS07_PVOI01,WSDS08_PVOI01
+    ,WSDS09_PVOI01,WSDS10_PVOI01,WSDS11_PVOI01,WSDS12_PVOI01,WSDS13_PVOI01,WSDS14_PVOI01,WSDS15_PVOI01,WSDS16_PVOI01
+    ,WSDS17_PVOI01,WSDS18_PVOI01,WSDS19_PVOI01,WSDS20_PVOI01,WSDS21_PVOI01,WSDS22_PVOI01,WSDS23_PVOI01,WSDS24_PVOI01
+    ,WSDS25_PVOI01,WSDS26_PVOI01
+	FROM WSDS_PVOI
+    ORDER BY AUTOID DESC
+";
+            using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+            {
+                //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
+                using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                {
+                    if (reader.Read())
+                    {
+                        WSDS_PVOI = new WSDS_PVOI()
+                        {
+                            AUTOID = (int)reader["AUTOID"],
+                            DATETIME = reader["DATETIME"] as DateTime? ?? null,
+                            WSDS01_PVOI01 = reader["WSDS01_PVOI01"] as Single? ?? null,
+                            WSDS02_PVOI01 = reader["WSDS02_PVOI01"] as Single? ?? null,
+                            WSDS03_PVOI01 = reader["WSDS03_PVOI01"] as Single? ?? null,
+                            WSDS04_PVOI01 = reader["WSDS04_PVOI01"] as Single? ?? null,
+                            WSDS05_PVOI01 = reader["WSDS05_PVOI01"] as Single? ?? null,
+                            WSDS06_PVOI01 = reader["WSDS06_PVOI01"] as Single? ?? null,
+                            WSDS07_PVOI01 = reader["WSDS07_PVOI01"] as Single? ?? null,
+                            WSDS08_PVOI01 = reader["WSDS08_PVOI01"] as Single? ?? null,
+                            WSDS09_PVOI01 = reader["WSDS09_PVOI01"] as Single? ?? null,
+                            WSDS10_PVOI01 = reader["WSDS10_PVOI01"] as Single? ?? null,
+                            WSDS11_PVOI01 = reader["WSDS11_PVOI01"] as Single? ?? null,
+                            WSDS12_PVOI01 = reader["WSDS12_PVOI01"] as Single? ?? null,
+                            WSDS13_PVOI01 = reader["WSDS13_PVOI01"] as Single? ?? null,
+                            WSDS14_PVOI01 = reader["WSDS14_PVOI01"] as Single? ?? null,
+                            WSDS15_PVOI01 = reader["WSDS15_PVOI01"] as Single? ?? null,
+                            WSDS16_PVOI01 = reader["WSDS16_PVOI01"] as Single? ?? null,
+                            WSDS17_PVOI01 = reader["WSDS17_PVOI01"] as Single? ?? null,
+                            WSDS18_PVOI01 = reader["WSDS18_PVOI01"] as Single? ?? null,
+                            WSDS19_PVOI01 = reader["WSDS19_PVOI01"] as Single? ?? null,
+                            WSDS20_PVOI01 = reader["WSDS20_PVOI01"] as Single? ?? null,
+                            WSDS21_PVOI01 = reader["WSDS21_PVOI01"] as Single? ?? null,
+                            WSDS22_PVOI01 = reader["WSDS22_PVOI01"] as Single? ?? null,
+                            WSDS23_PVOI01 = reader["WSDS23_PVOI01"] as Single? ?? null,
+                            WSDS24_PVOI01 = reader["WSDS24_PVOI01"] as Single? ?? null,
+                            WSDS25_PVOI01 = reader["WSDS25_PVOI01"] as Single? ?? null,
+                            WSDS26_PVOI01 = reader["WSDS26_PVOI01"] as Single? ?? null
+                        };
+                    }
+                }
+            }
+
+            return WSDS_PVOI;
+        }
+
+        public WSDS_PWLS ReadDataFromWSDS_PWLS()
+        {
+            WSDS_PWLS WSDS_PWLS = null;
+
+            string sql = @"
+SELECT TOP 1 AUTOID,DATETIME
+    ,WSDS01_PWLS01,WSDS02_PWLS01,WSDS03_PWLS01,WSDS04_PWLS01,WSDS05_PWLS01,WSDS06_PWLS01,WSDS07_PWLS01,WSDS08_PWLS01
+    ,WSDS09_PWLS01,WSDS10_PWLS01,WSDS11_PWLS01,WSDS12_PWLS01,WSDS13_PWLS01,WSDS14_PWLS01,WSDS15_PWLS01,WSDS16_PWLS01
+    ,WSDS17_PWLS01,WSDS18_PWLS01,WSDS19_PWLS01,WSDS20_PWLS01,WSDS21_PWLS01,WSDS22_PWLS01,WSDS23_PWLS01,WSDS24_PWLS01
+    ,WSDS25_PWLS01,WSDS26_PWLS01,WSDS27_PWLS01,WSDS28_PWLS01,WSDS29_PWLS01,WSDS30_PWLS01,WSDS31_PWLS01,WSDS32_PWLS01
+    ,WSDS33_PWLS01,WSDS34_PWLS01,WSDS35_PWLS01,WSDS36_PWLS01,WSDS37_PWLS01,WSDS38_PWLS01,WSDS39_PWLS01,WSDS40_PWLS01
+    ,WSDS41_PWLS01,WSDS42_PWLS01,WSDS43_PWLS01,WSDS44_PWLS01,WSDS45_PWLS01,WSDS46_PWLS01,WSDS47_PWLS01,WSDS48_PWLS01
+    ,WSDS49_PWLS01,WSDS50_PWLS01,WSDS51_PWLS01,WSDS52_PWLS01,WSDS53_PWLS01,WSDS54_PWLS01,WSDS55_PWLS01,WSDS56_PWLS01
+    ,WSDS57_PWLS01,WSDS58_PWLS01
+	FROM WSDS_PWLS
+    ORDER BY AUTOID DESC
+";
+            using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+            {
+                //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
+                using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                {
+                    if (reader.Read())
+                    {
+                        WSDS_PWLS = new WSDS_PWLS()
+                        {
+                            AUTOID = (int)reader["AUTOID"],
+                            DATETIME = reader["DATETIME"] as DateTime? ?? null,
+                            WSDS01_PWLS01 = reader["WSDS01_PWLS01"] as Single? ?? null,
+                            WSDS02_PWLS01 = reader["WSDS02_PWLS01"] as Single? ?? null,
+                            WSDS03_PWLS01 = reader["WSDS03_PWLS01"] as Single? ?? null,
+                            WSDS04_PWLS01 = reader["WSDS04_PWLS01"] as Single? ?? null,
+                            WSDS05_PWLS01 = reader["WSDS05_PWLS01"] as Single? ?? null,
+                            WSDS06_PWLS01 = reader["WSDS06_PWLS01"] as Single? ?? null,
+                            WSDS07_PWLS01 = reader["WSDS07_PWLS01"] as Single? ?? null,
+                            WSDS08_PWLS01 = reader["WSDS08_PWLS01"] as Single? ?? null,
+                            WSDS09_PWLS01 = reader["WSDS09_PWLS01"] as Single? ?? null,
+                            WSDS10_PWLS01 = reader["WSDS10_PWLS01"] as Single? ?? null,
+                            WSDS11_PWLS01 = reader["WSDS11_PWLS01"] as Single? ?? null,
+                            WSDS12_PWLS01 = reader["WSDS12_PWLS01"] as Single? ?? null,
+                            WSDS13_PWLS01 = reader["WSDS13_PWLS01"] as Single? ?? null,
+                            WSDS14_PWLS01 = reader["WSDS14_PWLS01"] as Single? ?? null,
+                            WSDS15_PWLS01 = reader["WSDS15_PWLS01"] as Single? ?? null,
+                            WSDS16_PWLS01 = reader["WSDS16_PWLS01"] as Single? ?? null,
+                            WSDS17_PWLS01 = reader["WSDS17_PWLS01"] as Single? ?? null,
+                            WSDS18_PWLS01 = reader["WSDS18_PWLS01"] as Single? ?? null,
+                            WSDS19_PWLS01 = reader["WSDS19_PWLS01"] as Single? ?? null,
+                            WSDS20_PWLS01 = reader["WSDS20_PWLS01"] as Single? ?? null,
+                            WSDS21_PWLS01 = reader["WSDS21_PWLS01"] as Single? ?? null,
+                            WSDS22_PWLS01 = reader["WSDS22_PWLS01"] as Single? ?? null,
+                            WSDS23_PWLS01 = reader["WSDS23_PWLS01"] as Single? ?? null,
+                            WSDS24_PWLS01 = reader["WSDS24_PWLS01"] as Single? ?? null,
+                            WSDS25_PWLS01 = reader["WSDS25_PWLS01"] as Single? ?? null,
+                            WSDS26_PWLS01 = reader["WSDS26_PWLS01"] as Single? ?? null,
+                            WSDS27_PWLS01 = reader["WSDS27_PWLS01"] as Single? ?? null,
+                            WSDS28_PWLS01 = reader["WSDS28_PWLS01"] as Single? ?? null,
+                            WSDS29_PWLS01 = reader["WSDS29_PWLS01"] as Single? ?? null,
+                            WSDS30_PWLS01 = reader["WSDS30_PWLS01"] as Single? ?? null,
+                            WSDS31_PWLS01 = reader["WSDS31_PWLS01"] as Single? ?? null,
+                            WSDS32_PWLS01 = reader["WSDS32_PWLS01"] as Single? ?? null,
+                            WSDS33_PWLS01 = reader["WSDS33_PWLS01"] as Single? ?? null,
+                            WSDS34_PWLS01 = reader["WSDS34_PWLS01"] as Single? ?? null,
+                            WSDS35_PWLS01 = reader["WSDS35_PWLS01"] as Single? ?? null,
+                            WSDS36_PWLS01 = reader["WSDS36_PWLS01"] as Single? ?? null,
+                            WSDS37_PWLS01 = reader["WSDS37_PWLS01"] as Single? ?? null,
+                            WSDS38_PWLS01 = reader["WSDS38_PWLS01"] as Single? ?? null,
+                            WSDS39_PWLS01 = reader["WSDS39_PWLS01"] as Single? ?? null,
+                            WSDS40_PWLS01 = reader["WSDS40_PWLS01"] as Single? ?? null,
+                            WSDS41_PWLS01 = reader["WSDS41_PWLS01"] as Single? ?? null,
+                            WSDS42_PWLS01 = reader["WSDS42_PWLS01"] as Single? ?? null,
+                            WSDS43_PWLS01 = reader["WSDS43_PWLS01"] as Single? ?? null,
+                            WSDS44_PWLS01 = reader["WSDS44_PWLS01"] as Single? ?? null,
+                            WSDS45_PWLS01 = reader["WSDS45_PWLS01"] as Single? ?? null,
+                            WSDS46_PWLS01 = reader["WSDS46_PWLS01"] as Single? ?? null,
+                            WSDS47_PWLS01 = reader["WSDS47_PWLS01"] as Single? ?? null,
+                            WSDS48_PWLS01 = reader["WSDS48_PWLS01"] as Single? ?? null,
+                            WSDS49_PWLS01 = reader["WSDS49_PWLS01"] as Single? ?? null,
+                            WSDS50_PWLS01 = reader["WSDS50_PWLS01"] as Single? ?? null,
+                            WSDS51_PWLS01 = reader["WSDS51_PWLS01"] as Single? ?? null,
+                            WSDS52_PWLS01 = reader["WSDS52_PWLS01"] as Single? ?? null,
+                            WSDS53_PWLS01 = reader["WSDS53_PWLS01"] as Single? ?? null,
+                            WSDS54_PWLS01 = reader["WSDS54_PWLS01"] as Single? ?? null,
+                            WSDS55_PWLS01 = reader["WSDS55_PWLS01"] as Single? ?? null,
+                            WSDS56_PWLS01 = reader["WSDS56_PWLS01"] as Single? ?? null,
+                            WSDS57_PWLS01 = reader["WSDS57_PWLS01"] as Single? ?? null,
+                            WSDS58_PWLS01 = reader["WSDS58_PWLS01"] as Single? ?? null
+                        };
+                    }
+                }
+            }
+
+            return WSDS_PWLS;
+        }
     }
-
 }

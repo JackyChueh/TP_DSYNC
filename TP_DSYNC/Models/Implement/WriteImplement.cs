@@ -1796,5 +1796,288 @@ UPDATE CT SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
 
             return affected;
         }
+
+        public int WriteDataForRRS_VFLH(RRS_VFLH RRS_VFLH)
+        {
+            string sql;
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.RepeatableRead }))
+            {
+                using (DbConnection connB3BUFFER = DbB3BUFFER.CreateConnection())
+                {
+                    string active = null;
+                    connB3BUFFER.Open();
+                    using (DbCommand cmd = connB3BUFFER.CreateCommand())
+                    {
+                        sql = @"
+                SELECT ACTIVE FROM RRS_VFLH WITH(UPDLOCK,ROWLOCK) WHERE AUTOID=@AUTOID AND ACTIVE='A'
+                ";
+                        cmd.CommandText = sql;
+                        DbB3BUFFER.AddInParameter(cmd, "AUTOID", DbType.Int32, RRS_VFLH.AUTOID);
+                        var obj = DbB3BUFFER.ExecuteScalar(cmd);
+                        if (obj != null)
+                        {
+                            active = obj.ToString();
+                        }
+
+                        if (active == "A")
+                        {
+                            using (DbConnection connDSCCR = DbDSCCR.CreateConnection())
+                            {
+                                connDSCCR.Open();
+                                using (DbCommand cmdDSCCR = connDSCCR.CreateCommand())
+                                {
+                                    sql = @"
+INSERT INTO RRS_VFLH (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,RRS01_VFLH01,RRS02_VFLH01,RRS03_VFLH01,RRS04_VFLH01,RRS05_VFLH01,RRS06_VFLH01)
+    VALUES (NEXT VALUE FOR [RRS_VFLH_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@RRS01_VFLH01,@RRS02_VFLH01,@RRS03_VFLH01,@RRS04_VFLH01,@RRS05_VFLH01,@RRS06_VFLH01)
+";
+                                    cmdDSCCR.CommandText = sql;
+                                    #region 參數
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DEVICE_ID", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS01_VFLH01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS02_VFLH01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS03_VFLH01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS04_VFLH01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS05_VFLH01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS06_VFLH01", DbType.Single);
+
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 71);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", RRS_VFLH.AUTOID);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", RRS_VFLH.DATETIME);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "XF");
+
+                                    #region R1
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "01");
+                                    DbDSCCR.AddInParameter(cmd, "RRS01_VFLH01", DbType.Single, RRS_VFLH.RRS01_VFLH01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS02_VFLH01", DbType.Single, RRS_VFLH.RRS02_VFLH01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS03_VFLH01", DbType.Single, RRS_VFLH.RRS03_VFLH01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS04_VFLH01", DbType.Single, RRS_VFLH.RRS04_VFLH01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS05_VFLH01", DbType.Single, RRS_VFLH.RRS05_VFLH01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS06_VFLH01", DbType.Single, RRS_VFLH.RRS06_VFLH01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #endregion
+
+                                    affected = 0;
+                                    sql = @"
+UPDATE RRS_VFLH SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
+";
+                                    cmd.CommandText = sql;
+                                    //DbDSCCR.AddInParameter(cmd, "AUTOID", DbType.Int32, RRS_VFLHF.AUTOID);
+                                    affected = DbB3BUFFER.ExecuteNonQuery(cmd);
+                                    if (affected == 0)
+                                    {
+                                        //throw new Exception("更新ACTIVE='A'->'S'失敗 AUTOID = " + RRS_VFLHF.AUTOID.ToString());
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+                scop.Complete();
+            }
+
+            return affected;
+        }
+
+        public int WriteDataForRRS_PVOI(RRS_PVOI RRS_PVOI)
+        {
+            string sql;
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.RepeatableRead }))
+            {
+                using (DbConnection connB3BUFFER = DbB3BUFFER.CreateConnection())
+                {
+                    string active = null;
+                    connB3BUFFER.Open();
+                    using (DbCommand cmd = connB3BUFFER.CreateCommand())
+                    {
+                        sql = @"
+                SELECT ACTIVE FROM RRS_PVOI WITH(UPDLOCK,ROWLOCK) WHERE AUTOID=@AUTOID AND ACTIVE='A'
+                ";
+                        cmd.CommandText = sql;
+                        DbB3BUFFER.AddInParameter(cmd, "AUTOID", DbType.Int32, RRS_PVOI.AUTOID);
+                        var obj = DbB3BUFFER.ExecuteScalar(cmd);
+                        if (obj != null)
+                        {
+                            active = obj.ToString();
+                        }
+
+                        if (active == "A")
+                        {
+                            using (DbConnection connDSCCR = DbDSCCR.CreateConnection())
+                            {
+                                connDSCCR.Open();
+                                using (DbCommand cmdDSCCR = connDSCCR.CreateCommand())
+                                {
+                                    sql = @"
+INSERT INTO RRS_PVOI (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,RRS01_PVOI01,RRS02_PVOI01,RRS03_PVOI01,RRS04_PVOI01,RRS05_PVOI01,RRS06_PVOI01,RRS07_PVOI01)
+    VALUES (NEXT VALUE FOR [RRS_PVOI_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@RRS01_PVOI01,@RRS02_PVOI01,@RRS03_PVOI01,@RRS04_PVOI01,@RRS05_PVOI01,@RRS06_PVOI01,@RRS07_PVOI01)
+";
+                                    cmdDSCCR.CommandText = sql;
+                                    #region 參數
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DEVICE_ID", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS01_PVOI01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS02_PVOI01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS03_PVOI01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS04_PVOI01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS05_PVOI01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS06_PVOI01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS07_PVOI01", DbType.Single);
+
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 71);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", RRS_PVOI.AUTOID);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", RRS_PVOI.DATETIME);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "XF");
+
+                                    #region R1
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "01");
+                                    DbDSCCR.AddInParameter(cmd, "RRS01_PVOI01", DbType.Single, RRS_PVOI.RRS01_PVOI01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS02_PVOI01", DbType.Single, RRS_PVOI.RRS02_PVOI01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS03_PVOI01", DbType.Single, RRS_PVOI.RRS03_PVOI01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS04_PVOI01", DbType.Single, RRS_PVOI.RRS04_PVOI01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS05_PVOI01", DbType.Single, RRS_PVOI.RRS05_PVOI01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS06_PVOI01", DbType.Single, RRS_PVOI.RRS06_PVOI01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS07_PVOI01", DbType.Single, RRS_PVOI.RRS07_PVOI01);
+
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #endregion
+
+                                    affected = 0;
+                                    sql = @"
+UPDATE RRS_PVOI SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
+";
+                                    cmd.CommandText = sql;
+                                    //DbDSCCR.AddInParameter(cmd, "AUTOID", DbType.Int32, RRS_PVOIF.AUTOID);
+                                    affected = DbB3BUFFER.ExecuteNonQuery(cmd);
+                                    if (affected == 0)
+                                    {
+                                        //throw new Exception("更新ACTIVE='A'->'S'失敗 AUTOID = " + RRS_PVOIF.AUTOID.ToString());
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+                scop.Complete();
+            }
+
+            return affected;
+        }
+
+        public int WriteDataForRRS_PWLS(RRS_PWLS RRS_PWLS)
+        {
+            string sql;
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.RepeatableRead }))
+            {
+                using (DbConnection connB3BUFFER = DbB3BUFFER.CreateConnection())
+                {
+                    string active = null;
+                    connB3BUFFER.Open();
+                    using (DbCommand cmd = connB3BUFFER.CreateCommand())
+                    {
+                        sql = @"
+                SELECT ACTIVE FROM RRS_PWLS WITH(UPDLOCK,ROWLOCK) WHERE AUTOID=@AUTOID AND ACTIVE='A'
+                ";
+                        cmd.CommandText = sql;
+                        DbB3BUFFER.AddInParameter(cmd, "AUTOID", DbType.Int32, RRS_PWLS.AUTOID);
+                        var obj = DbB3BUFFER.ExecuteScalar(cmd);
+                        if (obj != null)
+                        {
+                            active = obj.ToString();
+                        }
+
+                        if (active == "A")
+                        {
+                            using (DbConnection connDSCCR = DbDSCCR.CreateConnection())
+                            {
+                                connDSCCR.Open();
+                                using (DbCommand cmdDSCCR = connDSCCR.CreateCommand())
+                                {
+                                    sql = @"
+INSERT INTO RRS_PWLS (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,RRS01_PWLS01,RRS02_PWLS01,RRS03_PWLS01,RRS04_PWLS01,RRS05_PWLS01,RRS06_PWLS01,RRS07_PWLS01,RRS08_PWLS01,RRS09_PWLS01,RRS10_PWLS01,RRS11_PWLS01,RRS12_PWLS01,RRS13_PWLS01)
+    VALUES (NEXT VALUE FOR [RRS_PWLS_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@RRS01_PWLS01,@RRS02_PWLS01,@RRS03_PWLS01,@RRS04_PWLS01,@RRS05_PWLS01,@RRS06_PWLS01,@RRS07_PWLS01,@RRS08_PWLS01,@RRS09_PWLS01,@RRS10_PWLS01,@RRS11_PWLS01,@RRS12_PWLS01,@RRS13_PWLS01)
+";
+                                    cmdDSCCR.CommandText = sql;
+                                    #region 參數
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DEVICE_ID", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS01_PVOI01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS02_PVOI01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS03_PVOI01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS04_PVOI01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS05_PVOI01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS06_PVOI01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS07_PVOI01", DbType.Single);
+
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 71);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", RRS_PWLS.AUTOID);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", RRS_PWLS.DATETIME);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "XF");
+
+                                    #region R1
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "01");
+                                    DbDSCCR.AddInParameter(cmd, "RRS01_PWLS01", DbType.Single, RRS_PWLS.RRS01_PWLS01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS02_PWLS01", DbType.Single, RRS_PWLS.RRS02_PWLS01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS03_PWLS01", DbType.Single, RRS_PWLS.RRS03_PWLS01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS04_PWLS01", DbType.Single, RRS_PWLS.RRS04_PWLS01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS05_PWLS01", DbType.Single, RRS_PWLS.RRS05_PWLS01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS06_PWLS01", DbType.Single, RRS_PWLS.RRS06_PWLS01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS07_PWLS01", DbType.Single, RRS_PWLS.RRS07_PWLS01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS08_PWLS01", DbType.Single, RRS_PWLS.RRS08_PWLS01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS09_PWLS01", DbType.Single, RRS_PWLS.RRS09_PWLS01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS10_PWLS01", DbType.Single, RRS_PWLS.RRS10_PWLS01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS11_PWLS01", DbType.Single, RRS_PWLS.RRS11_PWLS01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS12_PWLS01", DbType.Single, RRS_PWLS.RRS12_PWLS01);
+                                    DbDSCCR.AddInParameter(cmd, "RRS13_PWLS01", DbType.Single, RRS_PWLS.RRS13_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #endregion
+
+                                    affected = 0;
+                                    sql = @"
+UPDATE RRS_PWLS SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
+";
+                                    cmd.CommandText = sql;
+                                    //DbDSCCR.AddInParameter(cmd, "AUTOID", DbType.Int32, RRS_PWLSF.AUTOID);
+                                    affected = DbB3BUFFER.ExecuteNonQuery(cmd);
+                                    if (affected == 0)
+                                    {
+                                        //throw new Exception("更新ACTIVE='A'->'S'失敗 AUTOID = " + RRS_PWLSF.AUTOID.ToString());
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+                scop.Complete();
+            }
+
+            return affected;
+        }
+
+        
     }
 }

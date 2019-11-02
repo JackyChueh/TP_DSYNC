@@ -464,6 +464,127 @@ namespace TP_DSYNC.Tasks
                 EventLog(EventLogEnum.EXCEPTION, EventLogEntryType.Error, "[{1}] {0} : {2}", "ZP", TaskId, "Error=" + ex.Message + ex.StackTrace);
             }
 
+            //RRS_VFLH
+            try
+            {
+                Log("[{1}] {0} : {2}", "RRS_VFLH", TaskId, "Start");
+                total.Restart();
+
+                unit.Restart();
+                RRS_VFLH RRS_VFLH = ReadImplement.ReadDataFromRRS_VFLH();
+                unit.Stop();
+                Log("[{1}] {0} : {2}", "RRS_VFLH", TaskId, "Read Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                Log("[{1}] {0} : {2}", "RRS_VFLH", TaskId, "Data=" + JsonConvert.SerializeObject(RRS_VFLH));
+                if (RRS_VFLH != null)
+                {
+                    unit.Restart();
+                    buffer = (BufferImplement.WriteBufferForRRS_VFLH(RRS_VFLH));
+                    unit.Stop();
+                    Log("[{1}] {0} : {2}", "RRS_VFLH", TaskId, "Buffer Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                    if (buffer)
+                    {
+                        unit.Restart();
+                        affected = WriteImplement.WriteDataForRRS_VFLH(RRS_VFLH);
+                        unit.Stop();
+                        Log("[{1}] {0} : {2}", "RRS_VFLH", TaskId, "Write Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                    }
+                }
+                total.Stop();
+                string alert = "";
+                if (total.Elapsed.Seconds > executeAlertSecond)
+                {
+                    alert = total.Elapsed.Seconds > executeAlertSecond ? " > " + executeAlertSecond.ToString() : "";
+                    EventLog(EventLogEnum.EXECUTE_ALERT_SECOND, EventLogEntryType.Warning, "[{1}] {0} : {2}", "RRS_VFLH", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
+                }
+                Log("[{1}] {0} : {2}", "RRS_VFLH", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
+            }
+            catch (Exception ex)
+            {
+                Log("[{1}] {0} : {2}", "RRS_VFLH", TaskId, "Error=" + ex.Message + ex.StackTrace);
+                EventLog(EventLogEnum.EXCEPTION, EventLogEntryType.Error, "[{1}] {0} : {2}", "RRS_VFLH", TaskId, "Error=" + ex.Message + ex.StackTrace);
+            }
+
+            //RRS_PVOI
+            try
+            {
+                Log("[{1}] {0} : {2}", "RRS_PVOI", TaskId, "Start");
+                total.Restart();
+
+                unit.Restart();
+                RRS_PVOI RRS_PVOI = ReadImplement.ReadDataFromRRS_PVOI();
+                unit.Stop();
+                Log("[{1}] {0} : {2}", "RRS_PVOI", TaskId, "Read Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                Log("[{1}] {0} : {2}", "RRS_PVOI", TaskId, "Data=" + JsonConvert.SerializeObject(RRS_PVOI));
+                if (RRS_PVOI != null)
+                {
+                    unit.Restart();
+                    buffer = (BufferImplement.WriteBufferForRRS_PVOI(RRS_PVOI));
+                    unit.Stop();
+                    Log("[{1}] {0} : {2}", "RRS_PVOI", TaskId, "Buffer Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                    if (buffer)
+                    {
+                        unit.Restart();
+                        affected = WriteImplement.WriteDataForRRS_PVOI(RRS_PVOI);
+                        unit.Stop();
+                        Log("[{1}] {0} : {2}", "RRS_PVOI", TaskId, "Write Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                    }
+                }
+                total.Stop();
+                string alert = "";
+                if (total.Elapsed.Seconds > executeAlertSecond)
+                {
+                    alert = total.Elapsed.Seconds > executeAlertSecond ? " > " + executeAlertSecond.ToString() : "";
+                    EventLog(EventLogEnum.EXECUTE_ALERT_SECOND, EventLogEntryType.Warning, "[{1}] {0} : {2}", "RRS_PVOI", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
+                }
+                Log("[{1}] {0} : {2}", "RRS_PVOI", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
+            }
+            catch (Exception ex)
+            {
+                Log("[{1}] {0} : {2}", "RRS_PVOI", TaskId, "Error=" + ex.Message + ex.StackTrace);
+                EventLog(EventLogEnum.EXCEPTION, EventLogEntryType.Error, "[{1}] {0} : {2}", "RRS_PVOI", TaskId, "Error=" + ex.Message + ex.StackTrace);
+            }
+
+            //RRS_PWLS
+            try
+            {
+                Log("[{1}] {0} : {2}", "RRS_PWLS", TaskId, "Start");
+                total.Restart();
+
+                unit.Restart();
+                RRS_PWLS RRS_PWLS = ReadImplement.ReadDataFromRRS_PWLS();
+                unit.Stop();
+                Log("[{1}] {0} : {2}", "RRS_PWLS", TaskId, "Read Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                Log("[{1}] {0} : {2}", "RRS_PWLS", TaskId, "Data=" + JsonConvert.SerializeObject(RRS_PWLS));
+                if (RRS_PWLS != null)
+                {
+                    unit.Restart();
+                    buffer = (BufferImplement.WriteBufferForRRS_PWLS(RRS_PWLS));
+                    unit.Stop();
+                    Log("[{1}] {0} : {2}", "RRS_PWLS", TaskId, "Buffer Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                    if (buffer)
+                    {
+                        unit.Restart();
+                        affected = WriteImplement.WriteDataForRRS_PWLS(RRS_PWLS);
+                        unit.Stop();
+                        Log("[{1}] {0} : {2}", "RRS_PWLS", TaskId, "Write Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                    }
+                }
+                total.Stop();
+                string alert = "";
+                if (total.Elapsed.Seconds > executeAlertSecond)
+                {
+                    alert = total.Elapsed.Seconds > executeAlertSecond ? " > " + executeAlertSecond.ToString() : "";
+                    EventLog(EventLogEnum.EXECUTE_ALERT_SECOND, EventLogEntryType.Warning, "[{1}] {0} : {2}", "RRS_PWLS", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
+                }
+                Log("[{1}] {0} : {2}", "RRS_PWLS", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
+            }
+            catch (Exception ex)
+            {
+                Log("[{1}] {0} : {2}", "RRS_PWLS", TaskId, "Error=" + ex.Message + ex.StackTrace);
+                EventLog(EventLogEnum.EXCEPTION, EventLogEntryType.Error, "[{1}] {0} : {2}", "RRS_PWLS", TaskId, "Error=" + ex.Message + ex.StackTrace);
+            }
+
+            //End
             Log("[{1}] {0} : {2}", "ProcessData", TaskId, "Done");
         }
     }

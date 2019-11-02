@@ -1853,12 +1853,12 @@ INSERT INTO RRS_VFLH (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,RRS01_VFLH01,RRS02_
 
                                     #region R1
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "01");
-                                    DbDSCCR.AddInParameter(cmd, "RRS01_VFLH01", DbType.Single, RRS_VFLH.RRS01_VFLH01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS02_VFLH01", DbType.Single, RRS_VFLH.RRS02_VFLH01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS03_VFLH01", DbType.Single, RRS_VFLH.RRS03_VFLH01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS04_VFLH01", DbType.Single, RRS_VFLH.RRS04_VFLH01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS05_VFLH01", DbType.Single, RRS_VFLH.RRS05_VFLH01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS06_VFLH01", DbType.Single, RRS_VFLH.RRS06_VFLH01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS01_VFLH01", RRS_VFLH.RRS01_VFLH01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS02_VFLH01", RRS_VFLH.RRS02_VFLH01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS03_VFLH01", RRS_VFLH.RRS03_VFLH01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS04_VFLH01", RRS_VFLH.RRS04_VFLH01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS05_VFLH01", RRS_VFLH.RRS05_VFLH01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS06_VFLH01", RRS_VFLH.RRS06_VFLH01);
                                     affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
                                     #endregion
                                     #endregion
@@ -1944,13 +1944,13 @@ INSERT INTO RRS_PVOI (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,RRS01_PVOI01,RRS02_
 
                                     #region R1
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "01");
-                                    DbDSCCR.AddInParameter(cmd, "RRS01_PVOI01", DbType.Single, RRS_PVOI.RRS01_PVOI01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS02_PVOI01", DbType.Single, RRS_PVOI.RRS02_PVOI01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS03_PVOI01", DbType.Single, RRS_PVOI.RRS03_PVOI01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS04_PVOI01", DbType.Single, RRS_PVOI.RRS04_PVOI01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS05_PVOI01", DbType.Single, RRS_PVOI.RRS05_PVOI01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS06_PVOI01", DbType.Single, RRS_PVOI.RRS06_PVOI01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS07_PVOI01", DbType.Single, RRS_PVOI.RRS07_PVOI01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS01_PVOI01",  RRS_PVOI.RRS01_PVOI01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS02_PVOI01",  RRS_PVOI.RRS02_PVOI01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS03_PVOI01",  RRS_PVOI.RRS03_PVOI01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS04_PVOI01",  RRS_PVOI.RRS04_PVOI01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS05_PVOI01",  RRS_PVOI.RRS05_PVOI01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS06_PVOI01",  RRS_PVOI.RRS06_PVOI01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS07_PVOI01",  RRS_PVOI.RRS07_PVOI01);
 
                                     affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
                                     #endregion
@@ -2022,13 +2022,19 @@ INSERT INTO RRS_PWLS (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,RRS01_PWLS01,RRS02_
                                     DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
                                     DbDSCCR.AddInParameter(cmdDSCCR, "DEVICE_ID", DbType.String);
-                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS01_PVOI01", DbType.Single);
-                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS02_PVOI01", DbType.Single);
-                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS03_PVOI01", DbType.Single);
-                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS04_PVOI01", DbType.Single);
-                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS05_PVOI01", DbType.Single);
-                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS06_PVOI01", DbType.Single);
-                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS07_PVOI01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS01_PWLS01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS02_PWLS01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS03_PWLS01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS04_PWLS01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS05_PWLS01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS06_PWLS01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS07_PWLS01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS08_PWLS01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS09_PWLS01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS10_PWLS01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS11_PWLS01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS12_PWLS01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "RRS13_PWLS01", DbType.Single);
 
                                     //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 71);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", RRS_PWLS.AUTOID);
@@ -2037,19 +2043,19 @@ INSERT INTO RRS_PWLS (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,RRS01_PWLS01,RRS02_
 
                                     #region R1
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "01");
-                                    DbDSCCR.AddInParameter(cmd, "RRS01_PWLS01", DbType.Single, RRS_PWLS.RRS01_PWLS01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS02_PWLS01", DbType.Single, RRS_PWLS.RRS02_PWLS01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS03_PWLS01", DbType.Single, RRS_PWLS.RRS03_PWLS01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS04_PWLS01", DbType.Single, RRS_PWLS.RRS04_PWLS01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS05_PWLS01", DbType.Single, RRS_PWLS.RRS05_PWLS01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS06_PWLS01", DbType.Single, RRS_PWLS.RRS06_PWLS01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS07_PWLS01", DbType.Single, RRS_PWLS.RRS07_PWLS01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS08_PWLS01", DbType.Single, RRS_PWLS.RRS08_PWLS01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS09_PWLS01", DbType.Single, RRS_PWLS.RRS09_PWLS01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS10_PWLS01", DbType.Single, RRS_PWLS.RRS10_PWLS01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS11_PWLS01", DbType.Single, RRS_PWLS.RRS11_PWLS01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS12_PWLS01", DbType.Single, RRS_PWLS.RRS12_PWLS01);
-                                    DbDSCCR.AddInParameter(cmd, "RRS13_PWLS01", DbType.Single, RRS_PWLS.RRS13_PWLS01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS01_PWLS01",  RRS_PWLS.RRS01_PWLS01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS02_PWLS01",  RRS_PWLS.RRS02_PWLS01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS03_PWLS01",  RRS_PWLS.RRS03_PWLS01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS04_PWLS01",  RRS_PWLS.RRS04_PWLS01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS05_PWLS01",  RRS_PWLS.RRS05_PWLS01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS06_PWLS01",  RRS_PWLS.RRS06_PWLS01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS07_PWLS01",  RRS_PWLS.RRS07_PWLS01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS08_PWLS01",  RRS_PWLS.RRS08_PWLS01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS09_PWLS01",  RRS_PWLS.RRS09_PWLS01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS10_PWLS01",  RRS_PWLS.RRS10_PWLS01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS11_PWLS01",  RRS_PWLS.RRS11_PWLS01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS12_PWLS01",  RRS_PWLS.RRS12_PWLS01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "RRS13_PWLS01",  RRS_PWLS.RRS13_PWLS01);
                                     affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
                                     #endregion
                                     #endregion

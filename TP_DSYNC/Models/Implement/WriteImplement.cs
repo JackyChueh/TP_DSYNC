@@ -1177,7 +1177,7 @@ INSERT INTO Chiller (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,Chiller01,Chiller02,
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", Chiller.DATETIME);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "XXXF");
 
-                                    #region R1
+                                    #region R1冰機
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "R1");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "Chiller01", Chiller.Chiller01_R1);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "Chiller02", Chiller.Chiller02_R1);
@@ -1191,7 +1191,7 @@ INSERT INTO Chiller (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,Chiller01,Chiller02,
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "Chiller10", Chiller.Chiller10_R1);
                                     affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
                                     #endregion
-                                    #region R2
+                                    #region R2冰機
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "R2");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "Chiller01", Chiller.Chiller01_R2);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "Chiller02", Chiller.Chiller02_R2);
@@ -1205,7 +1205,7 @@ INSERT INTO Chiller (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,Chiller01,Chiller02,
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "Chiller10", Chiller.Chiller10_R2);
                                     affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
                                     #endregion
-                                    #region R3
+                                    #region R3冰機
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "R3");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "Chiller01", Chiller.Chiller01_R3);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "Chiller02", Chiller.Chiller02_R3);
@@ -1219,7 +1219,7 @@ INSERT INTO Chiller (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,Chiller01,Chiller02,
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "Chiller10", Chiller.Chiller10_R3);
                                     affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
                                     #endregion
-                                    #region R6
+                                    #region R6=>R4冰機
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "R6");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "Chiller01", Chiller.Chiller01_R6);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "Chiller02", Chiller.Chiller02_R6);
@@ -1851,7 +1851,7 @@ INSERT INTO RRS_VFLH (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,RRS01_VFLH01,RRS02_
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", RRS_VFLH.DATETIME);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "XF");
 
-                                    #region R1
+                                    #region 01
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "01");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "RRS01_VFLH01", RRS_VFLH.RRS01_VFLH01);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "RRS02_VFLH01", RRS_VFLH.RRS02_VFLH01);
@@ -1942,7 +1942,7 @@ INSERT INTO RRS_PVOI (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,RRS01_PVOI01,RRS02_
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", RRS_PVOI.DATETIME);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "XF");
 
-                                    #region R1
+                                    #region 01
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "01");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "RRS01_PVOI01",  RRS_PVOI.RRS01_PVOI01);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "RRS02_PVOI01",  RRS_PVOI.RRS02_PVOI01);
@@ -2041,7 +2041,7 @@ INSERT INTO RRS_PWLS (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,RRS01_PWLS01,RRS02_
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", RRS_PWLS.DATETIME);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "XF");
 
-                                    #region R1
+                                    #region 01
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "01");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "RRS01_PWLS01",  RRS_PWLS.RRS01_PWLS01);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "RRS02_PWLS01",  RRS_PWLS.RRS02_PWLS01);
@@ -2084,6 +2084,658 @@ UPDATE RRS_PWLS SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
             return affected;
         }
 
-        
+        public int WriteDataForWSDS_PVOI(WSDS_PVOI WSDS_PVOI)
+        {
+            string sql;
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.RepeatableRead }))
+            {
+                using (DbConnection connB3BUFFER = DbB3BUFFER.CreateConnection())
+                {
+                    string active = null;
+                    connB3BUFFER.Open();
+                    using (DbCommand cmd = connB3BUFFER.CreateCommand())
+                    {
+                        sql = @"
+                SELECT ACTIVE FROM WSDS_PVOI WITH(UPDLOCK,ROWLOCK) WHERE AUTOID=@AUTOID AND ACTIVE='A'
+                ";
+                        cmd.CommandText = sql;
+                        DbB3BUFFER.AddInParameter(cmd, "AUTOID", DbType.Int32, WSDS_PVOI.AUTOID);
+                        var obj = DbB3BUFFER.ExecuteScalar(cmd);
+                        if (obj != null)
+                        {
+                            active = obj.ToString();
+                        }
+
+                        if (active == "A")
+                        {
+                            using (DbConnection connDSCCR = DbDSCCR.CreateConnection())
+                            {
+                                connDSCCR.Open();
+                                using (DbCommand cmdDSCCR = connDSCCR.CreateCommand())
+                                {
+                                    sql = @"
+INSERT INTO WSDS_PVOI (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,WSDS_PVOI_STATUS)
+    VALUES (NEXT VALUE FOR [WSDS_PVOI_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@WSDS_PVOI_STATUS)
+";
+                                    cmdDSCCR.CommandText = sql;
+                                    #region 參數
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DEVICE_ID", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "WSDS_PVOI_STATUS", DbType.Single);
+                                  
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 71);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", WSDS_PVOI.AUTOID);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", WSDS_PVOI.DATETIME);
+
+                                    #region 主樓PH1(給水)	高層給水泵P1
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "PH1S");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "01");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS01_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓PH1(給水)	高層給水泵P2
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "PH1S");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "02");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS02_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓PH1(飲水)	高層飲用水泵P7
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "PH1D");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "03");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS03_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓PH1(飲水)	高層飲用水泵P8
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "PH1D");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "04");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS04_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓19F(給水)	中層給水泵P3
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "19FS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "05");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS05_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓19F(給水)	中層給水泵P4
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "19FS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "06");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS06_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓19F(飲水)	中層飲用水泵P9
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "19FD");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "07");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS07_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓19F(飲水)	中層飲用水泵P10
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "19FD");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "08");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS08_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓8F(給水)	    低層給水泵P5
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "08FS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "09");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS09_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓8F(給水)	    低層給水泵P6
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "08FS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS10_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓8F(飲水)	    低層飲用水泵P11
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "08FD");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS11_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓8F(飲水)	    低層飲用水泵P12
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "08FD");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS12_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B3F(B1車道雨廢水)	    廢水泵P15 (B3-12室)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3FC");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "13");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS13_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B3F(B1車道雨廢水)	    廢水泵P16 (B3-12室)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3FC");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "14");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS14_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B3F(糞便)	污水泵P13(B3-24室)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3FX");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "15");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS15_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B3F(糞便)	污水泵P14(B3-24室)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3FX");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "16");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS16_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(B1以下糞水)	排放泵#1(近B2-116車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "SB2X");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "17");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS17_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(B1以下糞水)	排放泵#2(近B2-116車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "SB2X");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "18");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS18_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(廚房污水)	    污水泵#1(近B2-122車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "SB2K");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "19");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS19_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(廚房污水)	    污水泵#2(近B2-122車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "SB2K");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "20");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS20_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(雨水儲存) 	廢水泵#2604(B2-81車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "SB2R");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "21");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS21_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(雨水儲存)	    廢水泵#2605(B2-81車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "SB2R");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "22");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS22_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(雨水離心排放)	    廢水泵#2606(B2-74車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "SB2E");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "23");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS23_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(雨水離心排放)	    廢水泵#2607(B2-74車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "SB2E");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "24");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS24_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(飲用及給水)	給水泵#1(B2-81旁房間)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "SB2Y");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "25");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS25_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(飲用及給水)	給水泵#2 (B2-81旁房間)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "SB2Y");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "26");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PVOI_STATUS", WSDS_PVOI.WSDS26_PVOI01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #endregion
+
+                                    affected = 0;
+                                    sql = @"
+UPDATE WSDS_PVOI SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
+";
+                                    cmd.CommandText = sql;
+                                    //DbDSCCR.AddInParameter(cmd, "AUTOID", DbType.Int32, WSDS_PVOIF.AUTOID);
+                                    affected = DbB3BUFFER.ExecuteNonQuery(cmd);
+                                    if (affected == 0)
+                                    {
+                                        //throw new Exception("更新ACTIVE='A'->'S'失敗 AUTOID = " + WSDS_PVOIF.AUTOID.ToString());
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+                scop.Complete();
+            }
+
+            return affected;
+        }
+
+        public int WriteDataForWSDS_PWLS(WSDS_PWLS WSDS_PWLS)
+        {
+            string sql;
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.RepeatableRead }))
+            {
+                using (DbConnection connB3BUFFER = DbB3BUFFER.CreateConnection())
+                {
+                    string active = null;
+                    connB3BUFFER.Open();
+                    using (DbCommand cmd = connB3BUFFER.CreateCommand())
+                    {
+                        sql = @"
+                SELECT ACTIVE FROM WSDS_PWLS WITH(UPDLOCK,ROWLOCK) WHERE AUTOID=@AUTOID AND ACTIVE='A'
+                ";
+                        cmd.CommandText = sql;
+                        DbB3BUFFER.AddInParameter(cmd, "AUTOID", DbType.Int32, WSDS_PWLS.AUTOID);
+                        var obj = DbB3BUFFER.ExecuteScalar(cmd);
+                        if (obj != null)
+                        {
+                            active = obj.ToString();
+                        }
+
+                        if (active == "A")
+                        {
+                            using (DbConnection connDSCCR = DbDSCCR.CreateConnection())
+                            {
+                                connDSCCR.Open();
+                                using (DbCommand cmdDSCCR = connDSCCR.CreateCommand())
+                                {
+                                    sql = @"
+INSERT INTO WSDS_PWLS (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,WSDS_PWLS_STATUS)
+    VALUES (NEXT VALUE FOR [WSDS_PWLS_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@WSDS_PWLS_STATUS)
+";
+                                    cmdDSCCR.CommandText = sql;
+                                    #region 參數
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DEVICE_ID", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "WSDS_PWLS_STATUS", DbType.Single);
+
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 71);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", WSDS_PWLS.AUTOID);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", WSDS_PWLS.DATETIME);
+
+                                    #region 主樓PH2東側(水塔補水箱)	CT7及CT10水塔補水箱水位檢知警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "PH2E");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "01");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS01_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓PH2西側(水塔補水箱)	CT9及CT15水塔補水箱水位檢知警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "PH2W");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "02");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS02_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓PH2(高層給水塔)	16-27樓高層給水高塔滿水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "PH2S");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "03");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS03_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓PH2(高層給水塔)	16-27樓高層給水高塔渴水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "PH2S");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "04");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS04_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓PH2(高層飲水塔)	16-27樓高層飲用水高塔滿水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "PH2D");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "05");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS05_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓PH2(高層飲水塔)	16-27樓高層飲用水高塔渴水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "PH2D");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "06");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS06_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓19F(中層給水塔)	5-15樓中層給水高塔滿水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "19FS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "07");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS07_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓19F(中層給水塔)	5-15樓中層給水高塔渴水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "19FS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "08");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS08_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓19F(中層飲水塔)	5-15樓中層飲用水高塔滿水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "19FD");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "09");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS09_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓19F(中層飲水塔)	5-15樓中層飲用水高塔渴水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "19FD");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS10_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓14樓前棟(冷卻水塔)	CT12冷卻水塔水位檢知警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "14FF");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS11_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓14樓後棟(冷卻水塔)	CT11冷卻水塔水位檢知警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "14FB");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS12_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓8F(低層給水塔)	B3-4樓低層給水高塔滿水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "8FLS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "13");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS13_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓8F(低層給水塔)	B3-4樓低層給水高塔渴水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "8FLS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "14");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS14_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓8F(低層飲水塔)	B3-4樓低層飲用水高塔滿水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "8FLD");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "15");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS15_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓8F(低層飲水塔)	B3-4樓低層飲用水高塔渴水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "8FLD");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "16");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS16_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(高層給水泵)	16-27樓高層給水泵P1過載警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1HS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "17");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS17_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(高層給水泵)	16-27樓高層給水泵P2過載警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1HS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "18");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS18_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(高層給水池)	16-27樓高層給水水池滿水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1HP");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "19");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS19_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(高層給水池)	16-27樓高層給水水池渴水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1HP");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "20");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS20_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(高層飲水泵)	16-27樓高層飲用水泵P7過載警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1HD");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "21");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS21_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(高層飲水泵)	16-27樓高層飲用水泵P8過載警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1HD");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "22");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS22_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(中層給水泵)	5-15樓中層給水泵P3過載警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1MS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "23");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS23_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(中層給水泵)	5-15樓中層給水泵P4過載警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1MS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "24");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS24_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(中層給水池)	5-15樓中層給水水池滿水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1MP");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "25");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS25_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(中層給水池)	5-15樓中層給水水池渴水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1MP");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "26");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS26_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(中層飲水泵)	5-15樓中層飲用水泵P9過載警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1MD");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "27");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS27_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(中層飲水泵)	5-15樓中層飲用水泵P10過載警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1MD");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "28");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS28_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(低層給水泵)	B3-4樓低層給水泵P5過載警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1LS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "29");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS29_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(低層給水泵)	B3-4樓低層給水泵P6過載警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1LS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "30");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS30_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(低層給水池)	B3-4樓低層給水水池滿水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1LP");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "31");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS31_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(低層給水池)	B3-4樓低層給水水池渴水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1LP");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "32");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS32_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(低層飲水泵)	B3-4樓低層飲用水泵P11過載警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1LD");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "33");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS33_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(低層飲水泵)	B3-4樓低層飲用水泵P12過載警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1LD");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "34");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS34_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(飲水池)	地下層飲用水池水位上限警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1DP");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "35");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS35_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(飲水池)	地下層飲用水池水位上限警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1DP");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "36");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS36_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(飲水槽)	B307飲用水槽高水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1DS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "37");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS37_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B307室(飲水槽)	B307飲用水槽低水位警報
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B1DS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "38");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS38_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B3F(B1車道雨廢水)	廢水泵P15過載警報 (B3-12室)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3FC");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "39");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS39_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B3F(B1車道雨廢水)	廢水泵P16過載警報 (B3-12室)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3FC");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "40");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS40_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B3F(B1車道雨廢水)	廢水池高液位警報(B3-12室)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3FC");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "41");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS41_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B3F(糞便)	污水泵P13過載警報(B3-24室)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3FX");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "42");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS42_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 主樓B3F(糞便)	污水泵P14過載警報(B3-24室)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3FX");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "43");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS43_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(飲用及給水)	副樓給水泵#1過載警報(B2-81旁房間)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B2FD");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "44");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS44_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(飲用及給水)	副樓給水泵#2過載警報(B2-81旁房間)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B2FD");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "45");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS45_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(給水塔)	副樓給水水塔高水位警報(近B1電氣斑管道間)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B2FS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "46");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS46_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(給水塔)	副樓給水水塔低水位警報(近B1電氣斑管道間)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B2FS");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "47");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS47_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(B1以下糞水)	副樓排放泵#1過載警報(近B2-116車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B2FX");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "48");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS48_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(B1以下糞水)	副樓排放泵#2過載警報(近B2-116車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B2FX");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "49");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS49_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(B1以下糞水)	副樓排放水池高液位警報(近B2-116車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B2FX");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "50");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS50_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(廚房污水)	副樓污水泵#1過載警報(近B2-122車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B2FK");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "51");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS51_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(廚房污水)	副樓污水泵#2過載警報(近B2-122車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B2FK");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "52");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS52_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(雨水儲存)	    副樓廢水泵#2604過載警報(B2-81車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B2FR");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "53");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS53_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(雨水儲存) 	副樓廢水泵#2605過載警報(B2-81車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B2FR");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "54");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS54_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(雨水儲存) 	副樓廢水池高液位警報(B2-81車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B2FR");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "55");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS55_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(雨水離心排放)	副樓廢水泵#2606過載警報(B2-74車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B2FE");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "56");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS56_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(雨水離心排放)	副樓廢水泵#2607過載警報(B2-74車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B2FE");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "57");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS57_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+                                    #region 副樓B2F(雨水離心排放)	副樓廢水池高液位警報(B2-74車位)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B2FE");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "58");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WSDS_PWLS_STATUS", WSDS_PWLS.WSDS58_PWLS01);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #endregion
+
+                                    affected = 0;
+                                    sql = @"
+UPDATE WSDS_PWLS SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
+";
+                                    cmd.CommandText = sql;
+                                    //DbDSCCR.AddInParameter(cmd, "AUTOID", DbType.Int32, WSDS_PWLSF.AUTOID);
+                                    affected = DbB3BUFFER.ExecuteNonQuery(cmd);
+                                    if (affected == 0)
+                                    {
+                                        //throw new Exception("更新ACTIVE='A'->'S'失敗 AUTOID = " + WSDS_PWLSF.AUTOID.ToString());
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+                scop.Complete();
+            }
+
+            return affected;
+        }
     }
 }

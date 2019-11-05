@@ -1,12 +1,12 @@
 USE [master]
 GO
-/****** Object:  Database [TP_B3_BUFFER]    Script Date: 2019/11/1 下午 09:38:43 ******/
+/****** Object:  Database [TP_B3_BUFFER]    Script Date: 2019/11/5 上午 08:18:52 ******/
 CREATE DATABASE [TP_B3_BUFFER]
  CONTAINMENT = NONE
  ON  PRIMARY 
-( NAME = N'TP_B3_BUFFER', FILENAME = N'D:\DATA\TP_B3_BUFFER.mdf' , SIZE = 65536KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+( NAME = N'TP_B3_BUFFER', FILENAME = N'D:\DATA\TP_B3_BUFFER.mdf' , SIZE = 73728KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
  LOG ON 
-( NAME = N'TP_B3_BUFFER_log', FILENAME = N'D:\DATA\TP_B3_BUFFER_log.ldf' , SIZE = 65536KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+( NAME = N'TP_B3_BUFFER_log', FILENAME = N'D:\DATA\TP_B3_BUFFER_log.ldf' , SIZE = 401408KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
 GO
 ALTER DATABASE [TP_B3_BUFFER] SET COMPATIBILITY_LEVEL = 110
 GO
@@ -75,7 +75,7 @@ ALTER DATABASE [TP_B3_BUFFER] SET TARGET_RECOVERY_TIME = 60 SECONDS
 GO
 USE [TP_B3_BUFFER]
 GO
-/****** Object:  Table [dbo].[AHU_04F]    Script Date: 2019/11/1 下午 09:38:44 ******/
+/****** Object:  Table [dbo].[AHU_04F]    Script Date: 2019/11/5 上午 08:18:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -139,7 +139,7 @@ CREATE TABLE [dbo].[AHU_04F](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[AHU_0B1]    Script Date: 2019/11/1 下午 09:38:44 ******/
+/****** Object:  Table [dbo].[AHU_0B1]    Script Date: 2019/11/5 上午 08:18:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -247,7 +247,7 @@ CREATE TABLE [dbo].[AHU_0B1](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[AHU_0RF]    Script Date: 2019/11/1 下午 09:38:44 ******/
+/****** Object:  Table [dbo].[AHU_0RF]    Script Date: 2019/11/5 上午 08:18:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -366,7 +366,7 @@ CREATE TABLE [dbo].[AHU_0RF](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[AHU_14F]    Script Date: 2019/11/1 下午 09:38:44 ******/
+/****** Object:  Table [dbo].[AHU_14F]    Script Date: 2019/11/5 上午 08:18:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -562,7 +562,7 @@ CREATE TABLE [dbo].[AHU_14F](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[AHU_S03]    Script Date: 2019/11/1 下午 09:38:44 ******/
+/****** Object:  Table [dbo].[AHU_S03]    Script Date: 2019/11/5 上午 08:18:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -593,7 +593,7 @@ CREATE TABLE [dbo].[AHU_S03](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[AHU_SB1]    Script Date: 2019/11/1 下午 09:38:44 ******/
+/****** Object:  Table [dbo].[AHU_SB1]    Script Date: 2019/11/5 上午 08:18:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -635,7 +635,7 @@ CREATE TABLE [dbo].[AHU_SB1](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Chiller]    Script Date: 2019/11/1 下午 09:38:44 ******/
+/****** Object:  Table [dbo].[Chiller]    Script Date: 2019/11/5 上午 08:18:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -695,7 +695,7 @@ CREATE TABLE [dbo].[Chiller](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[COP]    Script Date: 2019/11/1 下午 09:38:44 ******/
+/****** Object:  Table [dbo].[COP]    Script Date: 2019/11/5 上午 08:18:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -750,7 +750,7 @@ CREATE TABLE [dbo].[COP](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[CP]    Script Date: 2019/11/1 下午 09:38:44 ******/
+/****** Object:  Table [dbo].[CP]    Script Date: 2019/11/5 上午 08:18:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -805,7 +805,7 @@ CREATE TABLE [dbo].[CP](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[CT]    Script Date: 2019/11/1 下午 09:38:44 ******/
+/****** Object:  Table [dbo].[CT]    Script Date: 2019/11/5 上午 08:18:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -867,7 +867,7 @@ CREATE TABLE [dbo].[CT](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[RRS_PVOI]    Script Date: 2019/11/1 下午 09:38:44 ******/
+/****** Object:  Table [dbo].[RRS_PVOI]    Script Date: 2019/11/5 上午 08:18:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -894,7 +894,7 @@ CREATE TABLE [dbo].[RRS_PVOI](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[RRS_PWLS]    Script Date: 2019/11/1 下午 09:38:44 ******/
+/****** Object:  Table [dbo].[RRS_PWLS]    Script Date: 2019/11/5 上午 08:18:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -927,7 +927,7 @@ CREATE TABLE [dbo].[RRS_PWLS](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[RRS_VFLH]    Script Date: 2019/11/1 下午 09:38:44 ******/
+/****** Object:  Table [dbo].[RRS_VFLH]    Script Date: 2019/11/5 上午 08:18:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -953,7 +953,7 @@ CREATE TABLE [dbo].[RRS_VFLH](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[WSDS_PVOI]    Script Date: 2019/11/1 下午 09:38:44 ******/
+/****** Object:  Table [dbo].[WSDS_PVOI]    Script Date: 2019/11/5 上午 08:18:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -999,7 +999,7 @@ CREATE TABLE [dbo].[WSDS_PVOI](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[WSDS_PWLS]    Script Date: 2019/11/1 下午 09:38:44 ******/
+/****** Object:  Table [dbo].[WSDS_PWLS]    Script Date: 2019/11/5 上午 08:18:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1077,7 +1077,7 @@ CREATE TABLE [dbo].[WSDS_PWLS](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[ZP]    Script Date: 2019/11/1 下午 09:38:44 ******/
+/****** Object:  Table [dbo].[ZP]    Script Date: 2019/11/5 上午 08:18:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

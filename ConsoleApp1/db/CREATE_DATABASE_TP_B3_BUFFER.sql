@@ -1,12 +1,12 @@
 USE [master]
 GO
-/****** Object:  Database [TP_B3_BUFFER]    Script Date: 2019/11/5 上午 08:18:52 ******/
+/****** Object:  Database [TP_B3_BUFFER]    Script Date: 2019/11/8 下午 11:24:16 ******/
 CREATE DATABASE [TP_B3_BUFFER]
  CONTAINMENT = NONE
  ON  PRIMARY 
-( NAME = N'TP_B3_BUFFER', FILENAME = N'D:\DATA\TP_B3_BUFFER.mdf' , SIZE = 73728KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+( NAME = N'TP_B3_BUFFER', FILENAME = N'D:\DATA\TP_B3_BUFFER.mdf' , SIZE = 65536KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
  LOG ON 
-( NAME = N'TP_B3_BUFFER_log', FILENAME = N'D:\DATA\TP_B3_BUFFER_log.ldf' , SIZE = 401408KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+( NAME = N'TP_B3_BUFFER_log', FILENAME = N'D:\DATA\TP_B3_BUFFER_log.ldf' , SIZE = 65536KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
 GO
 ALTER DATABASE [TP_B3_BUFFER] SET COMPATIBILITY_LEVEL = 110
 GO
@@ -75,7 +75,7 @@ ALTER DATABASE [TP_B3_BUFFER] SET TARGET_RECOVERY_TIME = 60 SECONDS
 GO
 USE [TP_B3_BUFFER]
 GO
-/****** Object:  Table [dbo].[AHU_04F]    Script Date: 2019/11/5 上午 08:18:52 ******/
+/****** Object:  Table [dbo].[AHU_04F]    Script Date: 2019/11/8 下午 11:24:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -139,7 +139,7 @@ CREATE TABLE [dbo].[AHU_04F](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[AHU_0B1]    Script Date: 2019/11/5 上午 08:18:52 ******/
+/****** Object:  Table [dbo].[AHU_0B1]    Script Date: 2019/11/8 下午 11:24:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -247,7 +247,7 @@ CREATE TABLE [dbo].[AHU_0B1](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[AHU_0RF]    Script Date: 2019/11/5 上午 08:18:52 ******/
+/****** Object:  Table [dbo].[AHU_0RF]    Script Date: 2019/11/8 下午 11:24:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -366,7 +366,7 @@ CREATE TABLE [dbo].[AHU_0RF](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[AHU_14F]    Script Date: 2019/11/5 上午 08:18:52 ******/
+/****** Object:  Table [dbo].[AHU_14F]    Script Date: 2019/11/8 下午 11:24:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -562,7 +562,7 @@ CREATE TABLE [dbo].[AHU_14F](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[AHU_S03]    Script Date: 2019/11/5 上午 08:18:52 ******/
+/****** Object:  Table [dbo].[AHU_S03]    Script Date: 2019/11/8 下午 11:24:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -593,7 +593,7 @@ CREATE TABLE [dbo].[AHU_S03](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[AHU_SB1]    Script Date: 2019/11/5 上午 08:18:52 ******/
+/****** Object:  Table [dbo].[AHU_SB1]    Script Date: 2019/11/8 下午 11:24:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -635,7 +635,7 @@ CREATE TABLE [dbo].[AHU_SB1](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Chiller]    Script Date: 2019/11/5 上午 08:18:52 ******/
+/****** Object:  Table [dbo].[Chiller]    Script Date: 2019/11/8 下午 11:24:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -695,7 +695,7 @@ CREATE TABLE [dbo].[Chiller](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[COP]    Script Date: 2019/11/5 上午 08:18:52 ******/
+/****** Object:  Table [dbo].[COP]    Script Date: 2019/11/8 下午 11:24:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -750,7 +750,7 @@ CREATE TABLE [dbo].[COP](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[CP]    Script Date: 2019/11/5 上午 08:18:52 ******/
+/****** Object:  Table [dbo].[CP]    Script Date: 2019/11/8 下午 11:24:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -805,7 +805,7 @@ CREATE TABLE [dbo].[CP](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[CT]    Script Date: 2019/11/5 上午 08:18:52 ******/
+/****** Object:  Table [dbo].[CT]    Script Date: 2019/11/8 下午 11:24:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -867,17 +867,23 @@ CREATE TABLE [dbo].[CT](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[RRS_PVOI]    Script Date: 2019/11/5 上午 08:18:52 ******/
+/****** Object:  Table [dbo].[RRS]    Script Date: 2019/11/8 下午 11:24:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
-CREATE TABLE [dbo].[RRS_PVOI](
+CREATE TABLE [dbo].[RRS](
 	[AUTOID] [int] NOT NULL,
 	[DATETIME] [datetime] NULL,
 	[ACTIVE] [varchar](1) NOT NULL,
+	[RRS01_VFLH01] [real] NULL,
+	[RRS02_VFLH01] [real] NULL,
+	[RRS03_VFLH01] [real] NULL,
+	[RRS04_VFLH01] [real] NULL,
+	[RRS05_VFLH01] [real] NULL,
+	[RRS06_VFLH01] [real] NULL,
 	[RRS01_PVOI01] [real] NULL,
 	[RRS02_PVOI01] [real] NULL,
 	[RRS03_PVOI01] [real] NULL,
@@ -885,26 +891,6 @@ CREATE TABLE [dbo].[RRS_PVOI](
 	[RRS05_PVOI01] [real] NULL,
 	[RRS06_PVOI01] [real] NULL,
 	[RRS07_PVOI01] [real] NULL,
- CONSTRAINT [PK_RRS_PVOI] PRIMARY KEY CLUSTERED 
-(
-	[AUTOID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-/****** Object:  Table [dbo].[RRS_PWLS]    Script Date: 2019/11/5 上午 08:18:52 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[RRS_PWLS](
-	[AUTOID] [int] NOT NULL,
-	[DATETIME] [datetime] NULL,
-	[ACTIVE] [varchar](1) NOT NULL,
 	[RRS01_PWLS01] [real] NULL,
 	[RRS02_PWLS01] [real] NULL,
 	[RRS03_PWLS01] [real] NULL,
@@ -918,7 +904,7 @@ CREATE TABLE [dbo].[RRS_PWLS](
 	[RRS11_PWLS01] [real] NULL,
 	[RRS12_PWLS01] [real] NULL,
 	[RRS13_PWLS01] [real] NULL,
- CONSTRAINT [PK_RRS_PWLS] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_RRS] PRIMARY KEY CLUSTERED 
 (
 	[AUTOID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -927,40 +913,14 @@ CREATE TABLE [dbo].[RRS_PWLS](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[RRS_VFLH]    Script Date: 2019/11/5 上午 08:18:52 ******/
+/****** Object:  Table [dbo].[WSDS]    Script Date: 2019/11/8 下午 11:24:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
-CREATE TABLE [dbo].[RRS_VFLH](
-	[AUTOID] [int] NOT NULL,
-	[DATETIME] [datetime] NULL,
-	[ACTIVE] [varchar](1) NOT NULL,
-	[RRS01_VFLH01] [real] NULL,
-	[RRS02_VFLH01] [real] NULL,
-	[RRS03_VFLH01] [real] NULL,
-	[RRS04_VFLH01] [real] NULL,
-	[RRS05_VFLH01] [real] NULL,
-	[RRS06_VFLH01] [real] NULL,
- CONSTRAINT [PK_RRS_VFLH] PRIMARY KEY CLUSTERED 
-(
-	[AUTOID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-/****** Object:  Table [dbo].[WSDS_PVOI]    Script Date: 2019/11/5 上午 08:18:52 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[WSDS_PVOI](
+CREATE TABLE [dbo].[WSDS](
 	[AUTOID] [int] NOT NULL,
 	[DATETIME] [datetime] NULL,
 	[ACTIVE] [varchar](1) NOT NULL,
@@ -990,26 +950,6 @@ CREATE TABLE [dbo].[WSDS_PVOI](
 	[WSDS24_PVOI01] [real] NULL,
 	[WSDS25_PVOI01] [real] NULL,
 	[WSDS26_PVOI01] [real] NULL,
- CONSTRAINT [PK_WSDS_PVOI] PRIMARY KEY CLUSTERED 
-(
-	[AUTOID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-/****** Object:  Table [dbo].[WSDS_PWLS]    Script Date: 2019/11/5 上午 08:18:52 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[WSDS_PWLS](
-	[AUTOID] [int] NOT NULL,
-	[DATETIME] [datetime] NULL,
-	[ACTIVE] [varchar](1) NOT NULL,
 	[WSDS01_PWLS01] [real] NULL,
 	[WSDS02_PWLS01] [real] NULL,
 	[WSDS03_PWLS01] [real] NULL,
@@ -1068,7 +1008,7 @@ CREATE TABLE [dbo].[WSDS_PWLS](
 	[WSDS56_PWLS01] [real] NULL,
 	[WSDS57_PWLS01] [real] NULL,
 	[WSDS58_PWLS01] [real] NULL,
- CONSTRAINT [PK_WSDS_PWLS] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_WSDS] PRIMARY KEY CLUSTERED 
 (
 	[AUTOID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -1077,36 +1017,38 @@ CREATE TABLE [dbo].[WSDS_PWLS](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[ZP]    Script Date: 2019/11/5 上午 08:18:52 ******/
+/****** Object:  Table [dbo].[ZP1]    Script Date: 2019/11/8 下午 11:24:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
-CREATE TABLE [dbo].[ZP](
+CREATE TABLE [dbo].[ZP1](
 	[AUTOID] [int] NOT NULL,
 	[DATETIME] [datetime] NULL,
 	[ACTIVE] [varchar](1) NOT NULL,
-	[ZP01_00] [real] NULL,
-	[ZP02_00] [real] NULL,
-	[ZP03_00] [real] NULL,
-	[ZP04_00] [real] NULL,
-	[ZP05_00] [real] NULL,
-	[ZP06_00] [real] NULL,
-	[ZP01_01] [real] NULL,
-	[ZP02_01] [real] NULL,
-	[ZP03_01] [real] NULL,
-	[ZP04_01] [real] NULL,
-	[ZP05_01] [real] NULL,
-	[ZP06_01] [real] NULL,
-	[ZP01_02] [real] NULL,
-	[ZP02_02] [real] NULL,
-	[ZP03_02] [real] NULL,
-	[ZP04_02] [real] NULL,
-	[ZP05_02] [real] NULL,
-	[ZP06_02] [real] NULL,
- CONSTRAINT [PK_ZP] PRIMARY KEY CLUSTERED 
+	[ZP101_00] [real] NULL,
+	[ZP102_00] [real] NULL,
+	[ZP104_00] [real] NULL,
+	[ZP105_00] [real] NULL,
+	[ZP106_00] [real] NULL,
+	[ZP107_00] [real] NULL,
+	[ZP108_00] [real] NULL,
+	[ZP109_00] [real] NULL,
+	[ZP110_00] [real] NULL,
+	[ZP111_00] [real] NULL,
+	[ZP101_01] [real] NULL,
+	[ZP102_01] [real] NULL,
+	[ZP104_01] [real] NULL,
+	[ZP105_01] [real] NULL,
+	[ZP106_01] [real] NULL,
+	[ZP107_01] [real] NULL,
+	[ZP108_01] [real] NULL,
+	[ZP109_01] [real] NULL,
+	[ZP110_01] [real] NULL,
+	[ZP111_01] [real] NULL,
+ CONSTRAINT [PK_ZP1] PRIMARY KEY CLUSTERED 
 (
 	[AUTOID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]

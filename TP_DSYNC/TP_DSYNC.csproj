@@ -97,12 +97,9 @@
     <Compile Include="Models\DataDefine\B3\COP.cs" />
     <Compile Include="Models\DataDefine\B3\CP.cs" />
     <Compile Include="Models\DataDefine\B3\CT.cs" />
-    <Compile Include="Models\DataDefine\B3\RRS_PVOI.cs" />
-    <Compile Include="Models\DataDefine\B3\RRS_PWLS.cs" />
-    <Compile Include="Models\DataDefine\B3\RRS_VFLH.cs" />
-    <Compile Include="Models\DataDefine\B3\WSDS_PVOI.cs" />
-    <Compile Include="Models\DataDefine\B3\WSDS_PWLS.cs" />
-    <Compile Include="Models\DataDefine\B3\ZP.cs" />
+    <Compile Include="Models\DataDefine\B3\RRS.cs" />
+    <Compile Include="Models\DataDefine\B3\WSDS.cs" />
+    <Compile Include="Models\DataDefine\B3\ZP1.cs" />
     <Compile Include="Models\Enums\EventLogEnum.cs" />
     <Compile Include="Models\Help\Config.cs" />
     <Compile Include="Models\Help\EventLogs.cs" />

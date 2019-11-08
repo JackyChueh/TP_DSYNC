@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP_DSYNC.Models.DataDefine.B3
 {
-    public class WSDS_PVOI
+    public class WSDS
     {
         public int AUTOID { get; set; }
         public DateTime? DATETIME { get; set; }

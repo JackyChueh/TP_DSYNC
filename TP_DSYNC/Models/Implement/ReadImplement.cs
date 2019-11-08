@@ -869,55 +869,6 @@ SELECT TOP 1 AUTOID,DATETIME
             return CP;
         }
 
-        public ZP ReadDataFromZP()
-        {
-            ZP ZP = null;
-
-            string sql = @"
-SELECT TOP 1 AUTOID,DATETIME
-    ,ZP01_00,ZP02_00,ZP03_00,ZP04_00,ZP05_00,ZP06_00
-    ,ZP01_01,ZP02_01,ZP03_01,ZP04_01,ZP05_01,ZP06_01
-    ,ZP01_02,ZP02_02,ZP03_02,ZP04_02,ZP05_02,ZP06_02
-	FROM ZP
-    ORDER BY AUTOID DESC
-";
-            using (DbCommand cmd = Db.GetSqlStringCommand(sql))
-            {
-                //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
-                using (IDataReader reader = this.Db.ExecuteReader(cmd))
-                {
-                    if (reader.Read())
-                    {
-                        ZP = new ZP()
-                        {
-                            AUTOID = (int)reader["AUTOID"],
-                            DATETIME = reader["DATETIME"] as DateTime? ?? null,
-                            ZP01_00 = reader["ZP01_00"] as Single? ?? null,
-                            ZP02_00 = reader["ZP02_00"] as Single? ?? null,
-                            ZP03_00 = reader["ZP03_00"] as Single? ?? null,
-                            ZP04_00 = reader["ZP04_00"] as Single? ?? null,
-                            ZP05_00 = reader["ZP05_00"] as Single? ?? null,
-                            ZP06_00 = reader["ZP06_00"] as Single? ?? null,
-                            ZP01_01 = reader["ZP01_01"] as Single? ?? null,
-                            ZP02_01 = reader["ZP02_01"] as Single? ?? null,
-                            ZP03_01 = reader["ZP03_01"] as Single? ?? null,
-                            ZP04_01 = reader["ZP04_01"] as Single? ?? null,
-                            ZP05_01 = reader["ZP05_01"] as Single? ?? null,
-                            ZP06_01 = reader["ZP06_01"] as Single? ?? null,
-                            ZP01_02 = reader["ZP01_02"] as Single? ?? null,
-                            ZP02_02 = reader["ZP02_02"] as Single? ?? null,
-                            ZP03_02 = reader["ZP03_02"] as Single? ?? null,
-                            ZP04_02 = reader["ZP04_02"] as Single? ?? null,
-                            ZP05_02 = reader["ZP05_02"] as Single? ?? null,
-                            ZP06_02 = reader["ZP06_02"] as Single? ?? null
-                        };
-                    }
-                }
-            }
-
-            return ZP;
-        }
-
         public CT ReadDataFromCT()
         {
             CT CT = null;
@@ -994,14 +945,16 @@ SELECT TOP 1 AUTOID,DATETIME
             return CT;
         }
 
-        public RRS_VFLH ReadDataFromRRS_VFLH()
+        public RRS ReadDataFromRRS()
         {
-            RRS_VFLH RRS_VFLH = null;
+            RRS RRS = null;
 
             string sql = @"
 SELECT TOP 1 AUTOID,DATETIME
     ,RRS01_VFLH01,RRS02_VFLH01,RRS03_VFLH01,RRS04_VFLH01,RRS05_VFLH01,RRS06_VFLH01
-	FROM RRS_VFLH
+    ,RRS01_PVOI01,RRS02_PVOI01,RRS03_PVOI01,RRS04_PVOI01,RRS05_PVOI01,RRS06_PVOI01,RRS07_PVOI01
+    ,RRS01_PWLS01,RRS02_PWLS01,RRS03_PWLS01,RRS04_PWLS01,RRS05_PWLS01,RRS06_PWLS01,RRS07_PWLS01,RRS08_PWLS01,RRS09_PWLS01,RRS10_PWLS01,RRS11_PWLS01,RRS12_PWLS01,RRS13_PWLS01
+	FROM RRS
     ORDER BY AUTOID DESC
 ";
             using (DbCommand cmd = Db.GetSqlStringCommand(sql))
@@ -1011,7 +964,7 @@ SELECT TOP 1 AUTOID,DATETIME
                 {
                     if (reader.Read())
                     {
-                        RRS_VFLH = new RRS_VFLH()
+                        RRS = new RRS()
                         {
                             AUTOID = (int)reader["AUTOID"],
                             DATETIME = reader["DATETIME"] as DateTime? ?? null,
@@ -1020,72 +973,16 @@ SELECT TOP 1 AUTOID,DATETIME
                             RRS03_VFLH01 = reader["RRS03_VFLH01"] as Single? ?? null,
                             RRS04_VFLH01 = reader["RRS04_VFLH01"] as Single? ?? null,
                             RRS05_VFLH01 = reader["RRS05_VFLH01"] as Single? ?? null,
-                            RRS06_VFLH01 = reader["RRS06_VFLH01"] as Single? ?? null
-                        };
-                    }
-                }
-            }
+                            RRS06_VFLH01 = reader["RRS06_VFLH01"] as Single? ?? null,
 
-            return RRS_VFLH;
-        }
-
-        public RRS_PVOI ReadDataFromRRS_PVOI()
-        {
-            RRS_PVOI RRS_PVOI = null;
-
-            string sql = @"
-SELECT TOP 1 AUTOID,DATETIME
-    ,RRS01_PVOI01,RRS02_PVOI01,RRS03_PVOI01,RRS04_PVOI01,RRS05_PVOI01,RRS06_PVOI01,RRS07_PVOI01
-	FROM RRS_PVOI
-    ORDER BY AUTOID DESC
-";
-            using (DbCommand cmd = Db.GetSqlStringCommand(sql))
-            {
-                //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
-                using (IDataReader reader = this.Db.ExecuteReader(cmd))
-                {
-                    if (reader.Read())
-                    {
-                        RRS_PVOI = new RRS_PVOI()
-                        {
-                            AUTOID = (int)reader["AUTOID"],
-                            DATETIME = reader["DATETIME"] as DateTime? ?? null,
                             RRS01_PVOI01 = reader["RRS01_PVOI01"] as Single? ?? null,
                             RRS02_PVOI01 = reader["RRS02_PVOI01"] as Single? ?? null,
                             RRS03_PVOI01 = reader["RRS03_PVOI01"] as Single? ?? null,
                             RRS04_PVOI01 = reader["RRS04_PVOI01"] as Single? ?? null,
                             RRS05_PVOI01 = reader["RRS05_PVOI01"] as Single? ?? null,
                             RRS06_PVOI01 = reader["RRS06_PVOI01"] as Single? ?? null,
-                            RRS07_PVOI01 = reader["RRS07_PVOI01"] as Single? ?? null
-                        };
-                    }
-                }
-            }
+                            RRS07_PVOI01 = reader["RRS07_PVOI01"] as Single? ?? null,
 
-            return RRS_PVOI;
-        }
-
-        public RRS_PWLS ReadDataFromRRS_PWLS()
-        {
-            RRS_PWLS RRS_PWLS = null;
-
-            string sql = @"
-SELECT TOP 1 AUTOID,DATETIME
-    ,RRS01_PWLS01,RRS02_PWLS01,RRS03_PWLS01,RRS04_PWLS01,RRS05_PWLS01,RRS06_PWLS01,RRS07_PWLS01,RRS08_PWLS01,RRS09_PWLS01,RRS10_PWLS01,RRS11_PWLS01,RRS12_PWLS01,RRS13_PWLS01
-	FROM RRS_PWLS
-    ORDER BY AUTOID DESC
-";
-            using (DbCommand cmd = Db.GetSqlStringCommand(sql))
-            {
-                //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
-                using (IDataReader reader = this.Db.ExecuteReader(cmd))
-                {
-                    if (reader.Read())
-                    {
-                        RRS_PWLS = new RRS_PWLS()
-                        {
-                            AUTOID = (int)reader["AUTOID"],
-                            DATETIME = reader["DATETIME"] as DateTime? ?? null,
                             RRS01_PWLS01 = reader["RRS01_PWLS01"] as Single? ?? null,
                             RRS02_PWLS01 = reader["RRS02_PWLS01"] as Single? ?? null,
                             RRS03_PWLS01 = reader["RRS03_PWLS01"] as Single? ?? null,
@@ -1104,12 +1001,12 @@ SELECT TOP 1 AUTOID,DATETIME
                 }
             }
 
-            return RRS_PWLS;
+            return RRS;
         }
 
-        public WSDS_PVOI ReadDataFromWSDS_PVOI()
+        public WSDS ReadDataFromWSDS()
         {
-            WSDS_PVOI WSDS_PVOI = null;
+            WSDS WSDS = null;
 
             string sql = @"
 SELECT TOP 1 AUTOID,DATETIME
@@ -1117,7 +1014,15 @@ SELECT TOP 1 AUTOID,DATETIME
     ,WSDS09_PVOI01,WSDS10_PVOI01,WSDS11_PVOI01,WSDS12_PVOI01,WSDS13_PVOI01,WSDS14_PVOI01,WSDS15_PVOI01,WSDS16_PVOI01
     ,WSDS17_PVOI01,WSDS18_PVOI01,WSDS19_PVOI01,WSDS20_PVOI01,WSDS21_PVOI01,WSDS22_PVOI01,WSDS23_PVOI01,WSDS24_PVOI01
     ,WSDS25_PVOI01,WSDS26_PVOI01
-	FROM WSDS_PVOI
+    ,WSDS01_PWLS01,WSDS02_PWLS01,WSDS03_PWLS01,WSDS04_PWLS01,WSDS05_PWLS01,WSDS06_PWLS01,WSDS07_PWLS01,WSDS08_PWLS01
+    ,WSDS09_PWLS01,WSDS10_PWLS01,WSDS11_PWLS01,WSDS12_PWLS01,WSDS13_PWLS01,WSDS14_PWLS01,WSDS15_PWLS01,WSDS16_PWLS01
+    ,WSDS17_PWLS01,WSDS18_PWLS01,WSDS19_PWLS01,WSDS20_PWLS01,WSDS21_PWLS01,WSDS22_PWLS01,WSDS23_PWLS01,WSDS24_PWLS01
+    ,WSDS25_PWLS01,WSDS26_PWLS01,WSDS27_PWLS01,WSDS28_PWLS01,WSDS29_PWLS01,WSDS30_PWLS01,WSDS31_PWLS01,WSDS32_PWLS01
+    ,WSDS33_PWLS01,WSDS34_PWLS01,WSDS35_PWLS01,WSDS36_PWLS01,WSDS37_PWLS01,WSDS38_PWLS01,WSDS39_PWLS01,WSDS40_PWLS01
+    ,WSDS41_PWLS01,WSDS42_PWLS01,WSDS43_PWLS01,WSDS44_PWLS01,WSDS45_PWLS01,WSDS46_PWLS01,WSDS47_PWLS01,WSDS48_PWLS01
+    ,WSDS49_PWLS01,WSDS50_PWLS01,WSDS51_PWLS01,WSDS52_PWLS01,WSDS53_PWLS01,WSDS54_PWLS01,WSDS55_PWLS01,WSDS56_PWLS01
+    ,WSDS57_PWLS01,WSDS58_PWLS01
+	FROM WSDS
     ORDER BY AUTOID DESC
 ";
             using (DbCommand cmd = Db.GetSqlStringCommand(sql))
@@ -1127,7 +1032,7 @@ SELECT TOP 1 AUTOID,DATETIME
                 {
                     if (reader.Read())
                     {
-                        WSDS_PVOI = new WSDS_PVOI()
+                        WSDS = new WSDS()
                         {
                             AUTOID = (int)reader["AUTOID"],
                             DATETIME = reader["DATETIME"] as DateTime? ?? null,
@@ -1156,43 +1061,8 @@ SELECT TOP 1 AUTOID,DATETIME
                             WSDS23_PVOI01 = reader["WSDS23_PVOI01"] as Single? ?? null,
                             WSDS24_PVOI01 = reader["WSDS24_PVOI01"] as Single? ?? null,
                             WSDS25_PVOI01 = reader["WSDS25_PVOI01"] as Single? ?? null,
-                            WSDS26_PVOI01 = reader["WSDS26_PVOI01"] as Single? ?? null
-                        };
-                    }
-                }
-            }
+                            WSDS26_PVOI01 = reader["WSDS26_PVOI01"] as Single? ?? null,
 
-            return WSDS_PVOI;
-        }
-
-        public WSDS_PWLS ReadDataFromWSDS_PWLS()
-        {
-            WSDS_PWLS WSDS_PWLS = null;
-
-            string sql = @"
-SELECT TOP 1 AUTOID,DATETIME
-    ,WSDS01_PWLS01,WSDS02_PWLS01,WSDS03_PWLS01,WSDS04_PWLS01,WSDS05_PWLS01,WSDS06_PWLS01,WSDS07_PWLS01,WSDS08_PWLS01
-    ,WSDS09_PWLS01,WSDS10_PWLS01,WSDS11_PWLS01,WSDS12_PWLS01,WSDS13_PWLS01,WSDS14_PWLS01,WSDS15_PWLS01,WSDS16_PWLS01
-    ,WSDS17_PWLS01,WSDS18_PWLS01,WSDS19_PWLS01,WSDS20_PWLS01,WSDS21_PWLS01,WSDS22_PWLS01,WSDS23_PWLS01,WSDS24_PWLS01
-    ,WSDS25_PWLS01,WSDS26_PWLS01,WSDS27_PWLS01,WSDS28_PWLS01,WSDS29_PWLS01,WSDS30_PWLS01,WSDS31_PWLS01,WSDS32_PWLS01
-    ,WSDS33_PWLS01,WSDS34_PWLS01,WSDS35_PWLS01,WSDS36_PWLS01,WSDS37_PWLS01,WSDS38_PWLS01,WSDS39_PWLS01,WSDS40_PWLS01
-    ,WSDS41_PWLS01,WSDS42_PWLS01,WSDS43_PWLS01,WSDS44_PWLS01,WSDS45_PWLS01,WSDS46_PWLS01,WSDS47_PWLS01,WSDS48_PWLS01
-    ,WSDS49_PWLS01,WSDS50_PWLS01,WSDS51_PWLS01,WSDS52_PWLS01,WSDS53_PWLS01,WSDS54_PWLS01,WSDS55_PWLS01,WSDS56_PWLS01
-    ,WSDS57_PWLS01,WSDS58_PWLS01
-	FROM WSDS_PWLS
-    ORDER BY AUTOID DESC
-";
-            using (DbCommand cmd = Db.GetSqlStringCommand(sql))
-            {
-                //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
-                using (IDataReader reader = this.Db.ExecuteReader(cmd))
-                {
-                    if (reader.Read())
-                    {
-                        WSDS_PWLS = new WSDS_PWLS()
-                        {
-                            AUTOID = (int)reader["AUTOID"],
-                            DATETIME = reader["DATETIME"] as DateTime? ?? null,
                             WSDS01_PWLS01 = reader["WSDS01_PWLS01"] as Single? ?? null,
                             WSDS02_PWLS01 = reader["WSDS02_PWLS01"] as Single? ?? null,
                             WSDS03_PWLS01 = reader["WSDS03_PWLS01"] as Single? ?? null,
@@ -1256,7 +1126,58 @@ SELECT TOP 1 AUTOID,DATETIME
                 }
             }
 
-            return WSDS_PWLS;
+            return WSDS;
         }
+
+        public ZP1 ReadDataFromZP1()
+        {
+            ZP1 ZP1 = null;
+
+            string sql = @"
+SELECT TOP 1 AUTOID,DATETIME
+    ,ZP101_00,ZP102_00,ZP104_00,ZP105_00,ZP106_00,ZP107_00,ZP108_00,ZP109_00,ZP110_00,ZP111_00
+    ,ZP101_01,ZP102_01,ZP104_01,ZP105_01,ZP106_01,ZP107_01,ZP108_01,ZP109_01,ZP110_01,ZP111_01
+	FROM ZP1
+    ORDER BY AUTOID DESC
+";
+            using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+            {
+                //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
+                using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                {
+                    if (reader.Read())
+                    {
+                        ZP1 = new ZP1()
+                        {
+                            AUTOID = (int)reader["AUTOID"],
+                            DATETIME = reader["DATETIME"] as DateTime? ?? null,
+                            ZP101_00 = reader["ZP101_00"] as Single? ?? null,
+                            ZP102_00 = reader["ZP102_00"] as Single? ?? null,
+                            ZP104_00 = reader["ZP104_00"] as Single? ?? null,
+                            ZP105_00 = reader["ZP105_00"] as Single? ?? null,
+                            ZP106_00 = reader["ZP106_00"] as Single? ?? null,
+                            ZP107_00 = reader["ZP107_00"] as Single? ?? null,
+                            ZP108_00 = reader["ZP108_00"] as Single? ?? null,
+                            ZP109_00 = reader["ZP109_00"] as Single? ?? null,
+                            ZP110_00 = reader["ZP110_00"] as Single? ?? null,
+                            ZP111_00 = reader["ZP111_00"] as Single? ?? null,
+                            ZP101_01 = reader["ZP101_01"] as Single? ?? null,
+                            ZP102_01 = reader["ZP102_01"] as Single? ?? null,
+                            ZP104_01 = reader["ZP104_01"] as Single? ?? null,
+                            ZP105_01 = reader["ZP105_01"] as Single? ?? null,
+                            ZP106_01 = reader["ZP106_01"] as Single? ?? null,
+                            ZP107_01 = reader["ZP107_01"] as Single? ?? null,
+                            ZP108_01 = reader["ZP108_01"] as Single? ?? null,
+                            ZP109_01 = reader["ZP109_01"] as Single? ?? null,
+                            ZP110_01 = reader["ZP110_01"] as Single? ?? null,
+                            ZP111_01 = reader["ZP111_01"] as Single? ?? null
+                        };
+                    }
+                }
+            }
+
+            return ZP1;
+        }
+
     }
 }

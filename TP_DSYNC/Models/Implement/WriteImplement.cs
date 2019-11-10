@@ -1538,8 +1538,6 @@ UPDATE CP SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
             return affected;
         }
 
-        
-
         public int WriteDataForCT(CT CT)
         {
             string sql;
@@ -1650,16 +1648,16 @@ INSERT INTO CT (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,CT01,CT02,CT03,CT04,CT05,
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "CT07", CT.CT07_05);
                                     affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
                                     #endregion
-                                    #region 06
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "06");
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT01", CT.CT01_06);
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT02", CT.CT02_06);
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT03", CT.CT03_06);
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT04", CT.CT04_06);
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT05", CT.CT05_06);
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT06", CT.CT06_06);
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "CT07", CT.CT07_06);
-                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #region 06(此項先取消)
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "06");
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "CT01", CT.CT01_06);
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "CT02", CT.CT02_06);
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "CT03", CT.CT03_06);
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "CT04", CT.CT04_06);
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "CT05", CT.CT05_06);
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "CT06", CT.CT06_06);
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "CT07", CT.CT07_06);
+                                    //affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
                                     #endregion
                                 
                                     #endregion

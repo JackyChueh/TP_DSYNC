@@ -45,12 +45,14 @@ namespace TP_DSYNC.Models.DataDefine.B3
         public Single? CT05_05 { get; set; }
         public Single? CT06_05 { get; set; }
         public Single? CT07_05 { get; set; }
-        public Single? CT01_06 { get; set; }
-        public Single? CT02_06 { get; set; }
-        public Single? CT03_06 { get; set; }
-        public Single? CT04_06 { get; set; }
-        public Single? CT05_06 { get; set; }
-        public Single? CT06_06 { get; set; }
-        public Single? CT07_06 { get; set; }
+
+        //06 此項先取消
+        //public Single? CT01_06 { get; set; }
+        //public Single? CT02_06 { get; set; }
+        //public Single? CT03_06 { get; set; }
+        //public Single? CT04_06 { get; set; }
+        //public Single? CT05_06 { get; set; }
+        //public Single? CT06_06 { get; set; }
+        //public Single? CT07_06 { get; set; }
     }
 }

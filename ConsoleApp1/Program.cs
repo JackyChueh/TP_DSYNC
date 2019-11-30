@@ -17,14 +17,14 @@ namespace ConsoleApp1
             {
                 Logs.Write(Program.EventLogSource + " on Start");
                 EventLogs.Write(Program.EventLogSource + " on Start", (int)EventLogEnum.START_OR_STOP, System.Diagnostics.EventLogEntryType.Information);
-                int.TryParse(ConfigurationManager.AppSettings["StartTimerAtSecond"], out int startTimerAtSecond);
-                while (true)
-                {
-                    if (DateTime.Now.Second == startTimerAtSecond)
-                    {
-                        break;
-                    }
-                }
+                //int.TryParse(ConfigurationManager.AppSettings["StartTimerAtSecond"], out int startTimerAtSecond);
+                //while (true)
+                //{
+                //    if (DateTime.Now.Second == startTimerAtSecond)
+                //    {
+                //        break;
+                //    }
+                //}
 
                 int.TryParse(ConfigurationManager.AppSettings["ProcessDataTiming"], out int processDataTiming);
                 if (processDataTiming == 0)

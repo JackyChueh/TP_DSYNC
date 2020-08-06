@@ -87,6 +87,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="db\CREATE_DATABASE_TP_ALERT.sql" />
     <Content Include="db\CREATE_DATABASE_TP_B3.sql" />
     <Content Include="db\CREATE_DATABASE_TP_B3_BUFFER.sql" />
     <Content Include="db\CREATE_DATABASE_TP_DSCCR.sql" />

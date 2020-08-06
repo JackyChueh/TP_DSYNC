@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="Models\DataAccess\B3BUFFER_DSCCR_Access.cs" />
     <Compile Include="Models\DataAccess\DatabaseAccess.cs" />
+    <Compile Include="Models\DataDefine\ALERT\ALERT_CONFIG.cs" />
     <Compile Include="Models\DataDefine\B3\AHU_04F.cs" />
     <Compile Include="Models\DataDefine\B3\AHU_0B1.cs" />
     <Compile Include="Models\DataDefine\B3\AHU_0RF.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Models\Help\Logs.cs" />
     <Compile Include="Models\Help\MailSender.cs" />
     <Compile Include="Models\Implement\BufferImplement.cs" />
+    <Compile Include="Models\Implement\AlertImplement.cs" />
     <Compile Include="Models\Implement\ReadImplement.cs" />
     <Compile Include="Models\Implement\WriteImplement.cs" />
     <Compile Include="ProjectInstaller.cs">
@@ -122,6 +124,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\AlertData.cs" />
     <Compile Include="Tasks\BaseTask.cs" />
     <Compile Include="Tasks\SensorData.cs" />
   </ItemGroup>
@@ -147,5 +150,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

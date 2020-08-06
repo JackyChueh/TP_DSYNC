@@ -134,8 +134,16 @@ SELECT SID,DATA_TYPE,LOCATION,DEVICE_ID,DATA_FIELD,MAX_VALUE,MIN_VALUE,CHECK_INT
                             {
                                 Single value = (Single)reader[c.DATA_FIELD];
                                 if (value > c.MAX_VALUE || value < c.MIN_VALUE)
-                                { 
-                                    new MailSender().Google_Send()
+                                {
+                                    //string[] to = new string[] { "jackychueh@gmail.com" };
+                                    string[] to = c.MAIL_TO.Split(';');
+                                    if (to.Length > 0)
+                                    {
+                                        string title = "Title";
+                                        string message = value.ToString();
+                                        //new MailSender().Google_Send(to, "Title", value.ToString());
+                                        Logs.Write("{0} {1}", title, message);
+                                    }
                                 }
                                 //rows.Add(ALERT_CONFIG);
                             }

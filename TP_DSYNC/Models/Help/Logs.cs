@@ -53,18 +53,6 @@ namespace TP_DSYNC.Models.Help
         }
 
         /// <summary>
-        /// 寫入記錄檔(args)
-        /// </summary>
-        /// <param name="Format"></param>
-        /// <param name="args"></param>
-        public static void Write(string Format, params object[] args)
-        {
-            string Path = _LogPath;
-            String FileName = DateTime.Now.ToString("yyyyMMdd") + ".txt";
-            FileWrite(Path + FileName, string.Format(Format, args));
-        }
-
-        /// <summary>
         /// 寫入記錄檔(指定路徑)
         /// </summary>
         /// <param name="SubFolder">資料目錄</param>

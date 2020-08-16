@@ -13,12 +13,16 @@ namespace TP_DSYNC.Tasks
         protected string MethodName;
         protected string CallerMethodName;
         protected string TaskId;
+        protected DateTime CurrentNow;
+
         public BaseTask(DateTime now)
         {
             ClassName = this.GetType().Name;
             //MethodName = MethodBase.GetCurrentMethod().Name;
             int seconds = now.Hour * 3600 + now.Minute * 60 + now.Second;
             TaskId = Convert.ToString(seconds, 16);
+
+            CurrentNow = now;
         }
 
         private void Log(string Folder, string Text)

@@ -32,17 +32,17 @@ namespace ConsoleApp1
                 //}
 
 
-                //int.TryParse(ConfigurationManager.AppSettings["ProcessDataTiming"], out int processDataTiming);
-                //if (processDataTiming == 0)
-                //    processDataTiming = 60000;   // 60 seconds  
-                //var timer = new Timer();
-                //timer.Interval = processDataTiming;
-                //timer.Elapsed += new ElapsedEventHandler(OnTimer);
-                //timer.Start();
+                int.TryParse(ConfigurationManager.AppSettings["ProcessDataTiming"], out int processDataTiming);
+                if (processDataTiming == 0)
+                    processDataTiming = 60000;   // 60 seconds  
+                var timer = new Timer();
+                timer.Interval = processDataTiming;
+                timer.Elapsed += new ElapsedEventHandler(OnTimer);
+                timer.Start();
 
                 //new SensorData(DateTime.Now).ProcessData();   //單次測試用
 
-                new AlertData(DateTime.Now).ProcessData();   //單次測試用
+                //new AlertData(DateTime.Now).ProcessData();   //單次測試用
 
                 //string[] mailto = { "jackychueh@gmail.com" };
                 //new MailSender().Google_Send("bstwjacky@gmail.com", mailto, "寄送郵件測試)(*&^%$#@!", "<h1>郵件內容</h1>", true);

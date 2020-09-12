@@ -9,7 +9,7 @@ namespace TP_DSYNC.Models.DataDefine.ALERT
     public class ALERT_CONFIG
     {
         public int SID { get; set; }
-        public Boolean MODE { get; set; }
+        public string MODE { get; set; }
         public string DATA_TYPE { get; set; }
         public string LOCATION { get; set; }
         public string DEVICE_ID { get; set; }

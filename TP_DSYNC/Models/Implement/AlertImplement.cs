@@ -33,7 +33,7 @@ SELECT SID,DATA_TYPE,LOCATION,DEVICE_ID,DATA_FIELD,MAX_VALUE,MIN_VALUE,CHECK_INT
             {
                 using (DbCommand cmd = conn.CreateCommand())
                 {
-                    Db.AddInParameter(cmd, "MODE", DbType.Boolean, true);
+                    Db.AddInParameter(cmd, "MODE", DbType.String, "Y");
 
                     //switch (dayOfWeek)
                     //{

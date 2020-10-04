@@ -98,6 +98,9 @@
     <Compile Include="Models\DataDefine\B3\COP.cs" />
     <Compile Include="Models\DataDefine\B3\CP.cs" />
     <Compile Include="Models\DataDefine\B3\CT.cs" />
+    <Compile Include="Models\DataDefine\B3\MSPCAI.cs" />
+    <Compile Include="Models\DataDefine\B3\MSPCALARS.cs" />
+    <Compile Include="Models\DataDefine\B3\MSPCSTATS.cs" />
     <Compile Include="Models\DataDefine\B3\RRS.cs" />
     <Compile Include="Models\DataDefine\B3\WSDS.cs" />
     <Compile Include="Models\DataDefine\B3\ZP1.cs" />

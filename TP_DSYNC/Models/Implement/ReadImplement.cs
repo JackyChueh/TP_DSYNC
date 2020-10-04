@@ -1180,5 +1180,357 @@ SELECT TOP 1 AUTOID,DATETIME
             return ZP1;
         }
 
+        public MSPCSTATS ReadDataFromMSPCSTATS()
+        {
+            MSPCSTATS MSPCSTATS = null;
+
+            string sql = @"
+SELECT TOP 1 AUTOID,DATETIME
+    ,ASEF04_PAAC04,ASEF04_PAAC05,ASEF04_PAAC06,ASEF04_PAAC07,ASEF08_PAAC09,ASEF08_PAAC10,ASEF08_PAAC11,ASEF08_PAAC12,ASEF08_PAAC13
+    ,ASEF05_PAAC18,ASEF04_PAAC19,ASEF06_PAAC20,ASEF05_PAAC23,ASEF05_PAAC24,ASEF01_PAAC28,ASEF04_PAAC33,ASEF06_PAAC34,ASEF07_PAAC34
+    ,ASEF06_PAAC35,ASEF07_PAAC35,ASEF05_PAAC36,ASEF06_PAAC37,ASEF07_PAAC37,ASEF06_PAAC38,ASEF07_PAAC38,ASEF04_PAAC39,ASEF04_PAAC40
+    ,ASEF05_PAAC41,ASEF06_PAAC42,ASEF07_PAAC42,ASEF04_PAAC43,ASEF05_PAAC45,ASEF05_PAAC46,BSEF03_PBAC01,BSEF05_PBAC01,BSEF03_PBAC02
+    ,BSEF05_PBAC02,BSEF03_PBAC03,BSEF05_PBAC03,BSEF03_PBAC04,BSEF05_PBAC04,BSEF03_PBAC05,BSEF05_PBAC05,BSEF03_PBAC06,BSEF05_PBAC06
+    ,BSEF03_PBAC07,BSEF05_PBAC07,BSEF03_PBAC08,BSEF05_PBAC08,BSEF03_PBAC09,BSEF05_PBAC09,BSEF03_PBAC10,BSEF05_PBAC10,BSEF03_PBAC11
+    ,BSEF05_PBAC11,BSEF03_PBAC12,BSEF05_PBAC12,BSEF01_PBAC14,BSEF05_PBAC15,BSEF01_PBAC19,BSEF05_PBAC19
+	FROM MSPCSTATS
+    ORDER BY AUTOID DESC
+";
+            using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+            {
+                //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
+                using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                {
+                    if (reader.Read())
+                    {
+                        MSPCSTATS = new MSPCSTATS()
+                        {
+                            AUTOID = (int)reader["AUTOID"],
+                            DATETIME = reader["DATETIME"] as DateTime? ?? null,
+                            ASEF04_PAAC04 = reader["ASEF04_PAAC04"] as Single? ?? null,
+                            ASEF04_PAAC05 = reader["ASEF04_PAAC05"] as Single? ?? null,
+                            ASEF04_PAAC06 = reader["ASEF04_PAAC06"] as Single? ?? null,
+                            ASEF04_PAAC07 = reader["ASEF04_PAAC07"] as Single? ?? null,
+                            ASEF08_PAAC09 = reader["ASEF08_PAAC09"] as Single? ?? null,
+                            ASEF08_PAAC10 = reader["ASEF08_PAAC10"] as Single? ?? null,
+                            ASEF08_PAAC11 = reader["ASEF08_PAAC11"] as Single? ?? null,
+                            ASEF08_PAAC12 = reader["ASEF08_PAAC12"] as Single? ?? null,
+                            ASEF08_PAAC13 = reader["ASEF08_PAAC13"] as Single? ?? null,
+                            ASEF05_PAAC18 = reader["ASEF05_PAAC18"] as Single? ?? null,
+                            ASEF04_PAAC19 = reader["ASEF04_PAAC19"] as Single? ?? null,
+                            //ASEF06_PAAC20 = reader["ASEF06_PAAC20"] as Single? ?? null,// 
+                            ASEF05_PAAC23 = reader["ASEF05_PAAC23"] as Single? ?? null,
+                            ASEF05_PAAC24 = reader["ASEF05_PAAC24"] as Single? ?? null,
+                            ASEF01_PAAC28 = reader["ASEF01_PAAC28"] as Single? ?? null,
+                            ASEF04_PAAC33 = reader["ASEF04_PAAC33"] as Single? ?? null,
+                            ASEF06_PAAC34 = reader["ASEF06_PAAC34"] as Single? ?? null,
+                            ASEF07_PAAC34 = reader["ASEF07_PAAC34"] as Single? ?? null,
+                            ASEF06_PAAC35 = reader["ASEF06_PAAC35"] as Single? ?? null,
+                            ASEF07_PAAC35 = reader["ASEF07_PAAC35"] as Single? ?? null,
+                            ASEF05_PAAC36 = reader["ASEF05_PAAC36"] as Single? ?? null,
+                            ASEF06_PAAC37 = reader["ASEF06_PAAC37"] as Single? ?? null,
+                            ASEF07_PAAC37 = reader["ASEF07_PAAC37"] as Single? ?? null,
+                            ASEF06_PAAC38 = reader["ASEF06_PAAC38"] as Single? ?? null,
+                            ASEF07_PAAC38 = reader["ASEF07_PAAC38"] as Single? ?? null,
+                            ASEF04_PAAC39 = reader["ASEF04_PAAC39"] as Single? ?? null,
+                            ASEF04_PAAC40 = reader["ASEF04_PAAC40"] as Single? ?? null,
+                            ASEF05_PAAC41 = reader["ASEF05_PAAC41"] as Single? ?? null,
+                            ASEF06_PAAC42 = reader["ASEF06_PAAC42"] as Single? ?? null,
+                            ASEF07_PAAC42 = reader["ASEF07_PAAC42"] as Single? ?? null,
+                            ASEF04_PAAC43 = reader["ASEF04_PAAC43"] as Single? ?? null,
+                            ASEF05_PAAC45 = reader["ASEF05_PAAC45"] as Single? ?? null,
+                            ASEF05_PAAC46 = reader["ASEF05_PAAC46"] as Single? ?? null,
+                            BSEF03_PBAC01 = reader["BSEF03_PBAC01"] as Single? ?? null,
+                            BSEF05_PBAC01 = reader["BSEF05_PBAC01"] as Single? ?? null,
+                            BSEF03_PBAC02 = reader["BSEF03_PBAC02"] as Single? ?? null,
+                            BSEF05_PBAC02 = reader["BSEF05_PBAC02"] as Single? ?? null,
+                            BSEF03_PBAC03 = reader["BSEF03_PBAC03"] as Single? ?? null,
+                            BSEF05_PBAC03 = reader["BSEF05_PBAC03"] as Single? ?? null,
+                            BSEF03_PBAC04 = reader["BSEF03_PBAC04"] as Single? ?? null,
+                            BSEF05_PBAC04 = reader["BSEF05_PBAC04"] as Single? ?? null,
+                            BSEF03_PBAC05 = reader["BSEF03_PBAC05"] as Single? ?? null,
+                            BSEF05_PBAC05 = reader["BSEF05_PBAC05"] as Single? ?? null,
+                            BSEF03_PBAC06 = reader["BSEF03_PBAC06"] as Single? ?? null,
+                            BSEF05_PBAC06 = reader["BSEF05_PBAC06"] as Single? ?? null,
+                            BSEF03_PBAC07 = reader["BSEF03_PBAC07"] as Single? ?? null,
+                            BSEF05_PBAC07 = reader["BSEF05_PBAC07"] as Single? ?? null,
+                            BSEF03_PBAC08 = reader["BSEF03_PBAC08"] as Single? ?? null,
+                            BSEF05_PBAC08 = reader["BSEF05_PBAC08"] as Single? ?? null,
+                            BSEF03_PBAC09 = reader["BSEF03_PBAC09"] as Single? ?? null,
+                            BSEF05_PBAC09 = reader["BSEF05_PBAC09"] as Single? ?? null,
+                            BSEF03_PBAC10 = reader["BSEF03_PBAC10"] as Single? ?? null,
+                            BSEF05_PBAC10 = reader["BSEF05_PBAC10"] as Single? ?? null,
+                            BSEF03_PBAC11 = reader["BSEF03_PBAC11"] as Single? ?? null,
+                            BSEF05_PBAC11 = reader["BSEF05_PBAC11"] as Single? ?? null,
+                            BSEF03_PBAC12 = reader["BSEF03_PBAC12"] as Single? ?? null,
+                            BSEF05_PBAC12 = reader["BSEF05_PBAC12"] as Single? ?? null,
+                            BSEF01_PBAC14 = reader["BSEF01_PBAC14"] as Single? ?? null,
+                            BSEF05_PBAC15 = reader["BSEF05_PBAC15"] as Single? ?? null,
+                            BSEF01_PBAC19 = reader["BSEF01_PBAC19"] as Single? ?? null,
+                            BSEF05_PBAC19 = reader["BSEF05_PBAC19"] as Single? ?? null
+                        };
+                    }
+                }
+            }
+
+            return MSPCSTATS;
+        }
+
+        public MSPCALARS ReadDataFromMSPCALARS()
+        {
+            MSPCALARS MSPCALARS = null;
+
+            string sql = @"
+SELECT TOP 1 AUTOID,DATETIME
+    ,ASEF11_PAAC01,ASEF14_PAAC01,ASEF10_PAAC02,ASEF11_PAAC02,ASEF14_PAAC02,ASEF15_PAAC02,ASEF11_PAAC03,ASEF14_PAAC03,ASEF11_PAAC04
+    ,ASEF12_PAAC04,ASEF13_PAAC04,ASEF11_PAAC05,ASEF12_PAAC05,ASEF11_PAAC06,ASEF12_PAAC06,ASEF11_PAAC07,ASEF12_PAAC07,ASEF13_PAAC08
+    ,ASEF09_PAAC09,ASEF11_PAAC09,ASEF13_PAAC09,ASEF09_PAAC10,ASEF11_PAAC10,ASEF13_PAAC10,ASEF09_PAAC11,ASEF11_PAAC11,ASEF13_PAAC11
+    ,ASEF09_PAAC12,ASEF11_PAAC12,ASEF13_PAAC12,ASEF09_PAAC13,ASEF11_PAAC13,ASEF13_PAAC13,ASEF11_PAAC14,ASEF12_PAAC14,ASEF14_PAAC14
+    ,ASEF15_PAAC14,ASEF11_PAAC15,ASEF12_PAAC15,ASEF11_PAAC16,ASEF12_PAAC16,ASEF13_PAAC16,ASEF16_PBAC16,ASEF17_PBAC16,ASEF14_PAAC16
+    ,ASEF15_PAAC16,ASEF11_PAAC17,ASEF12_PAAC17,ASEF13_PAAC17,ASEF11_PAAC18,ASEF13_PAAC18,ASEF14_PAAC18,ASEF15_PAAC18,ASEF11_PAAC19
+    ,ASEF13_PAAC19,ASEF11_PAAC20,ASEF11_PAAC21,ASEF14_PAAC21,ASEF15_PAAC21,ASEF11_PAAC22,ASEF14_PAAC22,ASEF15_PAAC22,ASEF11_PAAC23
+    ,ASEF11_PAAC24,ASEF14_PAAC24,ASEF15_PAAC24,ASEF10_PAAC25,ASEF11_PAAC25,ASEF14_PAAC25,ASEF10_PAAC26,ASEF10_PAAC27,ASEF11_PAAC27
+    ,ASEF14_PAAC27,ASEF15_PAAC27,ASEF11_PAAC29,ASEF14_PAAC29,ASEF15_PAAC29,ASEF11_PAAC30,ASEF14_PAAC30,ASEF15_PAAC30,ASEF11_PAAC31
+    ,ASEF14_PAAC31,ASEF15_PAAC31,ASEF11_PAAC32,ASEF14_PAAC32,ASEF15_PAAC32,ASEF11_PAAC33,ASEF14_PAAC33,ASEF15_PAAC33,ASEF11_PAAC34
+    ,ASEF11_PAAC35,ASEF11_PAAC36,ASEF11_PAAC37,ASEF11_PAAC38,ASEF11_PAAC39,ASEF11_PAAC40,ASEF11_PAAC41,ASEF11_PAAC42,ASEF11_PAAC43
+    ,ASEF11_PAAC44,ASEF11_PAAC45,ASEF12_PAAC45,ASEF13_PAAC45,ASEF11_PAAC46,ASEF12_PAAC46,ASEF11_PAAC47,ASEF10_PAAC48,ASEF11_PAAC48
+    ,ASEF10_PAAC49,ASEF11_PAAC49,ASEF10_PAAC50,ASEF11_PAAC50,BSEF11_PBAC01,BSEF11_PBAC02,BSEF11_PBAC03,BSEF11_PBAC04,BSEF11_PBAC05
+    ,BSEF11_PBAC06,BSEF11_PBAC07,BSEF11_PBAC08,BSEF11_PBAC09,BSEF11_PBAC10,BSEF11_PBAC11,BSEF11_PBAC12,BSEF11_PBAC13,BSEF11_PBAC14
+    ,BSEF11_PBAC15,BSEF11_PBAC16,BSEF11_PBAC17,BSEF14_PBAC17,BSEF11_PBAC18,BSEF14_PBAC18,BSEF11_PBAC19	
+    FROM MSPCALARS
+    ORDER BY AUTOID DESC
+";
+            using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+            {
+                //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
+                using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                {
+                    if (reader.Read())
+                    {
+                        MSPCALARS = new MSPCALARS()
+                        {
+                            AUTOID = (int)reader["AUTOID"],
+                            DATETIME = reader["DATETIME"] as DateTime? ?? null,
+                            ASEF11_PAAC01 = reader["ASEF11_PAAC01"] as Single? ?? null,
+                            ASEF14_PAAC01 = reader["ASEF14_PAAC01"] as Single? ?? null,
+                            ASEF10_PAAC02 = reader["ASEF10_PAAC02"] as Single? ?? null,
+                            ASEF11_PAAC02 = reader["ASEF11_PAAC02"] as Single? ?? null,
+                            ASEF14_PAAC02 = reader["ASEF14_PAAC02"] as Single? ?? null,
+                            ASEF15_PAAC02 = reader["ASEF15_PAAC02"] as Single? ?? null,
+                            ASEF11_PAAC03 = reader["ASEF11_PAAC03"] as Single? ?? null,
+                            ASEF14_PAAC03 = reader["ASEF14_PAAC03"] as Single? ?? null,
+                            ASEF11_PAAC04 = reader["ASEF11_PAAC04"] as Single? ?? null,
+                            ASEF12_PAAC04 = reader["ASEF12_PAAC04"] as Single? ?? null,
+                            ASEF13_PAAC04 = reader["ASEF13_PAAC04"] as Single? ?? null,
+                            ASEF11_PAAC05 = reader["ASEF11_PAAC05"] as Single? ?? null,
+                            ASEF12_PAAC05 = reader["ASEF12_PAAC05"] as Single? ?? null,
+                            ASEF11_PAAC06 = reader["ASEF11_PAAC06"] as Single? ?? null,
+                            ASEF12_PAAC06 = reader["ASEF12_PAAC06"] as Single? ?? null,
+                            ASEF11_PAAC07 = reader["ASEF11_PAAC07"] as Single? ?? null,
+                            ASEF12_PAAC07 = reader["ASEF12_PAAC07"] as Single? ?? null,
+                            ASEF13_PAAC08 = reader["ASEF13_PAAC08"] as Single? ?? null,
+                            ASEF09_PAAC09 = reader["ASEF09_PAAC09"] as Single? ?? null,
+                            ASEF11_PAAC09 = reader["ASEF11_PAAC09"] as Single? ?? null,
+                            ASEF13_PAAC09 = reader["ASEF13_PAAC09"] as Single? ?? null,
+                            ASEF09_PAAC10 = reader["ASEF09_PAAC10"] as Single? ?? null,
+                            ASEF11_PAAC10 = reader["ASEF11_PAAC10"] as Single? ?? null,
+                            ASEF13_PAAC10 = reader["ASEF13_PAAC10"] as Single? ?? null,
+                            ASEF09_PAAC11 = reader["ASEF09_PAAC11"] as Single? ?? null,
+                            ASEF11_PAAC11 = reader["ASEF11_PAAC11"] as Single? ?? null,
+                            ASEF13_PAAC11 = reader["ASEF13_PAAC11"] as Single? ?? null,
+                            ASEF09_PAAC12 = reader["ASEF09_PAAC12"] as Single? ?? null,
+                            ASEF11_PAAC12 = reader["ASEF11_PAAC12"] as Single? ?? null,
+                            ASEF13_PAAC12 = reader["ASEF13_PAAC12"] as Single? ?? null,
+                            ASEF09_PAAC13 = reader["ASEF09_PAAC13"] as Single? ?? null,
+                            ASEF11_PAAC13 = reader["ASEF11_PAAC13"] as Single? ?? null,
+                            ASEF13_PAAC13 = reader["ASEF13_PAAC13"] as Single? ?? null,
+                            ASEF11_PAAC14 = reader["ASEF11_PAAC14"] as Single? ?? null,
+                            ASEF12_PAAC14 = reader["ASEF12_PAAC14"] as Single? ?? null,
+                            ASEF14_PAAC14 = reader["ASEF14_PAAC14"] as Single? ?? null,
+                            ASEF15_PAAC14 = reader["ASEF15_PAAC14"] as Single? ?? null,
+                            ASEF11_PAAC15 = reader["ASEF11_PAAC15"] as Single? ?? null,
+                            ASEF12_PAAC15 = reader["ASEF12_PAAC15"] as Single? ?? null,
+                            ASEF11_PAAC16 = reader["ASEF11_PAAC16"] as Single? ?? null,
+                            ASEF12_PAAC16 = reader["ASEF12_PAAC16"] as Single? ?? null,
+                            ASEF13_PAAC16 = reader["ASEF13_PAAC16"] as Single? ?? null,
+                            //ASEF16_PBAC16 = reader["ASEF16_PBAC16"] as Single? ?? null,//有資料來源, 資料定義不明
+                            //ASEF17_PBAC16 = reader["ASEF17_PBAC16"] as Single? ?? null,//有資料來源, 資料定義不明
+                            ASEF14_PAAC16 = reader["ASEF14_PAAC16"] as Single? ?? null,
+                            ASEF15_PAAC16 = reader["ASEF15_PAAC16"] as Single? ?? null,
+                            ASEF11_PAAC17 = reader["ASEF11_PAAC17"] as Single? ?? null,
+                            ASEF12_PAAC17 = reader["ASEF12_PAAC17"] as Single? ?? null,
+                            ASEF13_PAAC17 = reader["ASEF13_PAAC17"] as Single? ?? null,
+                            ASEF11_PAAC18 = reader["ASEF11_PAAC18"] as Single? ?? null,
+                            ASEF13_PAAC18 = reader["ASEF13_PAAC18"] as Single? ?? null,
+                            ASEF14_PAAC18 = reader["ASEF14_PAAC18"] as Single? ?? null,
+                            ASEF15_PAAC18 = reader["ASEF15_PAAC18"] as Single? ?? null,
+                            ASEF11_PAAC19 = reader["ASEF11_PAAC19"] as Single? ?? null,
+                            ASEF13_PAAC19 = reader["ASEF13_PAAC19"] as Single? ?? null,
+                            ASEF11_PAAC20 = reader["ASEF11_PAAC20"] as Single? ?? null,
+                            ASEF11_PAAC21 = reader["ASEF11_PAAC21"] as Single? ?? null,
+                            ASEF14_PAAC21 = reader["ASEF14_PAAC21"] as Single? ?? null,
+                            ASEF15_PAAC21 = reader["ASEF15_PAAC21"] as Single? ?? null,
+                            ASEF11_PAAC22 = reader["ASEF11_PAAC22"] as Single? ?? null,
+                            ASEF14_PAAC22 = reader["ASEF14_PAAC22"] as Single? ?? null,
+                            ASEF15_PAAC22 = reader["ASEF15_PAAC22"] as Single? ?? null,
+                            ASEF11_PAAC23 = reader["ASEF11_PAAC23"] as Single? ?? null,
+                            ASEF11_PAAC24 = reader["ASEF11_PAAC24"] as Single? ?? null,
+                            ASEF14_PAAC24 = reader["ASEF14_PAAC24"] as Single? ?? null,
+                            ASEF15_PAAC24 = reader["ASEF15_PAAC24"] as Single? ?? null,
+                            ASEF10_PAAC25 = reader["ASEF10_PAAC25"] as Single? ?? null,
+                            ASEF11_PAAC25 = reader["ASEF11_PAAC25"] as Single? ?? null,
+                            ASEF14_PAAC25 = reader["ASEF14_PAAC25"] as Single? ?? null,
+                            ASEF10_PAAC26 = reader["ASEF10_PAAC26"] as Single? ?? null,
+                            ASEF10_PAAC27 = reader["ASEF10_PAAC27"] as Single? ?? null,
+                            ASEF11_PAAC27 = reader["ASEF11_PAAC27"] as Single? ?? null,
+                            ASEF14_PAAC27 = reader["ASEF14_PAAC27"] as Single? ?? null,
+                            ASEF15_PAAC27 = reader["ASEF15_PAAC27"] as Single? ?? null,
+                            ASEF11_PAAC29 = reader["ASEF11_PAAC29"] as Single? ?? null,
+                            ASEF14_PAAC29 = reader["ASEF14_PAAC29"] as Single? ?? null,
+                            ASEF15_PAAC29 = reader["ASEF15_PAAC29"] as Single? ?? null,
+                            ASEF11_PAAC30 = reader["ASEF11_PAAC30"] as Single? ?? null,
+                            ASEF14_PAAC30 = reader["ASEF14_PAAC30"] as Single? ?? null,
+                            ASEF15_PAAC30 = reader["ASEF15_PAAC30"] as Single? ?? null,
+                            ASEF11_PAAC31 = reader["ASEF11_PAAC31"] as Single? ?? null,
+                            ASEF14_PAAC31 = reader["ASEF14_PAAC31"] as Single? ?? null,
+                            ASEF15_PAAC31 = reader["ASEF15_PAAC31"] as Single? ?? null,
+                            ASEF11_PAAC32 = reader["ASEF11_PAAC32"] as Single? ?? null,
+                            ASEF14_PAAC32 = reader["ASEF14_PAAC32"] as Single? ?? null,
+                            ASEF15_PAAC32 = reader["ASEF15_PAAC32"] as Single? ?? null,
+                            ASEF11_PAAC33 = reader["ASEF11_PAAC33"] as Single? ?? null,
+                            ASEF14_PAAC33 = reader["ASEF14_PAAC33"] as Single? ?? null,
+                            ASEF15_PAAC33 = reader["ASEF15_PAAC33"] as Single? ?? null,
+                            ASEF11_PAAC34 = reader["ASEF11_PAAC34"] as Single? ?? null,
+                            ASEF11_PAAC35 = reader["ASEF11_PAAC35"] as Single? ?? null,
+                            ASEF11_PAAC36 = reader["ASEF11_PAAC36"] as Single? ?? null,
+                            ASEF11_PAAC37 = reader["ASEF11_PAAC37"] as Single? ?? null,
+                            ASEF11_PAAC38 = reader["ASEF11_PAAC38"] as Single? ?? null,
+                            ASEF11_PAAC39 = reader["ASEF11_PAAC39"] as Single? ?? null,
+                            ASEF11_PAAC40 = reader["ASEF11_PAAC40"] as Single? ?? null,
+                            ASEF11_PAAC41 = reader["ASEF11_PAAC41"] as Single? ?? null,
+                            ASEF11_PAAC42 = reader["ASEF11_PAAC42"] as Single? ?? null,
+                            ASEF11_PAAC43 = reader["ASEF11_PAAC43"] as Single? ?? null,
+                            ASEF11_PAAC44 = reader["ASEF11_PAAC44"] as Single? ?? null,
+                            ASEF11_PAAC45 = reader["ASEF11_PAAC45"] as Single? ?? null,
+                            ASEF12_PAAC45 = reader["ASEF12_PAAC45"] as Single? ?? null,
+                            ASEF13_PAAC45 = reader["ASEF13_PAAC45"] as Single? ?? null,
+                            ASEF11_PAAC46 = reader["ASEF11_PAAC46"] as Single? ?? null,
+                            ASEF12_PAAC46 = reader["ASEF12_PAAC46"] as Single? ?? null,
+                            ASEF11_PAAC47 = reader["ASEF11_PAAC47"] as Single? ?? null,
+                            ASEF10_PAAC48 = reader["ASEF10_PAAC48"] as Single? ?? null,
+                            ASEF11_PAAC48 = reader["ASEF11_PAAC48"] as Single? ?? null,
+                            ASEF10_PAAC49 = reader["ASEF10_PAAC49"] as Single? ?? null,
+                            ASEF11_PAAC49 = reader["ASEF11_PAAC49"] as Single? ?? null,
+                            ASEF10_PAAC50 = reader["ASEF10_PAAC50"] as Single? ?? null,
+                            ASEF11_PAAC50 = reader["ASEF11_PAAC50"] as Single? ?? null,
+                            BSEF11_PBAC01 = reader["BSEF11_PBAC01"] as Single? ?? null,
+                            BSEF11_PBAC02 = reader["BSEF11_PBAC02"] as Single? ?? null,
+                            BSEF11_PBAC03 = reader["BSEF11_PBAC03"] as Single? ?? null,
+                            BSEF11_PBAC04 = reader["BSEF11_PBAC04"] as Single? ?? null,
+                            BSEF11_PBAC05 = reader["BSEF11_PBAC05"] as Single? ?? null,
+                            BSEF11_PBAC06 = reader["BSEF11_PBAC06"] as Single? ?? null,
+                            BSEF11_PBAC07 = reader["BSEF11_PBAC07"] as Single? ?? null,
+                            BSEF11_PBAC08 = reader["BSEF11_PBAC08"] as Single? ?? null,
+                            BSEF11_PBAC09 = reader["BSEF11_PBAC09"] as Single? ?? null,
+                            BSEF11_PBAC10 = reader["BSEF11_PBAC10"] as Single? ?? null,
+                            BSEF11_PBAC11 = reader["BSEF11_PBAC11"] as Single? ?? null,
+                            BSEF11_PBAC12 = reader["BSEF11_PBAC12"] as Single? ?? null,
+                            //BSEF11_PBAC13 = reader["BSEF11_PBAC13"] as Single? ?? null,//有資料來源, 沒資料定義
+                            BSEF11_PBAC14 = reader["BSEF11_PBAC14"] as Single? ?? null,
+                            BSEF11_PBAC15 = reader["BSEF11_PBAC15"] as Single? ?? null,
+                            BSEF11_PBAC16 = reader["BSEF11_PBAC16"] as Single? ?? null,
+                            BSEF11_PBAC17 = reader["BSEF11_PBAC17"] as Single? ?? null,
+                            BSEF14_PBAC17 = reader["BSEF14_PBAC17"] as Single? ?? null,
+                            BSEF11_PBAC18 = reader["BSEF11_PBAC18"] as Single? ?? null,
+                            BSEF14_PBAC18 = reader["BSEF14_PBAC18"] as Single? ?? null,
+                            BSEF11_PBAC19 = reader["BSEF11_PBAC19"] as Single? ?? null
+                        };
+                    }
+                }
+            }
+
+            return MSPCALARS;
+        }
+
+        public MSPCAI ReadDataFromMSPCAI()
+        {
+            MSPCAI MSPCAI = null;
+
+            string sql = @"
+SELECT TOP 1 AUTOID,DATETIME
+    ,ASEF16_PAAC01,ASEF16_PAAC02,ASEF17_PAAC02,ASEF16_PAAC03,ASEF16_PAAC04,ASEF17_PAAC04,ASEF16_PAAC06,ASEF17_PAAC06,ASEF16_PAAC14
+    ,ASEF17_PAAC14,ASEF16_PAAC16,ASEF17_PAAC16,ASEF16_PAAC18,ASEF16_PAAC19,ASEF17_PAAC19,ASEF16_PAAC21,ASEF17_PAAC21,ASEF16_PAAC22
+    ,ASEF17_PAAC22,ASEF16_PAAC24,ASEF17_PAAC24,ASEF16_PAAC25,ASEF16_PAAC27,ASEF17_PAAC27,ASEF16_PAAC28,ASEF18_PAAC28,ASEF16_PAAC29
+    ,ASEF17_PAAC29,ASEF16_PAAC30,ASEF17_PAAC30,ASEF16_PAAC31,ASEF17_PAAC31,ASEF16_PAAC32,ASEF17_PAAC32,ASEF16_PAAC33,ASEF17_PAAC33
+    ,ASEF16_PAAC45,ASEF17_PAAC45,ASEF16_PAAC46,ASEF17_PAAC46,ASEF16_PAAC48,ASEF17_PAAC48,BSEF16_PBAC16,BSEF17_PBAC16,BSEF16_PBAC18
+    ,BSEF17_PBAC18
+    FROM MSPCAI
+    ORDER BY AUTOID DESC
+";
+            using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+            {
+                //Db.AddInParameter(cmd, "ID", DbType.String, UserId);
+                using (IDataReader reader = this.Db.ExecuteReader(cmd))
+                {
+                    if (reader.Read())
+                    {
+                        MSPCAI = new MSPCAI()
+                        {
+                            AUTOID = (int)reader["AUTOID"],
+                            DATETIME = reader["DATETIME"] as DateTime? ?? null,
+                            ASEF16_PAAC01 = reader["ASEF16_PAAC01"] as Single? ?? null,
+                            ASEF16_PAAC02 = reader["ASEF16_PAAC02"] as Single? ?? null,
+                            ASEF17_PAAC02 = reader["ASEF17_PAAC02"] as Single? ?? null,
+                            ASEF16_PAAC03 = reader["ASEF16_PAAC03"] as Single? ?? null,
+                            ASEF16_PAAC04 = reader["ASEF16_PAAC04"] as Single? ?? null,
+                            ASEF17_PAAC04 = reader["ASEF17_PAAC04"] as Single? ?? null,
+                            ASEF16_PAAC06 = reader["ASEF16_PAAC06"] as Single? ?? null,
+                            ASEF17_PAAC06 = reader["ASEF17_PAAC06"] as Single? ?? null,
+                            ASEF16_PAAC14 = reader["ASEF16_PAAC14"] as Single? ?? null,
+                            ASEF17_PAAC14 = reader["ASEF17_PAAC14"] as Single? ?? null,
+                            ASEF16_PAAC16 = reader["ASEF16_PAAC16"] as Single? ?? null,
+                            ASEF17_PAAC16 = reader["ASEF17_PAAC16"] as Single? ?? null,
+                            ASEF16_PAAC18 = reader["ASEF16_PAAC18"] as Single? ?? null,
+                            ASEF16_PAAC19 = reader["ASEF16_PAAC19"] as Single? ?? null,
+                            ASEF17_PAAC19 = reader["ASEF17_PAAC19"] as Single? ?? null,
+                            ASEF16_PAAC21 = reader["ASEF16_PAAC21"] as Single? ?? null,
+                            ASEF17_PAAC21 = reader["ASEF17_PAAC21"] as Single? ?? null,
+                            ASEF16_PAAC22 = reader["ASEF16_PAAC22"] as Single? ?? null,
+                            ASEF17_PAAC22 = reader["ASEF17_PAAC22"] as Single? ?? null,
+                            ASEF16_PAAC24 = reader["ASEF16_PAAC24"] as Single? ?? null,
+                            ASEF17_PAAC24 = reader["ASEF17_PAAC24"] as Single? ?? null,
+                            ASEF16_PAAC25 = reader["ASEF16_PAAC25"] as Single? ?? null,
+                            ASEF16_PAAC27 = reader["ASEF16_PAAC27"] as Single? ?? null,
+                            ASEF17_PAAC27 = reader["ASEF17_PAAC27"] as Single? ?? null,
+                            ASEF16_PAAC28 = reader["ASEF16_PAAC28"] as Single? ?? null,
+                            ASEF18_PAAC28 = reader["ASEF18_PAAC28"] as Single? ?? null,
+                            ASEF16_PAAC29 = reader["ASEF16_PAAC29"] as Single? ?? null,
+                            ASEF17_PAAC29 = reader["ASEF17_PAAC29"] as Single? ?? null,
+                            ASEF16_PAAC30 = reader["ASEF16_PAAC30"] as Single? ?? null,
+                            ASEF17_PAAC30 = reader["ASEF17_PAAC30"] as Single? ?? null,
+                            ASEF16_PAAC31 = reader["ASEF16_PAAC31"] as Single? ?? null,
+                            ASEF17_PAAC31 = reader["ASEF17_PAAC31"] as Single? ?? null,
+                            ASEF16_PAAC32 = reader["ASEF16_PAAC32"] as Single? ?? null,
+                            ASEF17_PAAC32 = reader["ASEF17_PAAC32"] as Single? ?? null,
+                            ASEF16_PAAC33 = reader["ASEF16_PAAC33"] as Single? ?? null,
+                            ASEF17_PAAC33 = reader["ASEF17_PAAC33"] as Single? ?? null,
+                            ASEF16_PAAC45 = reader["ASEF16_PAAC45"] as Single? ?? null,
+                            ASEF17_PAAC45 = reader["ASEF17_PAAC45"] as Single? ?? null,
+                            ASEF16_PAAC46 = reader["ASEF16_PAAC46"] as Single? ?? null,
+                            ASEF17_PAAC46 = reader["ASEF17_PAAC46"] as Single? ?? null,
+                            ASEF16_PAAC48 = reader["ASEF16_PAAC48"] as Single? ?? null,
+                            ASEF17_PAAC48 = reader["ASEF17_PAAC48"] as Single? ?? null,
+                            BSEF16_PBAC16 = reader["BSEF16_PBAC16"] as Single? ?? null,
+                            BSEF17_PBAC16 = reader["BSEF17_PBAC16"] as Single? ?? null,
+                            BSEF16_PBAC18 = reader["BSEF16_PBAC18"] as Single? ?? null,
+                            BSEF17_PBAC18 = reader["BSEF17_PBAC18"] as Single? ?? null
+                        };
+                    }
+                }
+            }
+
+            return MSPCAI;
+        }
+
     }
 }

@@ -544,6 +544,46 @@ namespace TP_DSYNC.Tasks
                 EventLog(EventLogEnum.EXCEPTION, EventLogEntryType.Error, "[{1}] {0} : {2}", "ZP1", TaskId, "Error=" + ex.Message + ex.StackTrace);
             }
 
+            //MSPCSTATS
+            try
+            {
+                Log("[{1}] {0} : {2}", "MSPCSTATS", TaskId, "Start");
+                total.Restart();
+
+                unit.Restart();
+                MSPCSTATS MSPCSTATS = ReadImplement.ReadDataFromMSPCSTATS();
+                unit.Stop();
+                Log("[{1}] {0} : {2}", "MSPCSTATS", TaskId, "Read Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                Log("[{1}] {0} : {2}", "MSPCSTATS", TaskId, "Data=" + JsonConvert.SerializeObject(MSPCSTATS));
+                if (MSPCSTATS != null)
+                {
+                    unit.Restart();
+                    buffer = (BufferImplement.WriteBufferForMSPCSTATS(MSPCSTATS));
+                    unit.Stop();
+                    Log("[{1}] {0} : {2}", "MSPCSTATS", TaskId, "Buffer Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                    if (buffer)
+                    {
+                        unit.Restart();
+                        affected = WriteImplement.WriteDataForMSPCSTATS(MSPCSTATS);
+                        unit.Stop();
+                        Log("[{1}] {0} : {2}", "MSPCSTATS", TaskId, "Write Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                    }
+                }
+                total.Stop();
+                string alert = "";
+                if (total.Elapsed.Seconds > executeAlertSecond)
+                {
+                    alert = total.Elapsed.Seconds > executeAlertSecond ? " > " + executeAlertSecond.ToString() : "";
+                    EventLog(EventLogEnum.EXECUTE_ALERT_SECOND, EventLogEntryType.Warning, "[{1}] {0} : {2}", "MSPCSTATS", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
+                }
+                Log("[{1}] {0} : {2}", "MSPCSTATS", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
+            }
+            catch (Exception ex)
+            {
+                Log("[{1}] {0} : {2}", "MSPCSTATS", TaskId, "Error=" + ex.Message + ex.StackTrace);
+                EventLog(EventLogEnum.EXCEPTION, EventLogEntryType.Error, "[{1}] {0} : {2}", "MSPCSTATS", TaskId, "Error=" + ex.Message + ex.StackTrace);
+            }
+
             //End
             Log("[{1}] {0} : {2}", "ProcessData", TaskId, "Done");
         }

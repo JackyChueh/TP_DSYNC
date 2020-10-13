@@ -583,6 +583,86 @@ namespace TP_DSYNC.Tasks
                 Log("[{1}] {0} : {2}", "MSPCSTATS", TaskId, "Error=" + ex.Message + ex.StackTrace);
                 EventLog(EventLogEnum.EXCEPTION, EventLogEntryType.Error, "[{1}] {0} : {2}", "MSPCSTATS", TaskId, "Error=" + ex.Message + ex.StackTrace);
             }
+            
+            //MSPCALARS
+            try
+            {
+                Log("[{1}] {0} : {2}", "MSPCALARS", TaskId, "Start");
+                total.Restart();
+
+                unit.Restart();
+                MSPCALARS MSPCALARS = ReadImplement.ReadDataFromMSPCALARS();
+                unit.Stop();
+                Log("[{1}] {0} : {2}", "MSPCALARS", TaskId, "Read Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                Log("[{1}] {0} : {2}", "MSPCALARS", TaskId, "Data=" + JsonConvert.SerializeObject(MSPCALARS));
+                if (MSPCALARS != null)
+                {
+                    unit.Restart();
+                    buffer = (BufferImplement.WriteBufferForMSPCALARS(MSPCALARS));
+                    unit.Stop();
+                    Log("[{1}] {0} : {2}", "MSPCALARS", TaskId, "Buffer Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                    if (buffer)
+                    {
+                        unit.Restart();
+                        affected = WriteImplement.WriteDataForMSPCALARS(MSPCALARS);
+                        unit.Stop();
+                        Log("[{1}] {0} : {2}", "MSPCALARS", TaskId, "Write Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                    }
+                }
+                total.Stop();
+                string alert = "";
+                if (total.Elapsed.Seconds > executeAlertSecond)
+                {
+                    alert = total.Elapsed.Seconds > executeAlertSecond ? " > " + executeAlertSecond.ToString() : "";
+                    EventLog(EventLogEnum.EXECUTE_ALERT_SECOND, EventLogEntryType.Warning, "[{1}] {0} : {2}", "MSPCALARS", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
+                }
+                Log("[{1}] {0} : {2}", "MSPCALARS", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
+            }
+            catch (Exception ex)
+            {
+                Log("[{1}] {0} : {2}", "MSPCALARS", TaskId, "Error=" + ex.Message + ex.StackTrace);
+                EventLog(EventLogEnum.EXCEPTION, EventLogEntryType.Error, "[{1}] {0} : {2}", "MSPCALARS", TaskId, "Error=" + ex.Message + ex.StackTrace);
+            }
+
+            //MSPCAI
+            try
+            {
+                Log("[{1}] {0} : {2}", "MSPCAI", TaskId, "Start");
+                total.Restart();
+
+                unit.Restart();
+                MSPCAI MSPCAI = ReadImplement.ReadDataFromMSPCAI();
+                unit.Stop();
+                Log("[{1}] {0} : {2}", "MSPCAI", TaskId, "Read Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                Log("[{1}] {0} : {2}", "MSPCAI", TaskId, "Data=" + JsonConvert.SerializeObject(MSPCAI));
+                if (MSPCAI != null)
+                {
+                    unit.Restart();
+                    buffer = (BufferImplement.WriteBufferForMSPCAI(MSPCAI));
+                    unit.Stop();
+                    Log("[{1}] {0} : {2}", "MSPCAI", TaskId, "Buffer Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                    if (buffer)
+                    {
+                        unit.Restart();
+                        affected = WriteImplement.WriteDataForMSPCAI(MSPCAI);
+                        unit.Stop();
+                        Log("[{1}] {0} : {2}", "MSPCAI", TaskId, "Write Time=" + unit.Elapsed.TotalMilliseconds.ToString() + "ms");
+                    }
+                }
+                total.Stop();
+                string alert = "";
+                if (total.Elapsed.Seconds > executeAlertSecond)
+                {
+                    alert = total.Elapsed.Seconds > executeAlertSecond ? " > " + executeAlertSecond.ToString() : "";
+                    EventLog(EventLogEnum.EXECUTE_ALERT_SECOND, EventLogEntryType.Warning, "[{1}] {0} : {2}", "MSPCAI", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
+                }
+                Log("[{1}] {0} : {2}", "MSPCAI", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
+            }
+            catch (Exception ex)
+            {
+                Log("[{1}] {0} : {2}", "MSPCAI", TaskId, "Error=" + ex.Message + ex.StackTrace);
+                EventLog(EventLogEnum.EXCEPTION, EventLogEntryType.Error, "[{1}] {0} : {2}", "MSPCAI", TaskId, "Error=" + ex.Message + ex.StackTrace);
+            }
 
             //End
             Log("[{1}] {0} : {2}", "ProcessData", TaskId, "Done");

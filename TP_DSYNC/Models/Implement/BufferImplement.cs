@@ -1548,8 +1548,8 @@ IF NOT EXISTS (SELECT 1 FROM MSPCALARS WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
                         Db.AddInParameter(cmd, "ASEF11_PAAC16", DbType.Single, MSPCALARS.ASEF11_PAAC16);
                         Db.AddInParameter(cmd, "ASEF12_PAAC16", DbType.Single, MSPCALARS.ASEF12_PAAC16);
                         Db.AddInParameter(cmd, "ASEF13_PAAC16", DbType.Single, MSPCALARS.ASEF13_PAAC16);
-                        //Db.AddInParameter(cmd, "ASEF16_PBAC16", DbType.Single, MSPCALARS.ASEF16_PBAC16);
-                        //Db.AddInParameter(cmd, "ASEF17_PBAC16", DbType.Single, MSPCALARS.ASEF17_PBAC16);
+                        Db.AddInParameter(cmd, "ASEF16_PBAC16", DbType.Single, MSPCALARS.ASEF16_PBAC16);    //
+                        Db.AddInParameter(cmd, "ASEF17_PBAC16", DbType.Single, MSPCALARS.ASEF17_PBAC16);    //
                         Db.AddInParameter(cmd, "ASEF14_PAAC16", DbType.Single, MSPCALARS.ASEF14_PAAC16);
                         Db.AddInParameter(cmd, "ASEF15_PAAC16", DbType.Single, MSPCALARS.ASEF15_PAAC16);
                         Db.AddInParameter(cmd, "ASEF11_PAAC17", DbType.Single, MSPCALARS.ASEF11_PAAC17);
@@ -1630,7 +1630,7 @@ IF NOT EXISTS (SELECT 1 FROM MSPCALARS WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
                         Db.AddInParameter(cmd, "BSEF11_PBAC10", DbType.Single, MSPCALARS.BSEF11_PBAC10);
                         Db.AddInParameter(cmd, "BSEF11_PBAC11", DbType.Single, MSPCALARS.BSEF11_PBAC11);
                         Db.AddInParameter(cmd, "BSEF11_PBAC12", DbType.Single, MSPCALARS.BSEF11_PBAC12);
-                        //Db.AddInParameter(cmd, "BSEF11_PBAC13", DbType.Single, MSPCALARS.BSEF11_PBAC13);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC13", DbType.Single, MSPCALARS.BSEF11_PBAC13);
                         Db.AddInParameter(cmd, "BSEF11_PBAC14", DbType.Single, MSPCALARS.BSEF11_PBAC14);
                         Db.AddInParameter(cmd, "BSEF11_PBAC15", DbType.Single, MSPCALARS.BSEF11_PBAC15);
                         Db.AddInParameter(cmd, "BSEF11_PBAC16", DbType.Single, MSPCALARS.BSEF11_PBAC16);

@@ -480,5 +480,10 @@ namespace TP_DSYNC.Models.DataDefine.B3
         public Single? BSEF14_PBAC19 { get; set; }
         public Single? BSEF15_PBAC19 { get; set; }
 
+        //有資料來源, 沒資料定義
+        public Single? ASEF16_PBAC16 { get; set; }
+        public Single? ASEF17_PBAC16 { get; set; }
+        public Single? BSEF11_PBAC13 { get; set; }
+
     }
 }

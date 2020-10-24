@@ -18,8 +18,8 @@ namespace TP_DSYNC.Tasks
         {
             Log("[{1}] {0} : {2}", "ProcessData", TaskId, "Begin " + new string('*', 66));
 
-            bool buffer;
-            int affected;
+            //bool buffer;
+            //int affected;
             Stopwatch total = new Stopwatch();
             Stopwatch unit = new Stopwatch();
             AlertImplement AlertImplement = new AlertImplement();
@@ -54,12 +54,13 @@ namespace TP_DSYNC.Tasks
                                     Single? value = AlertImplement.ReadFieldValue(c);
                                     if (value == null || value > c.MAX_VALUE || value < c.MIN_VALUE)    //檢查值是否正常
                                     {
-                                        AlertImplement.WriteAlertInfo(c, this.CurrentNow);  //寫入異常記錄
+                                        //AlertImplement.WriteAlertInfo(c, this.CurrentNow);  //寫入異常記錄
                                         string[] to = c.MAIL_TO.Split(';');
                                         if (to.Length > 0)
                                         {
                                             if (c.ALERT_DATE.AddMinutes(c.ALERT_INTERVAL) < this.CurrentNow)    //寄送通知的週期
                                             {
+                                                AlertImplement.WriteAlertInfo(c, value, this.CurrentNow);  //寫入異常記錄
                                                 AlertImplement.SendAlertMessage(c, value);
                                                 AlertImplement.UpdateAlertDate(c, this.CurrentNow);
                                             }

@@ -57,44 +57,42 @@ SELECT SID,DATA_TYPE,LOCATION,DEVICE_ID,DATA_FIELD,MAX_VALUE,MIN_VALUE,CHECK_INT
                 {
                     while (reader.Read())
                     {
-                        ALERT_CONFIG ALERT_CONFIG = new ALERT_CONFIG()
-                        {
-                            SID = (int)reader["SID"],
-                            //MODE = (Boolean)reader["MODE"],
-                            DATA_TYPE = reader["DATA_TYPE"] as string,
-                            LOCATION = reader["LOCATION"] as string,
-                            DEVICE_ID = reader["DEVICE_ID"] as string,
-                            DATA_FIELD = reader["DATA_FIELD"] as string,
-                            MAX_VALUE = (Single)reader["MAX_VALUE"],
-                            MIN_VALUE = (Single)reader["MIN_VALUE"],
-                            CHECK_INTERVAL = (int)reader["CHECK_INTERVAL"],
-                            //ALERT_INTERVAL = (int)reader["ALERT_INTERVAL"],
-                            SUN = (Boolean)reader["SUN"],
-                            SUN_STIME = (TimeSpan)reader["SUN_STIME"],
-                            SUN_ETIME = (TimeSpan)reader["SUN_ETIME"],
-                            MON = (Boolean)reader["MON"],
-                            MON_STIME = (TimeSpan)reader["MON_STIME"],
-                            MON_ETIME = (TimeSpan)reader["MON_ETIME"],
-                            TUE = (Boolean)reader["TUE"],
-                            TUE_STIME = (TimeSpan)reader["TUE_STIME"],
-                            TUE_ETIME = (TimeSpan)reader["TUE_ETIME"],
-                            WED = (Boolean)reader["WED"],
-                            WED_STIME = (TimeSpan)reader["WED_STIME"],
-                            WED_ETIME = (TimeSpan)reader["WED_ETIME"],
-                            THU = (Boolean)reader["THU"],
-                            THU_STIME = (TimeSpan)reader["THU_STIME"],
-                            THU_ETIME = (TimeSpan)reader["THU_ETIME"],
-                            FRI = (Boolean)reader["FRI"],
-                            FRI_STIME = (TimeSpan)reader["FRI_STIME"],
-                            FRI_ETIME = (TimeSpan)reader["FRI_ETIME"],
-                            STA = (Boolean)reader["STA"],
-                            STA_STIME = (TimeSpan)reader["STA_STIME"],
-                            STA_ETIME = (TimeSpan)reader["STA_ETIME"],
-                            CHECK_DATE = (DateTime)reader["CHECK_DATE"],
-                            ALERT_DATE = (DateTime)reader["ALERT_DATE"],
-                            MAIL_TO = reader["MAIL_TO"] as string,
-                            CHECK_HR_CALENDAR = (Boolean)reader["CHECK_HR_CALENDAR"],
-                        };
+                        ALERT_CONFIG ALERT_CONFIG = new ALERT_CONFIG();
+                        ALERT_CONFIG.SID = (int)reader["SID"];
+                        //ALERT_CONFIG.MODE = (Boolean)reader["MODE"];
+                        ALERT_CONFIG.DATA_TYPE = reader["DATA_TYPE"] as string;
+                        ALERT_CONFIG.LOCATION = reader["LOCATION"] as string;
+                        ALERT_CONFIG.DEVICE_ID = reader["DEVICE_ID"] as string;
+                        ALERT_CONFIG.DATA_FIELD = reader["DATA_FIELD"] as string;
+                        ALERT_CONFIG.MAX_VALUE = (Single)reader["MAX_VALUE"];
+                        ALERT_CONFIG.MIN_VALUE = (Single)reader["MIN_VALUE"];
+                        ALERT_CONFIG.CHECK_INTERVAL = (int)reader["CHECK_INTERVAL"];
+                        //ALERT_CONFIG.ALERT_INTERVAL = (int)reader["ALERT_INTERVAL"];
+                        ALERT_CONFIG.SUN = (Boolean)reader["SUN"];
+                        ALERT_CONFIG.SUN_STIME = reader["SUN_STIME"] as TimeSpan? ?? null;
+                        ALERT_CONFIG.SUN_ETIME = reader["SUN_ETIME"] as TimeSpan? ?? null;
+                        ALERT_CONFIG.MON = (Boolean)reader["MON"];
+                        ALERT_CONFIG.MON_STIME = reader["MON_STIME"] as TimeSpan? ?? null;
+                        ALERT_CONFIG.MON_ETIME = reader["MON_ETIME"] as TimeSpan? ?? null;
+                        ALERT_CONFIG.TUE = (Boolean)reader["TUE"];
+                        ALERT_CONFIG.TUE_STIME = reader["TUE_STIME"] as TimeSpan? ?? null;
+                        ALERT_CONFIG.TUE_ETIME = reader["TUE_ETIME"] as TimeSpan? ?? null;
+                        ALERT_CONFIG.WED = (Boolean)reader["WED"];
+                        ALERT_CONFIG.WED_STIME = reader["WED_STIME"] as TimeSpan? ?? null;
+                        ALERT_CONFIG.WED_ETIME = reader["WED_ETIME"] as TimeSpan? ?? null;
+                        ALERT_CONFIG.THU = (Boolean)reader["THU"];
+                        ALERT_CONFIG.THU_STIME = reader["THU_STIME"] as TimeSpan? ?? null;
+                        ALERT_CONFIG.THU_ETIME = reader["THU_ETIME"] as TimeSpan? ?? null;
+                        ALERT_CONFIG.FRI = (Boolean)reader["FRI"];
+                        ALERT_CONFIG.FRI_STIME = reader["FRI_STIME"] as TimeSpan? ?? null;
+                        ALERT_CONFIG.FRI_ETIME = reader["FRI_ETIME"] as TimeSpan? ?? null;
+                        ALERT_CONFIG.STA = (Boolean)reader["STA"];
+                        ALERT_CONFIG.STA_STIME = reader["STA_STIME"] as TimeSpan? ?? null;
+                        ALERT_CONFIG.STA_ETIME = reader["STA_ETIME"] as TimeSpan? ?? null;
+                        ALERT_CONFIG.CHECK_DATE = (DateTime)reader["CHECK_DATE"];
+                        ALERT_CONFIG.ALERT_DATE = (DateTime)reader["ALERT_DATE"];
+                        ALERT_CONFIG.MAIL_TO = reader["MAIL_TO"] as string;
+                        ALERT_CONFIG.CHECK_HR_CALENDAR = (Boolean)reader["CHECK_HR_CALENDAR"];
 
                         rows.Add(ALERT_CONFIG);
                     }
@@ -156,7 +154,7 @@ SELECT SID,DATA_TYPE,LOCATION,DEVICE_ID,DATA_FIELD,MAX_VALUE,MIN_VALUE,CHECK_INT
             return value;
         }
 
-        public void WriteAlertInfo(ALERT_CONFIG c, DateTime Now)
+        public void WriteAlertInfo(ALERT_CONFIG c, Single? value, DateTime Now)
         {
             DatabaseProviderFactory factory = new DatabaseProviderFactory();
             Database Db = factory.Create("TP_ALERT");
@@ -166,12 +164,41 @@ SELECT SID,DATA_TYPE,LOCATION,DEVICE_ID,DATA_FIELD,MAX_VALUE,MIN_VALUE,CHECK_INT
                 conn.Open();
                 using (DbCommand cmd = conn.CreateCommand())
                 {
-                    string sql = "UPDATE ALERT_CONFIG SET CHECK_DATE=@CHECK_DATE WHERE SID=@SID";
+                    string sql = "UPDATE ALERT_LOG SET CHECK_DATE=@CHECK_DATE WHERE SID=@SID";
                     Db.AddInParameter(cmd, "CHECK_DATE", DbType.DateTime, Now);
                     Db.AddInParameter(cmd, "SID", DbType.Int32, c.SID);
                     cmd.CommandText = sql;
                     cmd.ExecuteNonQuery();
                 }
+
+                using (DbCommand cmd = Db.CreateConnection().CreateCommand())
+                {
+                    string sql = @"
+SET @SID = NEXT VALUE FOR [ALERT_LOG_SEQ]
+INSERT ALERT_LOG (
+    SID,DATA_TYPE,LOCATION,DEVICE_ID,DATA_FIELD,MAX_VALUE,MIN_VALUE,ALERT_VALUE,CHECK_DATE
+    )
+VALUES (
+    @SID,@DATA_TYPE,@LOCATION,@DEVICE_ID,@DATA_FIELD,@MAX_VALUE,@MIN_VALUE,@ALERT_VALUE,@CHECK_DATE
+    );
+                ";
+
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql;
+
+                    Db.AddInParameter(cmd, "DATA_TYPE", DbType.String, c.DATA_TYPE);
+                    Db.AddInParameter(cmd, "LOCATION", DbType.String, c.LOCATION);
+                    Db.AddInParameter(cmd, "DEVICE_ID", DbType.String, c.DEVICE_ID);
+                    Db.AddInParameter(cmd, "DATA_FIELD", DbType.String, c.DATA_FIELD);
+                    Db.AddInParameter(cmd, "MAX_VALUE", DbType.Single, c.MAX_VALUE);
+                    Db.AddInParameter(cmd, "MIN_VALUE", DbType.Single, c.MIN_VALUE);
+                    Db.AddInParameter(cmd, "ALERT_VALUE", DbType.Single, value);
+                    Db.AddInParameter(cmd, "CHECK_DATE", DbType.Date, Now);
+                    Db.AddOutParameter(cmd, "SID", DbType.Int32, 1);
+
+                    int effect = Db.ExecuteNonQuery(cmd);
+                }
+
             }
         }
 
@@ -196,11 +223,69 @@ SELECT SID,DATA_TYPE,LOCATION,DEVICE_ID,DATA_FIELD,MAX_VALUE,MIN_VALUE,CHECK_INT
 
         public void SendAlertMessage(ALERT_CONFIG c, Single? value)
         {
+            ALERT_LOG r = GetPhraseName(c, value);
             string title = "Title";
-            string message = c.DATA_TYPE + " " + c.LOCATION + " " + c.DEVICE_ID + ", " + c.DATA_FIELD + "=" + value.ToString();
+            string message = r.DATA_TYPE + " " + r.LOCATION + " " + r.DEVICE_ID + ", " + r.DATA_FIELD + "=" + r.ALERT_VALUE;
             //new MailSender().Google_Send(to, "Title", value.ToString());
-            Logs.Write("ALERT", "{0} {1}", title, message);
+            
+            Logs.Write("MAIL ALERT", "{0} {1}", title, message);
         }
+
+        public ALERT_LOG GetPhraseName(ALERT_CONFIG c, Single? value)
+        {
+            DatabaseProviderFactory factory = new DatabaseProviderFactory();
+            Database Db = factory.Create("TP_SCC");
+
+            ALERT_LOG r = new ALERT_LOG();
+
+            string sql = @"
+SELECT [dbo].[PHRASE_NAME]('DATA_TYPE',@DATA_TYPE,default) AS DATA_TYPE
+	,[dbo].[PHRASE_NAME](@DATA_TYPE+'_LOCATION',@LOCATION,@DATA_TYPE) AS LOCATION
+	,[dbo].[PHRASE_NAME](@DATA_TYPE+'_DEVICE_ID',@DEVICE_ID,@LOCATION) AS DEVICE_ID
+	,[dbo].[PHRASE_NAME](@DATA_TYPE+'_DATA_FIELD',@DATA_FIELD,@DATA_TYPE) AS DATA_FIELD
+    ,[dbo].[DATA_NAME] (@DATA_TYPE,@LOCATION,@DATA_FIELD,@MAX_VALUE) AS MAX_VALUE
+    ,[dbo].[DATA_NAME] (@DATA_TYPE,@LOCATION,@DATA_FIELD,@MIN_VALUE) AS MIN_VALUE
+    ,[dbo].[DATA_NAME] (@DATA_TYPE,@LOCATION,@DATA_FIELD,@ALERT_VALUE) AS ALERT_VALUE
+";
+            using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+            {
+                Db.AddInParameter(cmd, "DATA_TYPE", DbType.String, c.DATA_TYPE);
+                Db.AddInParameter(cmd, "LOCATION", DbType.String, c.LOCATION);
+                Db.AddInParameter(cmd, "DEVICE_ID", DbType.String, c.DEVICE_ID);
+                Db.AddInParameter(cmd, "DATA_FIELD", DbType.String, c.DATA_FIELD);
+                Db.AddInParameter(cmd, "MAX_VALUE", DbType.Single, c.MAX_VALUE);
+                Db.AddInParameter(cmd, "MIN_VALUE", DbType.Single, c.MIN_VALUE);
+                Db.AddInParameter(cmd, "ALERT_VALUE", DbType.Single, value);
+                cmd.CommandText = sql;
+
+                using (IDataReader reader = Db.ExecuteReader(cmd))
+                {
+                    if (reader.Read())
+                    {
+                        //value = reader[c.DATA_FIELD] as Single? ?? null;
+                        r.DATA_TYPE = reader["DATA_TYPE"] as string;
+                        r.LOCATION = reader["LOCATION"] as string;
+                        r.DEVICE_ID = reader["DEVICE_ID"] as string;
+                        r.DATA_FIELD = reader["DATA_FIELD"] as string;
+                        r.MAX_VALUE = reader["MAX_VALUE"] as string;
+                        r.MIN_VALUE = reader["MIN_VALUE"] as string;
+                        r.ALERT_VALUE = reader["ALERT_VALUE"] as string;
+                    }
+                    else
+                    {
+                        r.DATA_TYPE = c.DATA_TYPE.ToString();
+                        r.LOCATION = c.LOCATION.ToString();
+                        r.DEVICE_ID = c.DEVICE_ID.ToString();
+                        r.DATA_FIELD = c.DATA_FIELD.ToString();
+                        r.MAX_VALUE = c.MAX_VALUE.ToString();
+                        r.MIN_VALUE = c.MIN_VALUE.ToString();
+                        r.ALERT_VALUE = value.ToString();
+                    }
+                }
+            }
+            return r;
+        }
+
 
         public bool CheckDayOfWeek(ALERT_CONFIG c, string DateType)
         {

@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="Models\DataAccess\B3BUFFER_DSCCR_Access.cs" />
     <Compile Include="Models\DataAccess\DatabaseAccess.cs" />
+    <Compile Include="Models\DataDefine\ALERT\ALERT_LOG.cs" />
     <Compile Include="Models\DataDefine\ALERT\ALERT_CONFIG.cs" />
     <Compile Include="Models\DataDefine\B3\AHU_04F.cs" />
     <Compile Include="Models\DataDefine\B3\AHU_0B1.cs" />

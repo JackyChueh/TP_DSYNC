@@ -9,7 +9,7 @@ namespace TP_DSYNC.Models.DataDefine.ALERT
     public class ALERT_CONFIG
     {
         public int SID { get; set; }
-        public Boolean MODE { get; set; }
+        public string MODE { get; set; }
         public string DATA_TYPE { get; set; }
         public string LOCATION { get; set; }
         public string DEVICE_ID { get; set; }
@@ -17,7 +17,7 @@ namespace TP_DSYNC.Models.DataDefine.ALERT
         public Single MAX_VALUE { get; set; }
         public Single MIN_VALUE { get; set; }
         public int CHECK_INTERVAL { get; set; }
-        public int ALERT_INTERVAL { get; set; }
+        public int? ALERT_INTERVAL { get; set; }
         public Boolean SUN { get; set; }
         public TimeSpan SUN_STIME { get; set; }
         public TimeSpan SUN_ETIME { get; set; }

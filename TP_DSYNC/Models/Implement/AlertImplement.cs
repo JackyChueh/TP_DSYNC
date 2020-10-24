@@ -31,7 +31,7 @@ SELECT SID,DATA_TYPE,LOCATION,DEVICE_ID,DATA_FIELD,MAX_VALUE,MIN_VALUE,CHECK_INT
 
             using (DbCommand cmd = Db.GetSqlStringCommand(sql))
             {
-                Db.AddInParameter(cmd, "MODE", DbType.Boolean, true);
+                Db.AddInParameter(cmd, "MODE", DbType.String, "Y");
 
                 //switch (dayOfWeek)
                 //{
@@ -68,7 +68,7 @@ SELECT SID,DATA_TYPE,LOCATION,DEVICE_ID,DATA_FIELD,MAX_VALUE,MIN_VALUE,CHECK_INT
                             MAX_VALUE = (Single)reader["MAX_VALUE"],
                             MIN_VALUE = (Single)reader["MIN_VALUE"],
                             CHECK_INTERVAL = (int)reader["CHECK_INTERVAL"],
-                            ALERT_INTERVAL = (int)reader["ALERT_INTERVAL"],
+                            //ALERT_INTERVAL = (int)reader["ALERT_INTERVAL"],
                             SUN = (Boolean)reader["SUN"],
                             SUN_STIME = (TimeSpan)reader["SUN_STIME"],
                             SUN_ETIME = (TimeSpan)reader["SUN_ETIME"],

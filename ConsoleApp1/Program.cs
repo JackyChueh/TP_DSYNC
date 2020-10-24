@@ -40,9 +40,9 @@ namespace ConsoleApp1
                 //timer.Elapsed += new ElapsedEventHandler(OnTimer);
                 //timer.Start();
 
-                new SensorData(DateTime.Now).ProcessData();   //單次測試用
+                //new SensorData(DateTime.Now).ProcessData();   //單次測試用
 
-                //new AlertData(DateTime.Now).ProcessData();   //單次測試用
+                new AlertData(DateTime.Now).ProcessData();   //單次測試用
 
                 //string[] mailto = { "jackychueh@gmail.com" };
                 //new MailSender().Google_Send("bstwjacky@gmail.com", mailto, "寄送郵件測試)(*&^%$#@!", "<h1>郵件內容</h1>", true);

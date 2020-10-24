@@ -1336,5 +1336,412 @@ IF NOT EXISTS (SELECT 1 FROM ZP1 WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
             return affected > 0;
         }
 
+        public bool WriteBufferForMSPCSTATS(MSPCSTATS MSPCSTATS)
+        {
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
+            {
+                using (DbConnection conn = Db.CreateConnection())
+                {
+                    conn.Open();
+
+                    string sql = @"
+IF NOT EXISTS (SELECT 1 FROM MSPCSTATS WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
+    BEGIN
+        INSERT INTO MSPCSTATS (AUTOID,DATETIME,ACTIVE
+            ,ASEF04_PAAC04,ASEF04_PAAC05,ASEF04_PAAC06,ASEF04_PAAC07,ASEF08_PAAC09,ASEF08_PAAC10,ASEF08_PAAC11,ASEF08_PAAC12,ASEF08_PAAC13
+            ,ASEF05_PAAC18,ASEF04_PAAC19,ASEF06_PAAC20,ASEF05_PAAC23,ASEF05_PAAC24,ASEF01_PAAC28,ASEF04_PAAC33,ASEF06_PAAC34,ASEF07_PAAC34
+            ,ASEF06_PAAC35,ASEF07_PAAC35,ASEF05_PAAC36,ASEF06_PAAC37,ASEF07_PAAC37,ASEF06_PAAC38,ASEF07_PAAC38,ASEF04_PAAC39,ASEF04_PAAC40
+            ,ASEF05_PAAC41,ASEF06_PAAC42,ASEF07_PAAC42,ASEF04_PAAC43,ASEF05_PAAC45,ASEF05_PAAC46,BSEF03_PBAC01,BSEF05_PBAC01,BSEF03_PBAC02
+            ,BSEF05_PBAC02,BSEF03_PBAC03,BSEF05_PBAC03,BSEF03_PBAC04,BSEF05_PBAC04,BSEF03_PBAC05,BSEF05_PBAC05,BSEF03_PBAC06,BSEF05_PBAC06
+            ,BSEF03_PBAC07,BSEF05_PBAC07,BSEF03_PBAC08,BSEF05_PBAC08,BSEF03_PBAC09,BSEF05_PBAC09,BSEF03_PBAC10,BSEF05_PBAC10,BSEF03_PBAC11
+            ,BSEF05_PBAC11,BSEF03_PBAC12,BSEF05_PBAC12,BSEF01_PBAC14,BSEF05_PBAC15,BSEF01_PBAC19,BSEF05_PBAC19
+            )
+        VALUES (@AUTOID,@DATETIME,@ACTIVE
+            ,@ASEF04_PAAC04,@ASEF04_PAAC05,@ASEF04_PAAC06,@ASEF04_PAAC07,@ASEF08_PAAC09,@ASEF08_PAAC10,@ASEF08_PAAC11,@ASEF08_PAAC12,@ASEF08_PAAC13
+            ,@ASEF05_PAAC18,@ASEF04_PAAC19,@ASEF06_PAAC20,@ASEF05_PAAC23,@ASEF05_PAAC24,@ASEF01_PAAC28,@ASEF04_PAAC33,@ASEF06_PAAC34,@ASEF07_PAAC34
+            ,@ASEF06_PAAC35,@ASEF07_PAAC35,@ASEF05_PAAC36,@ASEF06_PAAC37,@ASEF07_PAAC37,@ASEF06_PAAC38,@ASEF07_PAAC38,@ASEF04_PAAC39,@ASEF04_PAAC40
+            ,@ASEF05_PAAC41,@ASEF06_PAAC42,@ASEF07_PAAC42,@ASEF04_PAAC43,@ASEF05_PAAC45,@ASEF05_PAAC46,@BSEF03_PBAC01,@BSEF05_PBAC01,@BSEF03_PBAC02
+            ,@BSEF05_PBAC02,@BSEF03_PBAC03,@BSEF05_PBAC03,@BSEF03_PBAC04,@BSEF05_PBAC04,@BSEF03_PBAC05,@BSEF05_PBAC05,@BSEF03_PBAC06,@BSEF05_PBAC06
+            ,@BSEF03_PBAC07,@BSEF05_PBAC07,@BSEF03_PBAC08,@BSEF05_PBAC08,@BSEF03_PBAC09,@BSEF05_PBAC09,@BSEF03_PBAC10,@BSEF05_PBAC10,@BSEF03_PBAC11
+            ,@BSEF05_PBAC11,@BSEF03_PBAC12,@BSEF05_PBAC12,@BSEF01_PBAC14,@BSEF05_PBAC15,@BSEF01_PBAC19,@BSEF05_PBAC19
+            )
+    END
+";
+                    using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                    {
+                        #region 參數
+                        Db.AddInParameter(cmd, "AUTOID", DbType.Int32, MSPCSTATS.AUTOID);
+                        Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, MSPCSTATS.DATETIME);
+                        Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
+                        Db.AddInParameter(cmd, "ASEF04_PAAC04", DbType.Single, MSPCSTATS.ASEF04_PAAC04);
+                        Db.AddInParameter(cmd, "ASEF04_PAAC05", DbType.Single, MSPCSTATS.ASEF04_PAAC05);
+                        Db.AddInParameter(cmd, "ASEF04_PAAC06", DbType.Single, MSPCSTATS.ASEF04_PAAC06);
+                        Db.AddInParameter(cmd, "ASEF04_PAAC07", DbType.Single, MSPCSTATS.ASEF04_PAAC07);
+                        Db.AddInParameter(cmd, "ASEF08_PAAC09", DbType.Single, MSPCSTATS.ASEF08_PAAC09);
+                        Db.AddInParameter(cmd, "ASEF08_PAAC10", DbType.Single, MSPCSTATS.ASEF08_PAAC10);
+                        Db.AddInParameter(cmd, "ASEF08_PAAC11", DbType.Single, MSPCSTATS.ASEF08_PAAC11);
+                        Db.AddInParameter(cmd, "ASEF08_PAAC12", DbType.Single, MSPCSTATS.ASEF08_PAAC12);
+                        Db.AddInParameter(cmd, "ASEF08_PAAC13", DbType.Single, MSPCSTATS.ASEF08_PAAC13);
+                        Db.AddInParameter(cmd, "ASEF05_PAAC18", DbType.Single, MSPCSTATS.ASEF05_PAAC18);
+                        Db.AddInParameter(cmd, "ASEF04_PAAC19", DbType.Single, MSPCSTATS.ASEF04_PAAC19);
+                        Db.AddInParameter(cmd, "ASEF06_PAAC20", DbType.Single, MSPCSTATS.ASEF06_PAAC20);
+                        Db.AddInParameter(cmd, "ASEF05_PAAC23", DbType.Single, MSPCSTATS.ASEF05_PAAC23);
+                        Db.AddInParameter(cmd, "ASEF05_PAAC24", DbType.Single, MSPCSTATS.ASEF05_PAAC24);
+                        Db.AddInParameter(cmd, "ASEF01_PAAC28", DbType.Single, MSPCSTATS.ASEF01_PAAC28);
+                        Db.AddInParameter(cmd, "ASEF04_PAAC33", DbType.Single, MSPCSTATS.ASEF04_PAAC33);
+                        Db.AddInParameter(cmd, "ASEF06_PAAC34", DbType.Single, MSPCSTATS.ASEF06_PAAC34);
+                        Db.AddInParameter(cmd, "ASEF07_PAAC34", DbType.Single, MSPCSTATS.ASEF07_PAAC34);
+                        Db.AddInParameter(cmd, "ASEF06_PAAC35", DbType.Single, MSPCSTATS.ASEF06_PAAC35);
+                        Db.AddInParameter(cmd, "ASEF07_PAAC35", DbType.Single, MSPCSTATS.ASEF07_PAAC35);
+                        Db.AddInParameter(cmd, "ASEF05_PAAC36", DbType.Single, MSPCSTATS.ASEF05_PAAC36);
+                        Db.AddInParameter(cmd, "ASEF06_PAAC37", DbType.Single, MSPCSTATS.ASEF06_PAAC37);
+                        Db.AddInParameter(cmd, "ASEF07_PAAC37", DbType.Single, MSPCSTATS.ASEF07_PAAC37);
+                        Db.AddInParameter(cmd, "ASEF06_PAAC38", DbType.Single, MSPCSTATS.ASEF06_PAAC38);
+                        Db.AddInParameter(cmd, "ASEF07_PAAC38", DbType.Single, MSPCSTATS.ASEF07_PAAC38);
+                        Db.AddInParameter(cmd, "ASEF04_PAAC39", DbType.Single, MSPCSTATS.ASEF04_PAAC39);
+                        Db.AddInParameter(cmd, "ASEF04_PAAC40", DbType.Single, MSPCSTATS.ASEF04_PAAC40);
+                        Db.AddInParameter(cmd, "ASEF05_PAAC41", DbType.Single, MSPCSTATS.ASEF05_PAAC41);
+                        Db.AddInParameter(cmd, "ASEF06_PAAC42", DbType.Single, MSPCSTATS.ASEF06_PAAC42);
+                        Db.AddInParameter(cmd, "ASEF07_PAAC42", DbType.Single, MSPCSTATS.ASEF07_PAAC42);
+                        Db.AddInParameter(cmd, "ASEF04_PAAC43", DbType.Single, MSPCSTATS.ASEF04_PAAC43);
+                        Db.AddInParameter(cmd, "ASEF05_PAAC45", DbType.Single, MSPCSTATS.ASEF05_PAAC45);
+                        Db.AddInParameter(cmd, "ASEF05_PAAC46", DbType.Single, MSPCSTATS.ASEF05_PAAC46);
+                        Db.AddInParameter(cmd, "BSEF03_PBAC01", DbType.Single, MSPCSTATS.BSEF03_PBAC01);
+                        Db.AddInParameter(cmd, "BSEF05_PBAC01", DbType.Single, MSPCSTATS.BSEF05_PBAC01);
+                        Db.AddInParameter(cmd, "BSEF03_PBAC02", DbType.Single, MSPCSTATS.BSEF03_PBAC02);
+                        Db.AddInParameter(cmd, "BSEF05_PBAC02", DbType.Single, MSPCSTATS.BSEF05_PBAC02);
+                        Db.AddInParameter(cmd, "BSEF03_PBAC03", DbType.Single, MSPCSTATS.BSEF03_PBAC03);
+                        Db.AddInParameter(cmd, "BSEF05_PBAC03", DbType.Single, MSPCSTATS.BSEF05_PBAC03);
+                        Db.AddInParameter(cmd, "BSEF03_PBAC04", DbType.Single, MSPCSTATS.BSEF03_PBAC04);
+                        Db.AddInParameter(cmd, "BSEF05_PBAC04", DbType.Single, MSPCSTATS.BSEF05_PBAC04);
+                        Db.AddInParameter(cmd, "BSEF03_PBAC05", DbType.Single, MSPCSTATS.BSEF03_PBAC05);
+                        Db.AddInParameter(cmd, "BSEF05_PBAC05", DbType.Single, MSPCSTATS.BSEF05_PBAC05);
+                        Db.AddInParameter(cmd, "BSEF03_PBAC06", DbType.Single, MSPCSTATS.BSEF03_PBAC06);
+                        Db.AddInParameter(cmd, "BSEF05_PBAC06", DbType.Single, MSPCSTATS.BSEF05_PBAC06);
+                        Db.AddInParameter(cmd, "BSEF03_PBAC07", DbType.Single, MSPCSTATS.BSEF03_PBAC07);
+                        Db.AddInParameter(cmd, "BSEF05_PBAC07", DbType.Single, MSPCSTATS.BSEF05_PBAC07);
+                        Db.AddInParameter(cmd, "BSEF03_PBAC08", DbType.Single, MSPCSTATS.BSEF03_PBAC08);
+                        Db.AddInParameter(cmd, "BSEF05_PBAC08", DbType.Single, MSPCSTATS.BSEF05_PBAC08);
+                        Db.AddInParameter(cmd, "BSEF03_PBAC09", DbType.Single, MSPCSTATS.BSEF03_PBAC09);
+                        Db.AddInParameter(cmd, "BSEF05_PBAC09", DbType.Single, MSPCSTATS.BSEF05_PBAC09);
+                        Db.AddInParameter(cmd, "BSEF03_PBAC10", DbType.Single, MSPCSTATS.BSEF03_PBAC10);
+                        Db.AddInParameter(cmd, "BSEF05_PBAC10", DbType.Single, MSPCSTATS.BSEF05_PBAC10);
+                        Db.AddInParameter(cmd, "BSEF03_PBAC11", DbType.Single, MSPCSTATS.BSEF03_PBAC11);
+                        Db.AddInParameter(cmd, "BSEF05_PBAC11", DbType.Single, MSPCSTATS.BSEF05_PBAC11);
+                        Db.AddInParameter(cmd, "BSEF03_PBAC12", DbType.Single, MSPCSTATS.BSEF03_PBAC12);
+                        Db.AddInParameter(cmd, "BSEF05_PBAC12", DbType.Single, MSPCSTATS.BSEF05_PBAC12);
+                        Db.AddInParameter(cmd, "BSEF01_PBAC14", DbType.Single, MSPCSTATS.BSEF01_PBAC14);
+                        Db.AddInParameter(cmd, "BSEF05_PBAC15", DbType.Single, MSPCSTATS.BSEF05_PBAC15);
+                        Db.AddInParameter(cmd, "BSEF01_PBAC19", DbType.Single, MSPCSTATS.BSEF01_PBAC19);
+                        Db.AddInParameter(cmd, "BSEF05_PBAC19", DbType.Single, MSPCSTATS.BSEF05_PBAC19);
+                        #endregion
+                        affected = Db.ExecuteNonQuery(cmd);
+                    }
+                }
+
+                scop.Complete();
+            }
+
+            return affected > 0;
+        }
+
+        public bool WriteBufferForMSPCALARS(MSPCALARS MSPCALARS)
+        {
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
+            {
+                using (DbConnection conn = Db.CreateConnection())
+                {
+                    conn.Open();
+
+                    string sql = @"
+IF NOT EXISTS (SELECT 1 FROM MSPCALARS WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
+    BEGIN
+        INSERT INTO MSPCALARS (AUTOID,DATETIME,ACTIVE
+            ,ASEF11_PAAC01,ASEF14_PAAC01,ASEF10_PAAC02,ASEF11_PAAC02,ASEF14_PAAC02,ASEF15_PAAC02,ASEF11_PAAC03,ASEF14_PAAC03
+            ,ASEF11_PAAC04,ASEF12_PAAC04,ASEF13_PAAC04,ASEF11_PAAC05,ASEF12_PAAC05,ASEF11_PAAC06,ASEF12_PAAC06,ASEF11_PAAC07
+            ,ASEF12_PAAC07,ASEF13_PAAC08,ASEF09_PAAC09,ASEF11_PAAC09,ASEF13_PAAC09,ASEF09_PAAC10,ASEF11_PAAC10,ASEF13_PAAC10
+            ,ASEF09_PAAC11,ASEF11_PAAC11,ASEF13_PAAC11,ASEF09_PAAC12,ASEF11_PAAC12,ASEF13_PAAC12,ASEF09_PAAC13,ASEF11_PAAC13
+            ,ASEF13_PAAC13,ASEF11_PAAC14,ASEF12_PAAC14,ASEF14_PAAC14,ASEF15_PAAC14,ASEF11_PAAC15,ASEF12_PAAC15,ASEF11_PAAC16
+            ,ASEF12_PAAC16,ASEF13_PAAC16,ASEF16_PBAC16,ASEF17_PBAC16,ASEF14_PAAC16,ASEF15_PAAC16,ASEF11_PAAC17,ASEF12_PAAC17
+            ,ASEF13_PAAC17,ASEF11_PAAC18,ASEF13_PAAC18,ASEF14_PAAC18,ASEF15_PAAC18,ASEF11_PAAC19,ASEF13_PAAC19,ASEF11_PAAC20
+            ,ASEF11_PAAC21,ASEF14_PAAC21,ASEF15_PAAC21,ASEF11_PAAC22,ASEF14_PAAC22,ASEF15_PAAC22,ASEF11_PAAC23,ASEF11_PAAC24
+            ,ASEF14_PAAC24,ASEF15_PAAC24,ASEF10_PAAC25,ASEF11_PAAC25,ASEF14_PAAC25,ASEF10_PAAC26,ASEF10_PAAC27,ASEF11_PAAC27
+            ,ASEF14_PAAC27,ASEF15_PAAC27,ASEF11_PAAC29,ASEF14_PAAC29,ASEF15_PAAC29,ASEF11_PAAC30,ASEF14_PAAC30,ASEF15_PAAC30
+            ,ASEF11_PAAC31,ASEF14_PAAC31,ASEF15_PAAC31,ASEF11_PAAC32,ASEF14_PAAC32,ASEF15_PAAC32,ASEF11_PAAC33,ASEF14_PAAC33
+            ,ASEF15_PAAC33,ASEF11_PAAC34,ASEF11_PAAC35,ASEF11_PAAC36,ASEF11_PAAC37,ASEF11_PAAC38,ASEF11_PAAC39,ASEF11_PAAC40
+            ,ASEF11_PAAC41,ASEF11_PAAC42,ASEF11_PAAC43,ASEF11_PAAC44,ASEF11_PAAC45,ASEF12_PAAC45,ASEF13_PAAC45,ASEF11_PAAC46
+            ,ASEF12_PAAC46,ASEF11_PAAC47,ASEF10_PAAC48,ASEF11_PAAC48,ASEF10_PAAC49,ASEF11_PAAC49,ASEF10_PAAC50,ASEF11_PAAC50
+            ,BSEF11_PBAC01,BSEF11_PBAC02,BSEF11_PBAC03,BSEF11_PBAC04,BSEF11_PBAC05,BSEF11_PBAC06,BSEF11_PBAC07,BSEF11_PBAC08
+            ,BSEF11_PBAC09,BSEF11_PBAC10,BSEF11_PBAC11,BSEF11_PBAC12,BSEF11_PBAC13,BSEF11_PBAC14,BSEF11_PBAC15,BSEF11_PBAC16
+            ,BSEF11_PBAC17,BSEF14_PBAC17,BSEF11_PBAC18,BSEF14_PBAC18,BSEF11_PBAC19
+            )
+        VALUES (@AUTOID,@DATETIME,@ACTIVE
+            ,@ASEF11_PAAC01,@ASEF14_PAAC01,@ASEF10_PAAC02,@ASEF11_PAAC02,@ASEF14_PAAC02,@ASEF15_PAAC02,@ASEF11_PAAC03,@ASEF14_PAAC03
+            ,@ASEF11_PAAC04,@ASEF12_PAAC04,@ASEF13_PAAC04,@ASEF11_PAAC05,@ASEF12_PAAC05,@ASEF11_PAAC06,@ASEF12_PAAC06,@ASEF11_PAAC07
+            ,@ASEF12_PAAC07,@ASEF13_PAAC08,@ASEF09_PAAC09,@ASEF11_PAAC09,@ASEF13_PAAC09,@ASEF09_PAAC10,@ASEF11_PAAC10,@ASEF13_PAAC10
+            ,@ASEF09_PAAC11,@ASEF11_PAAC11,@ASEF13_PAAC11,@ASEF09_PAAC12,@ASEF11_PAAC12,@ASEF13_PAAC12,@ASEF09_PAAC13,@ASEF11_PAAC13
+            ,@ASEF13_PAAC13,@ASEF11_PAAC14,@ASEF12_PAAC14,@ASEF14_PAAC14,@ASEF15_PAAC14,@ASEF11_PAAC15,@ASEF12_PAAC15,@ASEF11_PAAC16
+            ,@ASEF12_PAAC16,@ASEF13_PAAC16,@ASEF16_PBAC16,@ASEF17_PBAC16,@ASEF14_PAAC16,@ASEF15_PAAC16,@ASEF11_PAAC17,@ASEF12_PAAC17
+            ,@ASEF13_PAAC17,@ASEF11_PAAC18,@ASEF13_PAAC18,@ASEF14_PAAC18,@ASEF15_PAAC18,@ASEF11_PAAC19,@ASEF13_PAAC19,@ASEF11_PAAC20
+            ,@ASEF11_PAAC21,@ASEF14_PAAC21,@ASEF15_PAAC21,@ASEF11_PAAC22,@ASEF14_PAAC22,@ASEF15_PAAC22,@ASEF11_PAAC23,@ASEF11_PAAC24
+            ,@ASEF14_PAAC24,@ASEF15_PAAC24,@ASEF10_PAAC25,@ASEF11_PAAC25,@ASEF14_PAAC25,@ASEF10_PAAC26,@ASEF10_PAAC27,@ASEF11_PAAC27
+            ,@ASEF14_PAAC27,@ASEF15_PAAC27,@ASEF11_PAAC29,@ASEF14_PAAC29,@ASEF15_PAAC29,@ASEF11_PAAC30,@ASEF14_PAAC30,@ASEF15_PAAC30
+            ,@ASEF11_PAAC31,@ASEF14_PAAC31,@ASEF15_PAAC31,@ASEF11_PAAC32,@ASEF14_PAAC32,@ASEF15_PAAC32,@ASEF11_PAAC33,@ASEF14_PAAC33
+            ,@ASEF15_PAAC33,@ASEF11_PAAC34,@ASEF11_PAAC35,@ASEF11_PAAC36,@ASEF11_PAAC37,@ASEF11_PAAC38,@ASEF11_PAAC39,@ASEF11_PAAC40
+            ,@ASEF11_PAAC41,@ASEF11_PAAC42,@ASEF11_PAAC43,@ASEF11_PAAC44,@ASEF11_PAAC45,@ASEF12_PAAC45,@ASEF13_PAAC45,@ASEF11_PAAC46
+            ,@ASEF12_PAAC46,@ASEF11_PAAC47,@ASEF10_PAAC48,@ASEF11_PAAC48,@ASEF10_PAAC49,@ASEF11_PAAC49,@ASEF10_PAAC50,@ASEF11_PAAC50
+            ,@BSEF11_PBAC01,@BSEF11_PBAC02,@BSEF11_PBAC03,@BSEF11_PBAC04,@BSEF11_PBAC05,@BSEF11_PBAC06,@BSEF11_PBAC07,@BSEF11_PBAC08
+            ,@BSEF11_PBAC09,@BSEF11_PBAC10,@BSEF11_PBAC11,@BSEF11_PBAC12,@BSEF11_PBAC13,@BSEF11_PBAC14,@BSEF11_PBAC15,@BSEF11_PBAC16
+            ,@BSEF11_PBAC17,@BSEF14_PBAC17,@BSEF11_PBAC18,@BSEF14_PBAC18,@BSEF11_PBAC19
+            )
+    END
+";
+                    using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                    {
+                        #region 參數
+                        Db.AddInParameter(cmd, "AUTOID", DbType.Int32, MSPCALARS.AUTOID);
+                        Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, MSPCALARS.DATETIME);
+                        Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
+                        Db.AddInParameter(cmd, "ASEF11_PAAC01", DbType.Single, MSPCALARS.ASEF11_PAAC01);
+                        Db.AddInParameter(cmd, "ASEF14_PAAC01", DbType.Single, MSPCALARS.ASEF14_PAAC01);
+                        Db.AddInParameter(cmd, "ASEF10_PAAC02", DbType.Single, MSPCALARS.ASEF10_PAAC02);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC02", DbType.Single, MSPCALARS.ASEF11_PAAC02);
+                        Db.AddInParameter(cmd, "ASEF14_PAAC02", DbType.Single, MSPCALARS.ASEF14_PAAC02);
+                        Db.AddInParameter(cmd, "ASEF15_PAAC02", DbType.Single, MSPCALARS.ASEF15_PAAC02);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC03", DbType.Single, MSPCALARS.ASEF11_PAAC03);
+                        Db.AddInParameter(cmd, "ASEF14_PAAC03", DbType.Single, MSPCALARS.ASEF14_PAAC03);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC04", DbType.Single, MSPCALARS.ASEF11_PAAC04);
+                        Db.AddInParameter(cmd, "ASEF12_PAAC04", DbType.Single, MSPCALARS.ASEF12_PAAC04);
+                        Db.AddInParameter(cmd, "ASEF13_PAAC04", DbType.Single, MSPCALARS.ASEF13_PAAC04);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC05", DbType.Single, MSPCALARS.ASEF11_PAAC05);
+                        Db.AddInParameter(cmd, "ASEF12_PAAC05", DbType.Single, MSPCALARS.ASEF12_PAAC05);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC06", DbType.Single, MSPCALARS.ASEF11_PAAC06);
+                        Db.AddInParameter(cmd, "ASEF12_PAAC06", DbType.Single, MSPCALARS.ASEF12_PAAC06);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC07", DbType.Single, MSPCALARS.ASEF11_PAAC07);
+                        Db.AddInParameter(cmd, "ASEF12_PAAC07", DbType.Single, MSPCALARS.ASEF12_PAAC07);
+                        Db.AddInParameter(cmd, "ASEF13_PAAC08", DbType.Single, MSPCALARS.ASEF13_PAAC08);
+                        Db.AddInParameter(cmd, "ASEF09_PAAC09", DbType.Single, MSPCALARS.ASEF09_PAAC09);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC09", DbType.Single, MSPCALARS.ASEF11_PAAC09);
+                        Db.AddInParameter(cmd, "ASEF13_PAAC09", DbType.Single, MSPCALARS.ASEF13_PAAC09);
+                        Db.AddInParameter(cmd, "ASEF09_PAAC10", DbType.Single, MSPCALARS.ASEF09_PAAC10);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC10", DbType.Single, MSPCALARS.ASEF11_PAAC10);
+                        Db.AddInParameter(cmd, "ASEF13_PAAC10", DbType.Single, MSPCALARS.ASEF13_PAAC10);
+                        Db.AddInParameter(cmd, "ASEF09_PAAC11", DbType.Single, MSPCALARS.ASEF09_PAAC11);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC11", DbType.Single, MSPCALARS.ASEF11_PAAC11);
+                        Db.AddInParameter(cmd, "ASEF13_PAAC11", DbType.Single, MSPCALARS.ASEF13_PAAC11);
+                        Db.AddInParameter(cmd, "ASEF09_PAAC12", DbType.Single, MSPCALARS.ASEF09_PAAC12);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC12", DbType.Single, MSPCALARS.ASEF11_PAAC12);
+                        Db.AddInParameter(cmd, "ASEF13_PAAC12", DbType.Single, MSPCALARS.ASEF13_PAAC12);
+                        Db.AddInParameter(cmd, "ASEF09_PAAC13", DbType.Single, MSPCALARS.ASEF09_PAAC13);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC13", DbType.Single, MSPCALARS.ASEF11_PAAC13);
+                        Db.AddInParameter(cmd, "ASEF13_PAAC13", DbType.Single, MSPCALARS.ASEF13_PAAC13);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC14", DbType.Single, MSPCALARS.ASEF11_PAAC14);
+                        Db.AddInParameter(cmd, "ASEF12_PAAC14", DbType.Single, MSPCALARS.ASEF12_PAAC14);
+                        Db.AddInParameter(cmd, "ASEF14_PAAC14", DbType.Single, MSPCALARS.ASEF14_PAAC14);
+                        Db.AddInParameter(cmd, "ASEF15_PAAC14", DbType.Single, MSPCALARS.ASEF15_PAAC14);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC15", DbType.Single, MSPCALARS.ASEF11_PAAC15);
+                        Db.AddInParameter(cmd, "ASEF12_PAAC15", DbType.Single, MSPCALARS.ASEF12_PAAC15);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC16", DbType.Single, MSPCALARS.ASEF11_PAAC16);
+                        Db.AddInParameter(cmd, "ASEF12_PAAC16", DbType.Single, MSPCALARS.ASEF12_PAAC16);
+                        Db.AddInParameter(cmd, "ASEF13_PAAC16", DbType.Single, MSPCALARS.ASEF13_PAAC16);
+                        Db.AddInParameter(cmd, "ASEF16_PBAC16", DbType.Single, MSPCALARS.ASEF16_PBAC16);    //
+                        Db.AddInParameter(cmd, "ASEF17_PBAC16", DbType.Single, MSPCALARS.ASEF17_PBAC16);    //
+                        Db.AddInParameter(cmd, "ASEF14_PAAC16", DbType.Single, MSPCALARS.ASEF14_PAAC16);
+                        Db.AddInParameter(cmd, "ASEF15_PAAC16", DbType.Single, MSPCALARS.ASEF15_PAAC16);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC17", DbType.Single, MSPCALARS.ASEF11_PAAC17);
+                        Db.AddInParameter(cmd, "ASEF12_PAAC17", DbType.Single, MSPCALARS.ASEF12_PAAC17);
+                        Db.AddInParameter(cmd, "ASEF13_PAAC17", DbType.Single, MSPCALARS.ASEF13_PAAC17);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC18", DbType.Single, MSPCALARS.ASEF11_PAAC18);
+                        Db.AddInParameter(cmd, "ASEF13_PAAC18", DbType.Single, MSPCALARS.ASEF13_PAAC18);
+                        Db.AddInParameter(cmd, "ASEF14_PAAC18", DbType.Single, MSPCALARS.ASEF14_PAAC18);
+                        Db.AddInParameter(cmd, "ASEF15_PAAC18", DbType.Single, MSPCALARS.ASEF15_PAAC18);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC19", DbType.Single, MSPCALARS.ASEF11_PAAC19);
+                        Db.AddInParameter(cmd, "ASEF13_PAAC19", DbType.Single, MSPCALARS.ASEF13_PAAC19);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC20", DbType.Single, MSPCALARS.ASEF11_PAAC20);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC21", DbType.Single, MSPCALARS.ASEF11_PAAC21);
+                        Db.AddInParameter(cmd, "ASEF14_PAAC21", DbType.Single, MSPCALARS.ASEF14_PAAC21);
+                        Db.AddInParameter(cmd, "ASEF15_PAAC21", DbType.Single, MSPCALARS.ASEF15_PAAC21);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC22", DbType.Single, MSPCALARS.ASEF11_PAAC22);
+                        Db.AddInParameter(cmd, "ASEF14_PAAC22", DbType.Single, MSPCALARS.ASEF14_PAAC22);
+                        Db.AddInParameter(cmd, "ASEF15_PAAC22", DbType.Single, MSPCALARS.ASEF15_PAAC22);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC23", DbType.Single, MSPCALARS.ASEF11_PAAC23);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC24", DbType.Single, MSPCALARS.ASEF11_PAAC24);
+                        Db.AddInParameter(cmd, "ASEF14_PAAC24", DbType.Single, MSPCALARS.ASEF14_PAAC24);
+                        Db.AddInParameter(cmd, "ASEF15_PAAC24", DbType.Single, MSPCALARS.ASEF15_PAAC24);
+                        Db.AddInParameter(cmd, "ASEF10_PAAC25", DbType.Single, MSPCALARS.ASEF10_PAAC25);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC25", DbType.Single, MSPCALARS.ASEF11_PAAC25);
+                        Db.AddInParameter(cmd, "ASEF14_PAAC25", DbType.Single, MSPCALARS.ASEF14_PAAC25);
+                        Db.AddInParameter(cmd, "ASEF10_PAAC26", DbType.Single, MSPCALARS.ASEF10_PAAC26);
+                        Db.AddInParameter(cmd, "ASEF10_PAAC27", DbType.Single, MSPCALARS.ASEF10_PAAC27);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC27", DbType.Single, MSPCALARS.ASEF11_PAAC27);
+                        Db.AddInParameter(cmd, "ASEF14_PAAC27", DbType.Single, MSPCALARS.ASEF14_PAAC27);
+                        Db.AddInParameter(cmd, "ASEF15_PAAC27", DbType.Single, MSPCALARS.ASEF15_PAAC27);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC29", DbType.Single, MSPCALARS.ASEF11_PAAC29);
+                        Db.AddInParameter(cmd, "ASEF14_PAAC29", DbType.Single, MSPCALARS.ASEF14_PAAC29);
+                        Db.AddInParameter(cmd, "ASEF15_PAAC29", DbType.Single, MSPCALARS.ASEF15_PAAC29);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC30", DbType.Single, MSPCALARS.ASEF11_PAAC30);
+                        Db.AddInParameter(cmd, "ASEF14_PAAC30", DbType.Single, MSPCALARS.ASEF14_PAAC30);
+                        Db.AddInParameter(cmd, "ASEF15_PAAC30", DbType.Single, MSPCALARS.ASEF15_PAAC30);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC31", DbType.Single, MSPCALARS.ASEF11_PAAC31);
+                        Db.AddInParameter(cmd, "ASEF14_PAAC31", DbType.Single, MSPCALARS.ASEF14_PAAC31);
+                        Db.AddInParameter(cmd, "ASEF15_PAAC31", DbType.Single, MSPCALARS.ASEF15_PAAC31);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC32", DbType.Single, MSPCALARS.ASEF11_PAAC32);
+                        Db.AddInParameter(cmd, "ASEF14_PAAC32", DbType.Single, MSPCALARS.ASEF14_PAAC32);
+                        Db.AddInParameter(cmd, "ASEF15_PAAC32", DbType.Single, MSPCALARS.ASEF15_PAAC32);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC33", DbType.Single, MSPCALARS.ASEF11_PAAC33);
+                        Db.AddInParameter(cmd, "ASEF14_PAAC33", DbType.Single, MSPCALARS.ASEF14_PAAC33);
+                        Db.AddInParameter(cmd, "ASEF15_PAAC33", DbType.Single, MSPCALARS.ASEF15_PAAC33);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC34", DbType.Single, MSPCALARS.ASEF11_PAAC34);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC35", DbType.Single, MSPCALARS.ASEF11_PAAC35);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC36", DbType.Single, MSPCALARS.ASEF11_PAAC36);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC37", DbType.Single, MSPCALARS.ASEF11_PAAC37);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC38", DbType.Single, MSPCALARS.ASEF11_PAAC38);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC39", DbType.Single, MSPCALARS.ASEF11_PAAC39);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC40", DbType.Single, MSPCALARS.ASEF11_PAAC40);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC41", DbType.Single, MSPCALARS.ASEF11_PAAC41);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC42", DbType.Single, MSPCALARS.ASEF11_PAAC42);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC43", DbType.Single, MSPCALARS.ASEF11_PAAC43);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC44", DbType.Single, MSPCALARS.ASEF11_PAAC44);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC45", DbType.Single, MSPCALARS.ASEF11_PAAC45);
+                        Db.AddInParameter(cmd, "ASEF12_PAAC45", DbType.Single, MSPCALARS.ASEF12_PAAC45);
+                        Db.AddInParameter(cmd, "ASEF13_PAAC45", DbType.Single, MSPCALARS.ASEF13_PAAC45);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC46", DbType.Single, MSPCALARS.ASEF11_PAAC46);
+                        Db.AddInParameter(cmd, "ASEF12_PAAC46", DbType.Single, MSPCALARS.ASEF12_PAAC46);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC47", DbType.Single, MSPCALARS.ASEF11_PAAC47);
+                        Db.AddInParameter(cmd, "ASEF10_PAAC48", DbType.Single, MSPCALARS.ASEF10_PAAC48);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC48", DbType.Single, MSPCALARS.ASEF11_PAAC48);
+                        Db.AddInParameter(cmd, "ASEF10_PAAC49", DbType.Single, MSPCALARS.ASEF10_PAAC49);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC49", DbType.Single, MSPCALARS.ASEF11_PAAC49);
+                        Db.AddInParameter(cmd, "ASEF10_PAAC50", DbType.Single, MSPCALARS.ASEF10_PAAC50);
+                        Db.AddInParameter(cmd, "ASEF11_PAAC50", DbType.Single, MSPCALARS.ASEF11_PAAC50);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC01", DbType.Single, MSPCALARS.BSEF11_PBAC01);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC02", DbType.Single, MSPCALARS.BSEF11_PBAC02);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC03", DbType.Single, MSPCALARS.BSEF11_PBAC03);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC04", DbType.Single, MSPCALARS.BSEF11_PBAC04);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC05", DbType.Single, MSPCALARS.BSEF11_PBAC05);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC06", DbType.Single, MSPCALARS.BSEF11_PBAC06);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC07", DbType.Single, MSPCALARS.BSEF11_PBAC07);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC08", DbType.Single, MSPCALARS.BSEF11_PBAC08);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC09", DbType.Single, MSPCALARS.BSEF11_PBAC09);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC10", DbType.Single, MSPCALARS.BSEF11_PBAC10);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC11", DbType.Single, MSPCALARS.BSEF11_PBAC11);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC12", DbType.Single, MSPCALARS.BSEF11_PBAC12);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC13", DbType.Single, MSPCALARS.BSEF11_PBAC13);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC14", DbType.Single, MSPCALARS.BSEF11_PBAC14);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC15", DbType.Single, MSPCALARS.BSEF11_PBAC15);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC16", DbType.Single, MSPCALARS.BSEF11_PBAC16);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC17", DbType.Single, MSPCALARS.BSEF11_PBAC17);
+                        Db.AddInParameter(cmd, "BSEF14_PBAC17", DbType.Single, MSPCALARS.BSEF14_PBAC17);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC18", DbType.Single, MSPCALARS.BSEF11_PBAC18);
+                        Db.AddInParameter(cmd, "BSEF14_PBAC18", DbType.Single, MSPCALARS.BSEF14_PBAC18);
+                        Db.AddInParameter(cmd, "BSEF11_PBAC19", DbType.Single, MSPCALARS.BSEF11_PBAC19);
+                        #endregion
+                        affected = Db.ExecuteNonQuery(cmd);
+                    }
+                }
+
+                scop.Complete();
+            }
+
+            return affected > 0;
+        }
+
+        public bool WriteBufferForMSPCAI(MSPCAI MSPCAI)
+        {
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.Serializable }))
+            {
+                using (DbConnection conn = Db.CreateConnection())
+                {
+                    conn.Open();
+
+                    string sql = @"
+IF NOT EXISTS (SELECT 1 FROM MSPCAI WITH (UPDLOCK) WHERE AUTOID = @AUTOID)
+    BEGIN
+        INSERT INTO MSPCAI (AUTOID,DATETIME,ACTIVE
+            ,ASEF16_PAAC01,ASEF16_PAAC02,ASEF17_PAAC02,ASEF16_PAAC03,ASEF16_PAAC04,ASEF17_PAAC04,ASEF16_PAAC06,ASEF17_PAAC06
+            ,ASEF16_PAAC14,ASEF17_PAAC14,ASEF16_PAAC16,ASEF17_PAAC16,ASEF16_PAAC18,ASEF16_PAAC19,ASEF17_PAAC19,ASEF16_PAAC21
+            ,ASEF17_PAAC21,ASEF16_PAAC22,ASEF17_PAAC22,ASEF16_PAAC24,ASEF17_PAAC24,ASEF16_PAAC25,ASEF16_PAAC27,ASEF17_PAAC27
+            ,ASEF16_PAAC28,ASEF18_PAAC28,ASEF16_PAAC29,ASEF17_PAAC29,ASEF16_PAAC30,ASEF17_PAAC30,ASEF16_PAAC31,ASEF17_PAAC31
+            ,ASEF16_PAAC32,ASEF17_PAAC32,ASEF16_PAAC33,ASEF17_PAAC33,ASEF16_PAAC45,ASEF17_PAAC45,ASEF16_PAAC46,ASEF17_PAAC46
+            ,ASEF16_PAAC48,ASEF17_PAAC48,BSEF16_PBAC16,BSEF17_PBAC16,BSEF16_PBAC18,BSEF17_PBAC18
+            )
+        VALUES (@AUTOID,@DATETIME,@ACTIVE
+            ,@ASEF16_PAAC01,@ASEF16_PAAC02,@ASEF17_PAAC02,@ASEF16_PAAC03,@ASEF16_PAAC04,@ASEF17_PAAC04,@ASEF16_PAAC06,@ASEF17_PAAC06
+            ,@ASEF16_PAAC14,@ASEF17_PAAC14,@ASEF16_PAAC16,@ASEF17_PAAC16,@ASEF16_PAAC18,@ASEF16_PAAC19,@ASEF17_PAAC19,@ASEF16_PAAC21
+            ,@ASEF17_PAAC21,@ASEF16_PAAC22,@ASEF17_PAAC22,@ASEF16_PAAC24,@ASEF17_PAAC24,@ASEF16_PAAC25,@ASEF16_PAAC27,@ASEF17_PAAC27
+            ,@ASEF16_PAAC28,@ASEF18_PAAC28,@ASEF16_PAAC29,@ASEF17_PAAC29,@ASEF16_PAAC30,@ASEF17_PAAC30,@ASEF16_PAAC31,@ASEF17_PAAC31
+            ,@ASEF16_PAAC32,@ASEF17_PAAC32,@ASEF16_PAAC33,@ASEF17_PAAC33,@ASEF16_PAAC45,@ASEF17_PAAC45,@ASEF16_PAAC46,@ASEF17_PAAC46
+            ,@ASEF16_PAAC48,@ASEF17_PAAC48,@BSEF16_PBAC16,@BSEF17_PBAC16,@BSEF16_PBAC18,@BSEF17_PBAC18
+            )
+    END
+";
+                    using (DbCommand cmd = Db.GetSqlStringCommand(sql))
+                    {
+                        #region 參數
+                        Db.AddInParameter(cmd, "AUTOID", DbType.Int32, MSPCAI.AUTOID);
+                        Db.AddInParameter(cmd, "DATETIME", DbType.DateTime, MSPCAI.DATETIME);
+                        Db.AddInParameter(cmd, "ACTIVE", DbType.String, "A");
+                        Db.AddInParameter(cmd, "ASEF16_PAAC01", DbType.Single, MSPCAI.ASEF16_PAAC01);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC02", DbType.Single, MSPCAI.ASEF16_PAAC02);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC02", DbType.Single, MSPCAI.ASEF17_PAAC02);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC03", DbType.Single, MSPCAI.ASEF16_PAAC03);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC04", DbType.Single, MSPCAI.ASEF16_PAAC04);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC04", DbType.Single, MSPCAI.ASEF17_PAAC04);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC06", DbType.Single, MSPCAI.ASEF16_PAAC06);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC06", DbType.Single, MSPCAI.ASEF17_PAAC06);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC14", DbType.Single, MSPCAI.ASEF16_PAAC14);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC14", DbType.Single, MSPCAI.ASEF17_PAAC14);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC16", DbType.Single, MSPCAI.ASEF16_PAAC16);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC16", DbType.Single, MSPCAI.ASEF17_PAAC16);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC18", DbType.Single, MSPCAI.ASEF16_PAAC18);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC19", DbType.Single, MSPCAI.ASEF16_PAAC19);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC19", DbType.Single, MSPCAI.ASEF17_PAAC19);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC21", DbType.Single, MSPCAI.ASEF16_PAAC21);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC21", DbType.Single, MSPCAI.ASEF17_PAAC21);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC22", DbType.Single, MSPCAI.ASEF16_PAAC22);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC22", DbType.Single, MSPCAI.ASEF17_PAAC22);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC24", DbType.Single, MSPCAI.ASEF16_PAAC24);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC24", DbType.Single, MSPCAI.ASEF17_PAAC24);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC25", DbType.Single, MSPCAI.ASEF16_PAAC25);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC27", DbType.Single, MSPCAI.ASEF16_PAAC27);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC27", DbType.Single, MSPCAI.ASEF17_PAAC27);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC28", DbType.Single, MSPCAI.ASEF16_PAAC28);
+                        Db.AddInParameter(cmd, "ASEF18_PAAC28", DbType.Single, MSPCAI.ASEF18_PAAC28);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC29", DbType.Single, MSPCAI.ASEF16_PAAC29);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC29", DbType.Single, MSPCAI.ASEF17_PAAC29);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC30", DbType.Single, MSPCAI.ASEF16_PAAC30);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC30", DbType.Single, MSPCAI.ASEF17_PAAC30);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC31", DbType.Single, MSPCAI.ASEF16_PAAC31);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC31", DbType.Single, MSPCAI.ASEF17_PAAC31);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC32", DbType.Single, MSPCAI.ASEF16_PAAC32);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC32", DbType.Single, MSPCAI.ASEF17_PAAC32);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC33", DbType.Single, MSPCAI.ASEF16_PAAC33);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC33", DbType.Single, MSPCAI.ASEF17_PAAC33);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC45", DbType.Single, MSPCAI.ASEF16_PAAC45);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC45", DbType.Single, MSPCAI.ASEF17_PAAC45);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC46", DbType.Single, MSPCAI.ASEF16_PAAC46);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC46", DbType.Single, MSPCAI.ASEF17_PAAC46);
+                        Db.AddInParameter(cmd, "ASEF16_PAAC48", DbType.Single, MSPCAI.ASEF16_PAAC48);
+                        Db.AddInParameter(cmd, "ASEF17_PAAC48", DbType.Single, MSPCAI.ASEF17_PAAC48);
+                        Db.AddInParameter(cmd, "BSEF16_PBAC16", DbType.Single, MSPCAI.BSEF16_PBAC16);
+                        Db.AddInParameter(cmd, "BSEF17_PBAC16", DbType.Single, MSPCAI.BSEF17_PBAC16);
+                        Db.AddInParameter(cmd, "BSEF16_PBAC18", DbType.Single, MSPCAI.BSEF16_PBAC18);
+                        Db.AddInParameter(cmd, "BSEF17_PBAC18", DbType.Single, MSPCAI.BSEF17_PBAC18);
+                        #endregion
+                        affected = Db.ExecuteNonQuery(cmd);
+                    }
+                }
+
+                scop.Complete();
+            }
+
+            return affected > 0;
+        }
     }
 }

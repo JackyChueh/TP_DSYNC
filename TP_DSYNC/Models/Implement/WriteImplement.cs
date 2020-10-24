@@ -2594,5 +2594,2068 @@ UPDATE ZP1 SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
             return affected;
         }
 
+        public int WriteDataForMSPCSTATS(MSPCSTATS MSPCSTATS)
+        {
+            string sql;
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.RepeatableRead }))
+            {
+                using (DbConnection connB3BUFFER = DbB3BUFFER.CreateConnection())
+                {
+                    string active = null;
+                    connB3BUFFER.Open();
+                    using (DbCommand cmd = connB3BUFFER.CreateCommand())
+                    {
+                        sql = @"
+SELECT ACTIVE FROM MSPCSTATS WITH(UPDLOCK,ROWLOCK) WHERE AUTOID=@AUTOID AND ACTIVE='A'
+";
+                        cmd.CommandText = sql;
+                        DbB3BUFFER.AddInParameter(cmd, "AUTOID", DbType.Int32, MSPCSTATS.AUTOID);
+                        var obj = DbB3BUFFER.ExecuteScalar(cmd);
+                        if (obj != null)
+                        {
+                            active = obj.ToString();
+                        }
+
+                        if (active == "A")
+                        {
+                            using (DbConnection connDSCCR = DbDSCCR.CreateConnection())
+                            {
+                                connDSCCR.Open();
+                                using (DbCommand cmdDSCCR = connDSCCR.CreateCommand())
+                                {
+                                    sql = @"
+INSERT INTO MSPCSTATS (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,WATER_TOWER,SEF01,SEF02,SEF03,SEF04,SEF05,SEF06,SEF07,SEF08)
+    VALUES (NEXT VALUE FOR [MSPCSTATS_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@WATER_TOWER,@SEF01,@SEF02,@SEF03,@SEF04,@SEF05,@SEF06,@SEF07,@SEF08)
+";
+                                    cmdDSCCR.CommandText = sql;
+                                    #region 參數
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DEVICE_ID", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "WATER_TOWER", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF01", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF02", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF03", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF04", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF05", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF06", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF07", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF08", DbType.Single);
+
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "SID", 61);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", MSPCSTATS.AUTOID);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", MSPCSTATS.DATETIME);
+                                    //DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "MSPCSTATSF");
+
+                                    #region 2706室電信機房箱型冷氣#1-(PA1-1)	主樓27樓	CT-7
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "27F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA04");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", MSPCSTATS.ASEF04_PAAC04);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2706室電信機房箱型冷氣#1-(PA1-2)	主樓27樓	CT-7
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "27F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA05");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", MSPCSTATS.ASEF04_PAAC05);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2706室電信機房箱型冷氣#1-(PA2-1)	主樓27樓	CT-7
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "27F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA06");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", MSPCSTATS.ASEF04_PAAC06);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2708室電信機房箱型冷氣#2-(PA2-2)	主樓27樓	CT-7
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "27F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA07");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", MSPCSTATS.ASEF04_PAAC07);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2607室箱型冷氣-(PA5-1)	主樓26樓	CT-10
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA09");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", MSPCSTATS.ASEF08_PAAC09);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2607室箱型冷氣-(PA5-2)	主樓26樓	CT-10
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", MSPCSTATS.ASEF08_PAAC10);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2605室箱型冷氣-(PA5-3)	主樓26樓	CT-10
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", MSPCSTATS.ASEF08_PAAC11);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2603室箱型冷氣-(PA5-4)	主樓26樓	CT-10
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", MSPCSTATS.ASEF08_PAAC12);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2601室箱型冷氣-(PA5-5)	主樓26樓	CT-10
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA13");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", MSPCSTATS.ASEF08_PAAC13);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2508室交換機房箱型冷氣機-(PA2506)	主樓25樓	CT-7
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "25F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA18");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.ASEF05_PAAC18);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2508微波室箱型冷氣#1-(PA2508-1)	主樓25樓	CT-7
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "25F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA19");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.ASEF05_PAAC19);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2508微波室箱型冷氣#2-(PA2508-2)	主樓25樓	CT-7
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "25F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA20");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.ASEF05_PAAC20);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2002電腦機房箱型冷氣機-(PA2002)	主樓20樓	CT-9
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "20F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA23");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.ASEF05_PAAC23);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 1902電腦機房箱型冷氣機-(PA1902)	主樓19樓	CT-9
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "19F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA24");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.ASEF05_PAAC24);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 1304室箱型冷氣機-(PA1304)	主樓13樓	CT-11
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "13F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA28");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", MSPCSTATS.ASEF01_PAAC28);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 501電腦機房箱型冷氣機-(PA0501)	主樓5樓	CT-9
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "5F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA33");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", MSPCSTATS.ASEF04_PAAC33);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機-(PA7-2)-(第1壓縮機)	主樓3樓	CT-12
+                                    //前棟電腦機房箱型冷氣機-(PA7-2)-(第2壓縮機)	主樓3樓	CT-12
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA34");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", MSPCSTATS.ASEF06_PAAC34);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", MSPCSTATS.ASEF07_PAAC34);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機-(PA7-3)-(第1壓縮機)	主樓3樓	CT-12
+                                    //前棟電腦機房箱型冷氣機-(PA7-3)-(第2壓縮機)	主樓3樓	CT-12
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA35");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", MSPCSTATS.ASEF06_PAAC35);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", MSPCSTATS.ASEF07_PAAC35);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機-(PA7-4)	主樓3樓	CT-12
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA36");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.ASEF05_PAAC36);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機-(PA7-5)-(第1壓縮機)	主樓3樓	CT-12
+                                    //前棟電腦機房箱型冷氣機-(PA7-5)-(第2壓縮機)	主樓3樓	CT-12
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA37");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", MSPCSTATS.ASEF06_PAAC37);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", MSPCSTATS.ASEF07_PAAC37);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機-(PA7-6)-(第1壓縮機)	主樓3樓	CT-12
+                                    //前棟電腦機房箱型冷氣機-(PA7-6)-(第2壓縮機)	主樓3樓	CT-12
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA37");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", MSPCSTATS.ASEF06_PAAC38);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", MSPCSTATS.ASEF07_PAAC38);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機-(PA7-7)	主樓3樓	CT-12
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA39");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", MSPCSTATS.ASEF04_PAAC39);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機-(PA7-9A)	主樓3樓	CT-12
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA40");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", MSPCSTATS.ASEF04_PAAC40);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機-(PA7-9B)	主樓3樓	CT-12
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA41");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", MSPCSTATS.ASEF04_PAAC41);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機-(PA7-13)-(第1壓縮機)	主樓3樓	CT-12
+                                    //前棟電腦機房箱型冷氣機-(PA7-13)-(第2壓縮機)	主樓3樓	CT-12
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA42");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", MSPCSTATS.ASEF06_PAAC42);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", MSPCSTATS.ASEF07_PAAC42);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 204電腦機房箱型冷氣機-(PA0204)	主樓2樓	CT-6
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "2F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA43");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT6");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", MSPCSTATS.ASEF04_PAAC43);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region B306UPS機房箱型冷氣機#1-(PAB304-1)	主樓B3樓	CT-13
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA45");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT13");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.ASEF05_PAAC45);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region B322UPS機房箱型冷氣機#1-(PAB322-1)	主樓B3樓	CT-11
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA46");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.ASEF05_PAAC46);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-1)	副樓9樓	AT-9
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB01");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", MSPCSTATS.BSEF03_PBAC01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.BSEF05_PBAC01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-2)	副樓9樓	AT-9
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB02");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", MSPCSTATS.BSEF03_PBAC02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.BSEF05_PBAC02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-3)	副樓9樓	AT-9
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB03");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", MSPCSTATS.BSEF03_PBAC03);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.BSEF05_PBAC03);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-4)	副樓9樓	AT-9
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB04");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", MSPCSTATS.BSEF03_PBAC04);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.BSEF05_PBAC04);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-5)	副樓9樓	AT-9
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB05");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", MSPCSTATS.BSEF03_PBAC05);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.BSEF05_PBAC05);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-6)	副樓9樓	AT-9
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB06");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", MSPCSTATS.BSEF03_PBAC06);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.BSEF05_PBAC06);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-7)	副樓9樓	AT-9
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB07");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", MSPCSTATS.BSEF03_PBAC07);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.BSEF05_PBAC07);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-8)	副樓9樓	AT-9
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB08");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", MSPCSTATS.BSEF03_PBAC08);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.BSEF05_PBAC08);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-10)	副樓9樓	AT-9
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", MSPCSTATS.BSEF03_PBAC10);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.BSEF05_PBAC10);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-11)	副樓9樓	AT-9
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", MSPCSTATS.BSEF03_PBAC11);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.BSEF05_PBAC11);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-12)	副樓9樓	AT-9
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", MSPCSTATS.BSEF03_PBAC12);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.BSEF05_PBAC12);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+
+                                    #region 秘書處檔案室箱型冷氣-(PA)	副樓8樓	CT-14
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S8F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB14");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT14");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", MSPCSTATS.BSEF01_PBAC14);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 總圖書室箱型冷氣-(PA)	副樓8樓	CT-13
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S8F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB15");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT13");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.BSEF05_PBAC15);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 201室房箱型冷氣-(PA)	副樓2樓	CT-13
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S2F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB19");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT13");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", MSPCSTATS.BSEF01_PBAC19);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.BSEF05_PBAC19);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #endregion
+
+                                    affected = 0;
+                                    sql = @"
+UPDATE MSPCSTATS SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
+";
+                                    cmd.CommandText = sql;
+                                    //DbDSCCR.AddInParameter(cmd, "AUTOID", DbType.Int32, MSPCSTATSF.AUTOID);
+                                    affected = DbB3BUFFER.ExecuteNonQuery(cmd);
+                                    if (affected == 0)
+                                    {
+                                        //throw new Exception("ACTIVE='A'->'S'失敗 AUTOID = " + MSPCSTATSF.AUTOID.ToString());
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+                scop.Complete();
+            }
+
+            return affected;
+        }
+
+        public int WriteDataForMSPCALARS(MSPCALARS MSPCALARS)
+        {
+            string sql;
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.RepeatableRead }))
+            {
+                using (DbConnection connB3BUFFER = DbB3BUFFER.CreateConnection())
+                {
+                    string active = null;
+                    connB3BUFFER.Open();
+                    using (DbCommand cmd = connB3BUFFER.CreateCommand())
+                    {
+                        sql = @"
+SELECT ACTIVE FROM MSPCALARS WITH(UPDLOCK,ROWLOCK) WHERE AUTOID=@AUTOID AND ACTIVE='A'
+";
+                        cmd.CommandText = sql;
+                        DbB3BUFFER.AddInParameter(cmd, "AUTOID", DbType.Int32, MSPCALARS.AUTOID);
+                        var obj = DbB3BUFFER.ExecuteScalar(cmd);
+                        if (obj != null)
+                        {
+                            active = obj.ToString();
+                        }
+
+                        if (active == "A")
+                        {
+                            using (DbConnection connDSCCR = DbDSCCR.CreateConnection())
+                            {
+                                connDSCCR.Open();
+                                using (DbCommand cmdDSCCR = connDSCCR.CreateCommand())
+                                {
+                                    sql = @"
+INSERT INTO MSPCALARS (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,WATER_TOWER,SEF09,SEF10,SEF11,SEF12,SEF13,SEF14,SEF15)
+    VALUES (NEXT VALUE FOR [MSPCALARS_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@WATER_TOWER,@SEF09,@SEF10,@SEF11,@SEF12,@SEF13,@SEF14,@SEF15)
+";
+                                    cmdDSCCR.CommandText = sql;
+                                    #region 參數
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DEVICE_ID", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "WATER_TOWER", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF09", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF10", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF11", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF12", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF13", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF14", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF15", DbType.Single);
+
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", MSPCALARS.AUTOID);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", MSPCALARS.DATETIME);
+
+                                    #region 前棟#11電梯機房箱型冷氣-(PA-貨)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "PH2F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA01");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 後棟#9/#10電梯機房箱型冷氣-(PA-主管)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "PH2F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA02");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", MSPCALARS.ASEF10_PAAC02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", MSPCALARS.ASEF15_PAAC02);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟中間#5-#8電梯機房箱型冷氣-(PA-高-1)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "PH2F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA03");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC03);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC03);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2706室電信機房箱型冷氣#1-(PA1-1)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "27F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA04");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC04);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", MSPCALARS.ASEF12_PAAC04);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", MSPCALARS.ASEF13_PAAC04);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2706室電信機房箱型冷氣#1-(PA1-2)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "27F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA05");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC05);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", MSPCALARS.ASEF12_PAAC05);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2706室電信機房箱型冷氣#1-(PA2-1)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "27F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA06");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC06);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", MSPCALARS.ASEF12_PAAC06);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2708室電信機房箱型冷氣#2-(PA2-2)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "27F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA07");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC07);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", MSPCALARS.ASEF12_PAAC07);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2602室箱型冷氣-(大金氣冷式)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA08");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", MSPCALARS.ASEF13_PAAC08);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2607室箱型冷氣-(PA5-1)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA09");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", MSPCALARS.ASEF09_PAAC09);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC09);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", MSPCALARS.ASEF13_PAAC09);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2607室箱型冷氣-(PA5-2)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", MSPCALARS.ASEF09_PAAC10);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC10);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", MSPCALARS.ASEF13_PAAC10);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2605室箱型冷氣-(PA5-3)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", MSPCALARS.ASEF09_PAAC11);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC11);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", MSPCALARS.ASEF13_PAAC11);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2603室箱型冷氣-(PA5-4)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", MSPCALARS.ASEF09_PAAC12);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC12);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", MSPCALARS.ASEF13_PAAC12);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2601室箱型冷氣-(PA5-5)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA13");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", MSPCALARS.ASEF09_PAAC13);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC13);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", MSPCALARS.ASEF13_PAAC13);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2620變壓器室箱型冷氣-(PA2620-1)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA14");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC14);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", MSPCALARS.ASEF12_PAAC14);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", MSPCALARS.ASEF13_PAAC14);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC14);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2620變壓器室箱型冷氣-(PA2620-2)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA15");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC15);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", MSPCALARS.ASEF12_PAAC15);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2606室電腦機房_箱型冷氣壓縮機#1-(PA-2606-1)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA16");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC16);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", MSPCALARS.ASEF12_PAAC16);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", MSPCALARS.ASEF13_PAAC16);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC16);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", MSPCALARS.ASEF15_PAAC16);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2606室電腦機房_箱型冷氣壓縮機#1-(PA-2606-2)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA17");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC17);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", MSPCALARS.ASEF12_PAAC17);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", MSPCALARS.ASEF13_PAAC17);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2506室交換機房_箱型冷氣機-(PA2506)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "25F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA18");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC18);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", MSPCALARS.ASEF13_PAAC18);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC18);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", MSPCALARS.ASEF15_PAAC18);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2508微波室箱型冷氣#1-(PA2508-1)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "25F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA19");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC19);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", MSPCALARS.ASEF13_PAAC19);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 主樓25樓2508微波室箱型冷氣#2
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "25F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA20");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC20);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2101電腦機房_箱型冷氣機-(PA2101)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "21F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA21");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT15");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC21);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC21);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", MSPCALARS.ASEF15_PAAC21);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2118電腦機房_箱型冷氣機-(PA2118)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "21F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA22");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC22);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC22);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", MSPCALARS.ASEF15_PAAC22);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2002電腦機房箱型冷氣機-(PA2002)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "20F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA23");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC23);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 1902電腦機房_箱型冷氣機-(PA1902)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "19F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA24");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC24);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC24);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", MSPCALARS.ASEF15_PAAC24);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 1716#1/#4電梯機房_箱型冷氣#1-(PA1716-1)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "ELF");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA25");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", MSPCALARS.ASEF10_PAAC25);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC25);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC25);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 1716#1/#4電梯機房箱型冷氣#2-(PA1716-2)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "ELF");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA26");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", MSPCALARS.ASEF10_PAAC26);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    //沒有水塔編號 //沒有水塔編號 //沒有水塔編號 //沒有水塔編號 //沒有水塔編號 //沒有水塔編號
+                                    #region 1602電腦機房_箱型冷氣機-(PA1602)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "16F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA27");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", MSPCALARS.ASEF10_PAAC27);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC27);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC27);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", MSPCALARS.ASEF15_PAAC27);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 1216電腦機房箱型冷氣機
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "12F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA29");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC29);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC29);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", MSPCALARS.ASEF15_PAAC29);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 1106電腦機房_箱型冷氣機-(PA1106)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "11F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA30");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC30);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC30);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", MSPCALARS.ASEF15_PAAC30);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 1104電腦機房箱型冷氣機-(PA1104)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "11F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA31");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC31);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC31);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", MSPCALARS.ASEF15_PAAC31);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 801電腦機房_箱型冷氣機-(PA0801)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "8F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA32");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC32);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC32);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", MSPCALARS.ASEF15_PAAC32);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 501電腦機房_箱型冷氣機-(PA0501)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "5F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA33");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC33);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC33);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", MSPCALARS.ASEF15_PAAC33);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機-(PA7-2)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA34");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC34);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機PA7-3
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA35");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC35);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機-(PA7-4)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA36");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC36);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機PA7-5
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA37");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC37);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機-(PA7-6)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA38");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC38);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機-(PA7-7)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA39");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC39);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機-(PA7-9A)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA40");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC40);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機-(PA7-9B)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA41");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC41);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟電腦機房箱型冷氣機-(PA7-13)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA42");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC42);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 主樓2樓204電腦機房箱型冷氣機
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "2F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA43");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC43);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 104電腦機房箱型冷氣機-(PA0104)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "1F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA44");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC44);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region B306UPS機房_箱型冷氣機#1-(PAB304-1)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA45");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT13");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC45);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", MSPCALARS.ASEF12_PAAC45);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", MSPCALARS.ASEF13_PAAC45);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region B322UPS機房_箱型冷氣機#1-(PAB322-1)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA46");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC46);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", MSPCALARS.ASEF12_PAAC46);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region B322UPS機房箱型冷氣機#2-(PAB322-2)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA47");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", MSPCALARS.ASEF10_PAAC47);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC47);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region B330UPS機房箱型冷氣機#1-(PAB330-1)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA48");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", MSPCALARS.ASEF10_PAAC48);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC48);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region B330UPS機房箱型冷氣機#2-(PAB330-2)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA49");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", MSPCALARS.ASEF10_PAAC49);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC49);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region B330UPS機房箱型冷氣機#3-(PAB330-3)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA50");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", MSPCALARS.ASEF10_PAAC50);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC50);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-1)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB01");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-2)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB02");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-3)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB03");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC03);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-4)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB04");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC04);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-5)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB05");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC05);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-6)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB06");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC06);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-7)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB07");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC07);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-8)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB08");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC08);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 哺乳室箱型冷氣-(PA9-9)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB09");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC09);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-10)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC10);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-11)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC11);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 箱型冷氣-(PA9-12)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S9F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB12");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "AT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC12);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 秘書處檔案室箱型冷氣-(PA)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S8F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB14");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT14");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC14);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 總圖書室箱型冷氣-(PA)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S8F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB15");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT13");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC15);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 電腦機房箱型冷氣-(PA1)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S7F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB16");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT13");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC16);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 電腦機房箱型冷氣-(PA2)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S7F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB17");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT13");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC17);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.BSEF14_PBAC17);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 電腦機房箱型冷氣-(PA)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S6F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB18");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT14");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC18);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.BSEF14_PBAC18);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 201室房箱型冷氣-(PA)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S2F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB19");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT13");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.BSEF11_PBAC19);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #endregion
+
+                                    affected = 0;
+                                    sql = @"
+UPDATE MSPCALARS SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
+";
+                                    cmd.CommandText = sql;
+                                    //DbDSCCR.AddInParameter(cmd, "AUTOID", DbType.Int32, MSPCALARSF.AUTOID);
+                                    affected = DbB3BUFFER.ExecuteNonQuery(cmd);
+                                    if (affected == 0)
+                                    {
+                                        //throw new Exception("ACTIVE='A'->'S'失敗 AUTOID = " + MSPCALARSF.AUTOID.ToString());
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+                scop.Complete();
+            }
+
+            return affected;
+        }
+
+        public int WriteDataForMSPCAI(MSPCAI MSPCAI)
+        {
+            string sql;
+            int affected = 0;
+
+            using (TransactionScope scop = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.RepeatableRead }))
+            {
+                using (DbConnection connB3BUFFER = DbB3BUFFER.CreateConnection())
+                {
+                    string active = null;
+                    connB3BUFFER.Open();
+                    using (DbCommand cmd = connB3BUFFER.CreateCommand())
+                    {
+                        sql = @"
+SELECT ACTIVE FROM MSPCAI WITH(UPDLOCK,ROWLOCK) WHERE AUTOID=@AUTOID AND ACTIVE='A'
+";
+                        cmd.CommandText = sql;
+                        DbB3BUFFER.AddInParameter(cmd, "AUTOID", DbType.Int32, MSPCAI.AUTOID);
+                        var obj = DbB3BUFFER.ExecuteScalar(cmd);
+                        if (obj != null)
+                        {
+                            active = obj.ToString();
+                        }
+
+                        if (active == "A")
+                        {
+                            using (DbConnection connDSCCR = DbDSCCR.CreateConnection())
+                            {
+                                connDSCCR.Open();
+                                using (DbCommand cmdDSCCR = connDSCCR.CreateCommand())
+                                {
+                                    sql = @"
+INSERT INTO MSPCAI (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,WATER_TOWER,SEF16,SEF17,SEF18)
+    VALUES (NEXT VALUE FOR [MSPCAI_SEQ],@AUTOID,@DATETIME,@LOCATION,@DEVICE_ID,@WATER_TOWER,@SEF16,@SEF17,@SEF18)
+";
+                                    cmdDSCCR.CommandText = sql;
+                                    #region 參數
+                                    //DbDSCCR.AddInParameter(cmdDSCCR, "SID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "AUTOID", DbType.Int32);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DATETIME", DbType.DateTime);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "LOCATION", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "DEVICE_ID", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "WATER_TOWER", DbType.String);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF16", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF17", DbType.Single);
+                                    DbDSCCR.AddInParameter(cmdDSCCR, "SEF18", DbType.Single);
+
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "AUTOID", MSPCAI.AUTOID);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DATETIME", MSPCAI.DATETIME);
+
+                                    #region 前棟#11電梯機房箱型冷氣-(PA-貨)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "PH2F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA01");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC01);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 後棟#9/#10電梯機房箱型冷氣-(PA-主管)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "PH2F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA02");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC02);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 前棟中間#5-#8電梯機房箱型冷氣-(PA-高-1)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "PH2F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA03");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC03);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2706室電信機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "27F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA04");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC04);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC04);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2708室電信機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "27F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA06");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC06);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC06);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2620變壓器室
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA14");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT10");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC14);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC14);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2606室電腦機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA16");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC16);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC16);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2506室交換機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "25F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA18");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC18);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2508微波室
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "25F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA19");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC19);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC19);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2101電腦機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "21F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA21");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT5");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC21);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC21);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 2118電腦機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "21F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA22");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC22);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC22);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 902電腦機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "19F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA24");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC24);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC24);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 1716#1/#4電梯機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "ELF");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA25");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC25);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 1602電腦機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "16F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA27");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC27);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC27);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 1304室箱型冷氣機-(PA1304)
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "13F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA28");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC28);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", MSPCAI.ASEF18_PAAC28);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 12樓1216電腦機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "12F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA29");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC29);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC29);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 1106電腦機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "11F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA30");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC30);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC30);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 1104電腦機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "11F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA31");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT7");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC31);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC31);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 801電腦機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "8F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA32");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC32);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC32);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 501電腦機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "5F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA33");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC33);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC33);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region B306UPS機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA45");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT13");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC45);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC45);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region B322UPS機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA46");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC46);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC46);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region B330UPS機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA48");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT11");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC48);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC48);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 電腦機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S7F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB16");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT13");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.BSEF16_PBAC16);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.BSEF17_PBAC16);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #region 電腦機房
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "S6F");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PB18");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT14");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.BSEF16_PBAC18);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.BSEF17_PBAC18);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
+                                    affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
+                                    #endregion
+
+                                    #endregion
+
+                                    affected = 0;
+                                    sql = @"
+UPDATE MSPCAI SET ACTIVE='S' WHERE AUTOID=@AUTOID AND ACTIVE='A'
+";
+                                    cmd.CommandText = sql;
+                                    //DbDSCCR.AddInParameter(cmd, "AUTOID", DbType.Int32, MSPCAIF.AUTOID);
+                                    affected = DbB3BUFFER.ExecuteNonQuery(cmd);
+                                    if (affected == 0)
+                                    {
+                                        //throw new Exception("ACTIVE='A'->'S'失敗 AUTOID = " + MSPCAIF.AUTOID.ToString());
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+                scop.Complete();
+            }
+
+            return affected;
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace TP_DSYNC.Models.DataDefine.ALERT
         public Single MAX_VALUE { get; set; }
         public Single MIN_VALUE { get; set; }
         public int CHECK_INTERVAL { get; set; }
-        public int ALERT_INTERVAL { get; set; }
+        public int? ALERT_INTERVAL { get; set; }
         public Boolean SUN { get; set; }
         public TimeSpan SUN_STIME { get; set; }
         public TimeSpan SUN_ETIME { get; set; }

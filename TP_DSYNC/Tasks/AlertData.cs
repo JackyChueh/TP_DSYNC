@@ -58,10 +58,10 @@ namespace TP_DSYNC.Tasks
                                         string[] to = c.MAIL_TO.Split(';');
                                         if (to.Length > 0)
                                         {
-                                            if (c.ALERT_DATE.AddMinutes(c.ALERT_INTERVAL) < this.CurrentNow)    //寄送通知的週期
+                                            if (c.ALERT_DATE.AddMinutes(c.CHECK_INTERVAL) < this.CurrentNow)    //寄送通知的週期
                                             {
                                                 AlertImplement.WriteAlertInfo(c, value, this.CurrentNow);  //寫入異常記錄
-                                                AlertImplement.SendAlertMessage(c, value);
+                                                AlertImplement.SendAlertMessage(c, value, this.CurrentNow);
                                                 AlertImplement.UpdateAlertDate(c, this.CurrentNow);
                                             }
                                         }

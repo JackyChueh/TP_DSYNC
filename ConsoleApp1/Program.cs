@@ -32,13 +32,13 @@ namespace ConsoleApp1
                 //}
 
 
-                //int.TryParse(ConfigurationManager.AppSettings["ProcessDataTiming"], out int processDataTiming);
-                //if (processDataTiming == 0)
-                //    processDataTiming = 60000;   // 60 seconds  
-                //var timer = new Timer();
-                //timer.Interval = processDataTiming;
-                //timer.Elapsed += new ElapsedEventHandler(OnTimer);
-                //timer.Start();
+                int.TryParse(ConfigurationManager.AppSettings["ProcessDataTiming"], out int processDataTiming);
+                if (processDataTiming == 0)
+                    processDataTiming = 60000;   // 60 seconds  
+                var timer = new Timer();
+                timer.Interval = processDataTiming;
+                timer.Elapsed += new ElapsedEventHandler(OnTimer);
+                timer.Start();
 
                 //new SensorData(DateTime.Now).ProcessData();   //單次測試用
 

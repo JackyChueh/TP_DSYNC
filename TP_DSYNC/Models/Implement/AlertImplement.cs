@@ -221,17 +221,25 @@ VALUES (
             }
         }
 
-        public void SendAlertMessage(ALERT_CONFIG c, Single? value)
+        public void SendAlertMessage(ALERT_CONFIG c, Single? value, DateTime Now)
         {
-            ALERT_LOG r = GetPhraseName(c, value);
-            string title = "Title";
-            string message = r.DATA_TYPE + " " + r.LOCATION + " " + r.DEVICE_ID + ", " + r.DATA_FIELD + "=" + r.ALERT_VALUE;
-            //new MailSender().Google_Send(to, "Title", value.ToString());
-            
-            Logs.Write("MAIL ALERT", "{0} {1}", title, message);
+            ALERT_LOG r = GetPhraseName(c, value, Now);
+            string title = "中控室監控數據異常通知";
+            //string html = r.DATA_TYPE + " " + r.LOCATION + " " + r.DEVICE_ID + ", " + r.DATA_FIELD + "=" + r.ALERT_VALUE;
+
+            string html = new MailSender().MailTemplate(r);
+
+            string[] mailTo = c.MAIL_TO.Split(';');
+            if (mailTo.Length > 0)
+            {
+                //new MailSender().Google_Send(mailTo, title, html);
+                new MailSender().Mail_Send(null, mailTo, title, html, true);
+            }
+
+            //Logs.Write("MAIL ALERT", "{0} {1}", title, html);
         }
 
-        public ALERT_LOG GetPhraseName(ALERT_CONFIG c, Single? value)
+        public ALERT_LOG GetPhraseName(ALERT_CONFIG c, Single? value, DateTime Now)
         {
             DatabaseProviderFactory factory = new DatabaseProviderFactory();
             Database Db = factory.Create("TP_SCC");
@@ -270,6 +278,7 @@ SELECT [dbo].[PHRASE_NAME]('DATA_TYPE',@DATA_TYPE,default) AS DATA_TYPE
                         r.MAX_VALUE = reader["MAX_VALUE"] as string;
                         r.MIN_VALUE = reader["MIN_VALUE"] as string;
                         r.ALERT_VALUE = reader["ALERT_VALUE"] as string;
+                        r.CHECK_DATE= Now;
                     }
                     else
                     {
@@ -280,6 +289,7 @@ SELECT [dbo].[PHRASE_NAME]('DATA_TYPE',@DATA_TYPE,default) AS DATA_TYPE
                         r.MAX_VALUE = c.MAX_VALUE.ToString();
                         r.MIN_VALUE = c.MIN_VALUE.ToString();
                         r.ALERT_VALUE = value.ToString();
+                        r.CHECK_DATE = Now;
                     }
                 }
             }

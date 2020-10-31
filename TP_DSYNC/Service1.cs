@@ -50,8 +50,10 @@ namespace TP_DSYNC
             {
                 //Thread thread = new Thread(new SensorData(DateTime.Now).ProcessData);
                 //thread.Start();
-                var t = new Task(new SensorData(DateTime.Now).ProcessData);
-                t.Start();
+                var t1 = new Task(new SensorData(DateTime.Now).ProcessData);
+                var t2 = new Task(new AlertData(DateTime.Now).ProcessData);
+                t1.Start();
+                t2.Start();
             }
             catch (Exception ex)
             {

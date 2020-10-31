@@ -7,6 +7,8 @@ using System.Data;
 using System.Data.Common;
 using Microsoft.Practices.EnterpriseLibrary.Data;
 using TP_DSYNC.Models.Help;
+using System.Configuration;
+using System.Net.Mail;
 
 namespace TP_DSYNC.Models.Implement
 {
@@ -233,7 +235,20 @@ VALUES (
             if (mailTo.Length > 0)
             {
                 //new MailSender().Google_Send(mailTo, title, html);
-                new MailSender().Mail_Send(null, mailTo, title, html, true);
+                //new MailSender().Mail_Taxi(null, mailTo, title, html, true);
+
+                string MAIL_SERVER = ConfigurationManager.AppSettings["MAIL_SERVER"];
+                int MAIL_PORT = int.Parse(ConfigurationManager.AppSettings["MAIL_PORT"]);
+                string MAIL_ACCOUNT = ConfigurationManager.AppSettings["MAIL_ACCOUNT"];
+                string MAIL_PASSWORD = ConfigurationManager.AppSettings["MAIL_PASSWORD"];
+                string MAIL_FROM = ConfigurationManager.AppSettings["MAIL_FROM"];
+                bool MAIL_IsBodyHtml = bool.Parse(ConfigurationManager.AppSettings["MAIL_IsBodyHtml"]);
+                bool MAIL_EnableSsl = bool.Parse(ConfigurationManager.AppSettings["MAIL_EnableSsl"]);
+                bool MAIL_UseDefaultCredentials = bool.Parse(ConfigurationManager.AppSettings["MAIL_UseDefaultCredentials"]);
+
+                MailAddress from = new MailAddress(MAIL_FROM);
+
+                new MailSender().Email_Send(from, mailTo, title, html, MAIL_SERVER, MAIL_PORT, MAIL_ACCOUNT, MAIL_PASSWORD, MAIL_IsBodyHtml, MAIL_EnableSsl, MAIL_UseDefaultCredentials);
             }
 
             //Logs.Write("MAIL ALERT", "{0} {1}", title, html);

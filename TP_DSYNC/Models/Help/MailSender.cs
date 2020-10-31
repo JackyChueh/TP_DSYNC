@@ -11,7 +11,44 @@ namespace TP_DSYNC.Models.Help
     public class MailSender
     {
         //SMTP MAIL
-        public bool Mail_Send(string MailFrom, string[] MailTos, string MailSub, string MailBody, bool isBodyHtml)
+
+        public void Email_Send(MailAddress From, string[] To, string Subject, string Body, string Server, int Port
+                 , string Account, string Password, bool IsBodyHtml, bool EnableSsl, bool UseDefaultCredentials)
+        {
+
+            try
+            {
+                MailMessage mail = new MailMessage()
+                {
+                    From = From,
+                    IsBodyHtml = IsBodyHtml,
+                    Subject = Subject,
+                    Body = Body
+                };
+                foreach (string addr in To)
+                {
+                    mail.To.Add(addr);
+                }
+
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = Server;
+                smtp.Port = Port;
+                smtp.EnableSsl = EnableSsl;
+                smtp.UseDefaultCredentials = UseDefaultCredentials;   //有些公司的正式環境要加這行才能成功寄信
+                smtp.Credentials = new NetworkCredential(Account, Password);
+
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                smtp.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                Logs.Write("Mail", "Mail_Send-Err=" + ex.Message + "\n");
+            }
+
+        }
+
+        public bool Mail_Taxi(string MailFrom, string[] MailTos, string MailSub, string MailBody, bool isBodyHtml)
         {
             string smtpServer = "10.2.1.17";
             int smtpPort = 25;

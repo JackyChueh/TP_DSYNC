@@ -1187,7 +1187,7 @@ SELECT TOP 1 AUTOID,DATETIME
             string sql = @"
 SELECT TOP 1 AUTOID,DATETIME
     ,ASEF04_PAAC04,ASEF04_PAAC05,ASEF04_PAAC06,ASEF04_PAAC07,ASEF08_PAAC09,ASEF08_PAAC10,ASEF08_PAAC11,ASEF08_PAAC12,ASEF08_PAAC13
-    ,ASEF05_PAAC18,ASEF04_PAAC19,ASEF06_PAAC20,ASEF05_PAAC23,ASEF05_PAAC24,ASEF01_PAAC28,ASEF04_PAAC33,ASEF06_PAAC34,ASEF07_PAAC34
+    ,ASEF05_PAAC18,ASEF04_PAAC19,ASEF05_PAAC20,ASEF05_PAAC23,ASEF05_PAAC24,ASEF01_PAAC28,ASEF04_PAAC33,ASEF06_PAAC34,ASEF07_PAAC34
     ,ASEF06_PAAC35,ASEF07_PAAC35,ASEF05_PAAC36,ASEF06_PAAC37,ASEF07_PAAC37,ASEF06_PAAC38,ASEF07_PAAC38,ASEF04_PAAC39,ASEF04_PAAC40
     ,ASEF05_PAAC41,ASEF06_PAAC42,ASEF07_PAAC42,ASEF04_PAAC43,ASEF05_PAAC45,ASEF05_PAAC46,BSEF03_PBAC01,BSEF05_PBAC01,BSEF03_PBAC02
     ,BSEF05_PBAC02,BSEF03_PBAC03,BSEF05_PBAC03,BSEF03_PBAC04,BSEF05_PBAC04,BSEF03_PBAC05,BSEF05_PBAC05,BSEF03_PBAC06,BSEF05_PBAC06
@@ -1218,7 +1218,7 @@ SELECT TOP 1 AUTOID,DATETIME
                             ASEF08_PAAC13 = reader["ASEF08_PAAC13"] as Single? ?? null,
                             ASEF05_PAAC18 = reader["ASEF05_PAAC18"] as Single? ?? null,
                             ASEF04_PAAC19 = reader["ASEF04_PAAC19"] as Single? ?? null,
-                            //ASEF06_PAAC20 = reader["ASEF06_PAAC20"] as Single? ?? null,// 
+                            ASEF05_PAAC20 = reader["ASEF05_PAAC20"] as Single? ?? null, 
                             ASEF05_PAAC23 = reader["ASEF05_PAAC23"] as Single? ?? null,
                             ASEF05_PAAC24 = reader["ASEF05_PAAC24"] as Single? ?? null,
                             ASEF01_PAAC28 = reader["ASEF01_PAAC28"] as Single? ?? null,
@@ -1353,8 +1353,8 @@ SELECT TOP 1 AUTOID,DATETIME
                             ASEF11_PAAC16 = reader["ASEF11_PAAC16"] as Single? ?? null,
                             ASEF12_PAAC16 = reader["ASEF12_PAAC16"] as Single? ?? null,
                             ASEF13_PAAC16 = reader["ASEF13_PAAC16"] as Single? ?? null,
-                            ASEF16_PBAC16 = reader["ASEF16_PBAC16"] as Single? ?? null,//有資料來源, 資料定義不明
-                            ASEF17_PBAC16 = reader["ASEF17_PBAC16"] as Single? ?? null,//有資料來源, 資料定義不明
+                            //ASEF16_PBAC16 = reader["ASEF16_PBAC16"] as Single? ?? null,//有資料來源, 資料定義不明, 故刪除
+                            //ASEF17_PBAC16 = reader["ASEF17_PBAC16"] as Single? ?? null,//有資料來源, 資料定義不明, 故刪除    
                             ASEF14_PAAC16 = reader["ASEF14_PAAC16"] as Single? ?? null,
                             ASEF15_PAAC16 = reader["ASEF15_PAAC16"] as Single? ?? null,
                             ASEF11_PAAC17 = reader["ASEF11_PAAC17"] as Single? ?? null,
@@ -1435,7 +1435,7 @@ SELECT TOP 1 AUTOID,DATETIME
                             BSEF11_PBAC10 = reader["BSEF11_PBAC10"] as Single? ?? null,
                             BSEF11_PBAC11 = reader["BSEF11_PBAC11"] as Single? ?? null,
                             BSEF11_PBAC12 = reader["BSEF11_PBAC12"] as Single? ?? null,
-                            BSEF11_PBAC13 = reader["BSEF11_PBAC13"] as Single? ?? null,//有資料來源, 沒資料定義
+                            //BSEF11_PBAC13 = reader["BSEF11_PBAC13"] as Single? ?? null,//有資料來源, 沒資料定義, 故刪除
                             BSEF11_PBAC14 = reader["BSEF11_PBAC14"] as Single? ?? null,
                             BSEF11_PBAC15 = reader["BSEF11_PBAC15"] as Single? ?? null,
                             BSEF11_PBAC16 = reader["BSEF11_PBAC16"] as Single? ?? null,

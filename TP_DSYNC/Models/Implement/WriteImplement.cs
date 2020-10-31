@@ -2801,6 +2801,8 @@ INSERT INTO MSPCSTATS (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,WATER_TOWER,SEF01,
                                     affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
                                     #endregion
 
+
+                                    //--資料來源ASEF04_PAAC19是否應為ASEF05_PAAC19
                                     #region 2508微波室箱型冷氣#1-(PA2508-1)	主樓25樓	CT-7
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "25F");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA19");
@@ -2808,8 +2810,8 @@ INSERT INTO MSPCSTATS (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,WATER_TOWER,SEF01,
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.ASEF05_PAAC19);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", MSPCSTATS.ASEF04_PAAC19);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
@@ -3007,8 +3009,8 @@ INSERT INTO MSPCSTATS (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,WATER_TOWER,SEF01,
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF01", DBNull.Value);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF02", DBNull.Value);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF03", DBNull.Value);
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", MSPCSTATS.ASEF04_PAAC41);
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF04", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF05", MSPCSTATS.ASEF05_PAAC41);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF06", DBNull.Value);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF07", DBNull.Value);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF08", DBNull.Value);
@@ -3549,6 +3551,7 @@ INSERT INTO MSPCALARS (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,WATER_TOWER,SEF09,
                                     affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
                                     #endregion
 
+                                    //--
                                     #region 2620變壓器室箱型冷氣-(PA2620-1)
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "26F");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA14");
@@ -3557,9 +3560,9 @@ INSERT INTO MSPCALARS (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,WATER_TOWER,SEF09,
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", DBNull.Value);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC14);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF12", MSPCALARS.ASEF12_PAAC14);
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", MSPCALARS.ASEF13_PAAC14);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF13", DBNull.Value);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF14", MSPCALARS.ASEF14_PAAC14);
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", DBNull.Value);
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "SEF15", MSPCALARS.ASEF15_PAAC14);
                                     affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
                                     #endregion
 
@@ -3647,6 +3650,7 @@ INSERT INTO MSPCALARS (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,WATER_TOWER,SEF09,
                                     affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
                                     #endregion
 
+                                    //--
                                     #region 2101電腦機房_箱型冷氣機-(PA2101)
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "21F");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA21");
@@ -3731,11 +3735,10 @@ INSERT INTO MSPCALARS (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,WATER_TOWER,SEF09,
                                     affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
                                     #endregion
 
-                                    //沒有水塔編號 //沒有水塔編號 //沒有水塔編號 //沒有水塔編號 //沒有水塔編號 //沒有水塔編號
                                     #region 1602電腦機房_箱型冷氣機-(PA1602)
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "16F");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA27");
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF09", DBNull.Value);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF10", MSPCALARS.ASEF10_PAAC27);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF11", MSPCALARS.ASEF11_PAAC27);
@@ -3998,6 +4001,7 @@ INSERT INTO MSPCALARS (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,WATER_TOWER,SEF09,
                                     affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
                                     #endregion
 
+                                    //--ASEF10_PAAC47有資料定義, 沒資料來源
                                     #region B322UPS機房箱型冷氣機#2-(PAB322-2)
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "B3F");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA47");
@@ -4472,10 +4476,11 @@ INSERT INTO MSPCAI (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,WATER_TOWER,SEF16,SEF
                                     affected += DbDSCCR.ExecuteNonQuery(cmdDSCCR);
                                     #endregion
 
+                                    //--
                                     #region 2101電腦機房
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "21F");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA21");
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT5");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT15");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC21);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC21);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);
@@ -4515,7 +4520,7 @@ INSERT INTO MSPCAI (SID,AUTOID,DATETIME,LOCATION,DEVICE_ID,WATER_TOWER,SEF16,SEF
                                     #region 1602電腦機房
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "LOCATION", "16F");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "DEVICE_ID", "PA27");
-                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "");
+                                    DbDSCCR.SetParameterValue(cmdDSCCR, "WATER_TOWER", "CT9");
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF16", MSPCAI.ASEF16_PAAC27);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF17", MSPCAI.ASEF17_PAAC27);
                                     DbDSCCR.SetParameterValue(cmdDSCCR, "SEF18", DBNull.Value);

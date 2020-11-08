@@ -224,7 +224,7 @@ namespace TP_DSYNC.Models.Help
                 <table style='width:100%;'>
                     <tr>
                         <td style='width:100%; text-align:center;'>
-                            中控室監控數據異常通知
+                            監控異常通知
                         </td>
                     </tr>
                 </table>

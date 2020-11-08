@@ -166,7 +166,7 @@ SELECT SID,DATA_TYPE,LOCATION,DEVICE_ID,DATA_FIELD,MAX_VALUE,MIN_VALUE,CHECK_INT
                 conn.Open();
                 using (DbCommand cmd = conn.CreateCommand())
                 {
-                    string sql = "UPDATE ALERT_LOG SET CHECK_DATE=@CHECK_DATE WHERE SID=@SID";
+                    string sql = "UPDATE ALERT_CONFIG SET CHECK_DATE=@CHECK_DATE WHERE SID=@SID";
                     Db.AddInParameter(cmd, "CHECK_DATE", DbType.DateTime, Now);
                     Db.AddInParameter(cmd, "SID", DbType.Int32, c.SID);
                     cmd.CommandText = sql;
@@ -226,7 +226,7 @@ VALUES (
         public void SendAlertMessage(ALERT_CONFIG c, Single? value, DateTime Now)
         {
             ALERT_LOG r = GetPhraseName(c, value, Now);
-            string title = "中控室監控數據異常通知";
+            string title = "監控異常通知 - (" + r.DEVICE_ID + ")";
             //string html = r.DATA_TYPE + " " + r.LOCATION + " " + r.DEVICE_ID + ", " + r.DATA_FIELD + "=" + r.ALERT_VALUE;
 
             string html = new MailSender().MailTemplate(r);
@@ -333,10 +333,6 @@ SELECT [dbo].[PHRASE_NAME]('DATA_TYPE',@DATA_TYPE,default) AS DATA_TYPE
                     else
                     {
                         yn = false;
-                        if (c.CHECK_HR_CALENDAR && DateType == "W")//是否比對行事曆&&是否為工作日
-                        {
-                            yn = true;
-                        }
                     }
                     if (yn)
                     {
@@ -359,10 +355,6 @@ SELECT [dbo].[PHRASE_NAME]('DATA_TYPE',@DATA_TYPE,default) AS DATA_TYPE
                     else
                     {
                         yn = false;
-                        if (c.CHECK_HR_CALENDAR && DateType == "W")
-                        {
-                            yn = true;
-                        }
                     }
                     if (yn)
                     {
@@ -384,10 +376,6 @@ SELECT [dbo].[PHRASE_NAME]('DATA_TYPE',@DATA_TYPE,default) AS DATA_TYPE
                     else
                     {
                         yn = false;
-                        if (c.CHECK_HR_CALENDAR && DateType == "W")
-                        {
-                            yn = true;
-                        }
                     }
                     if (yn)
                     {
@@ -409,10 +397,6 @@ SELECT [dbo].[PHRASE_NAME]('DATA_TYPE',@DATA_TYPE,default) AS DATA_TYPE
                     else
                     {
                         yn = false;
-                        if (c.CHECK_HR_CALENDAR && DateType == "W")
-                        {
-                            yn = true;
-                        }
                     }
                     if (yn)
                     {
@@ -434,10 +418,6 @@ SELECT [dbo].[PHRASE_NAME]('DATA_TYPE',@DATA_TYPE,default) AS DATA_TYPE
                     else
                     {
                         yn = false;
-                        if (c.CHECK_HR_CALENDAR && DateType == "W")
-                        {
-                            yn = true;
-                        }
                     }
                     if (yn)
                     {
@@ -459,10 +439,6 @@ SELECT [dbo].[PHRASE_NAME]('DATA_TYPE',@DATA_TYPE,default) AS DATA_TYPE
                     else
                     {
                         yn = false;
-                        if (c.CHECK_HR_CALENDAR && DateType == "W")
-                        {
-                            yn = true;
-                        }
                     }
                     if (yn)
                     {
@@ -484,10 +460,6 @@ SELECT [dbo].[PHRASE_NAME]('DATA_TYPE',@DATA_TYPE,default) AS DATA_TYPE
                     else
                     {
                         yn = false;
-                        if (c.CHECK_HR_CALENDAR && DateType == "W")
-                        {
-                            yn = true;
-                        }
                     }
                     if (yn)
                     {

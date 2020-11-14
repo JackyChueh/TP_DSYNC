@@ -26,7 +26,7 @@ namespace TP_DSYNC.Tasks
             //ReadImplement ReadImplement = new ReadImplement("TP_B3");
             //BufferImplement BufferImplement = new BufferImplement("TP_B3_BUFFER");
             //WriteImplement WriteImplement = new WriteImplement("TP_B3_BUFFER", "TP_DSCCR");
-            int.TryParse(ConfigurationManager.AppSettings["AlertLimitSecond"], out int AlertLimitSecond);
+            int.TryParse(ConfigurationManager.AppSettings["ExecuteAlertSecond"], out int executeAlertSecond);
 
             //ReadConfig
             try
@@ -81,9 +81,9 @@ namespace TP_DSYNC.Tasks
                 }
                 total.Stop();
                 string alert = "";
-                if (total.Elapsed.Seconds > AlertLimitSecond)
+                if (total.Elapsed.Seconds > executeAlertSecond)
                 {
-                    alert = total.Elapsed.Seconds > AlertLimitSecond ? " > " + AlertLimitSecond.ToString() : "";
+                    alert = total.Elapsed.Seconds > executeAlertSecond ? " > " + executeAlertSecond.ToString() : "";
                     EventLog(EventLogEnum.EXECUTE_ALERT_SECOND, EventLogEntryType.Warning, "[{1}] {0} : {2}", "Alert", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);
                 }
                 Log("[{1}] {0} : {2}", "Alert", TaskId, "End Time=" + total.Elapsed.Seconds.ToString() + "seconds" + alert);

@@ -234,6 +234,14 @@ namespace TP_DSYNC.Models.DataDefine.B3
         public Single? ASEF06_PAAC46 { get; set; }
         public Single? ASEF07_PAAC46 { get; set; }
         public Single? ASEF08_PAAC46 { get; set; }
+        public Single? ASEF01_PAAC47 { get; set; }
+        public Single? ASEF02_PAAC47 { get; set; }
+        public Single? ASEF03_PAAC47 { get; set; }
+        public Single? ASEF04_PAAC47 { get; set; }
+        public Single? ASEF05_PAAC47 { get; set; }
+        public Single? ASEF06_PAAC47 { get; set; }
+        public Single? ASEF07_PAAC47 { get; set; }
+        public Single? ASEF08_PAAC47 { get; set; }
         public Single? BSEF01_PBAC01 { get; set; }
         public Single? BSEF02_PBAC01 { get; set; }
         public Single? BSEF03_PBAC01 { get; set; }
